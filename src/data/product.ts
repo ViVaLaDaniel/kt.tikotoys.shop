@@ -1,12 +1,13 @@
 import { Product } from "../types";
+import HeadImage from '../assets/Head.jpg';
 
 export const sampleProduct: Product = {
   id: 1,
-  name: "Мишкa 'Плюшик'",
+  name: "Cloud-Soft Chenille Knit Beanie",
   price: 35,
   currency: "$",
-  imageUrl: "/my-toy.png",
-  description: "Невероятно мягкий и уютный плюшевый мишка, который станет лучшим другом для вашего ребенка. Сделан из гипоаллергенных материалов.",
+  imageUrl: HeadImage,
+  description: "Experience ultimate comfort with our handmade Cloud-Soft Chenille Knit Beanie. Perfect for chilly days, this incredibly soft and plush hat keeps you warm and stylish. Made from hypoallergenic, chunky chenille yarn, it's the coziest accessory for your winter wardrobe.",
   colors: [
     { name: "Brown", class: "bg-yellow-800" },
     { name: "Beige", class: "bg-amber-300" },

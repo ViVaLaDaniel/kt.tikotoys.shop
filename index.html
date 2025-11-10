@@ -1,9 +1,28 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Карточка товара 'Юлины Игрушки'</title>
+
+    <!-- Primary SEO Meta Tags -->
+    <title>Cloud-Soft Chenille Knit Beanie | Handmade & Cozy</title>
+    <meta name="description" content="Experience ultimate comfort with our handmade Cloud-Soft Chenille Knit Beanie. This incredibly soft and plush hat keeps you warm and stylish. Made from hypoallergenic, chunky chenille yarn." />
+    <meta name="keywords" content="chenille knit hat, plush beanie, soft winter hat, handmade beanie, chunky knit, hypoallergenic yarn, cozy hat, women's winter hat" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-website-url.com/">
+    <meta property="og:title" content="Cloud-Soft Chenille Knit Beanie | Handmade & Cozy">
+    <meta property="og:description" content="Experience ultimate comfort with our handmade Cloud-Soft Chenille Knit Beanie. This incredibly soft and plush hat keeps you warm and stylish. Made from hypoallergenic, chunky chenille yarn.">
+    <meta property="og:image" content="/src/assets/Head.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://your-website-url.com/">
+    <meta property="twitter:title" content="Cloud-Soft Chenille Knit Beanie | Handmade & Cozy">
+    <meta property="twitter:description" content="Experience ultimate comfort with our handmade Cloud-Soft Chenille Knit Beanie. This incredibly soft and plush hat keeps you warm and stylish. Made from hypoallergenic, chunky chenille yarn.">
+    <meta property="twitter:image" content="/src/assets/Head.jpg">
+
     <script src="https://cdn.tailwindcss.com"></script>
   <script type="importmap">
 {
@@ -15,8 +34,35 @@
 }
 </script>
 </head>
-  <body class="bg-amber-100">
+  <body class="bg-gray-900">
     <div id="root"></div>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "Cloud-Soft Chenille Knit Beanie",
+      "image": "/src/assets/Head.jpg",
+      "description": "Experience ultimate comfort with our handmade Cloud-Soft Chenille Knit Beanie. This incredibly soft and plush hat keeps you warm and stylish. Made from hypoallergenic, chunky chenille yarn, it's the coziest accessory for your winter wardrobe.",
+      "sku": "CKB-001",
+      "brand": {
+        "@type": "Brand",
+        "name": "CardsforToys"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://your-website-url.com/",
+        "priceCurrency": "USD",
+        "price": "35",
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "124"
+      }
+    }
+    </script>
     <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>

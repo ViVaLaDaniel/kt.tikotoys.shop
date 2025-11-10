@@ -38,13 +38,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         <div className="flex items-center mt-2 translate-z-25">
           <StarRating rating={product.rating} />
-          <span className="text-sm text-gray-500 ml-2">({product.reviewCount} отзывов)</span>
+          <span className="text-sm text-gray-500 ml-2">({product.reviewCount} reviews)</span>
         </div>
 
         <p className="text-gray-600 mt-4 text-sm leading-relaxed translate-z-20">{product.description}</p>
 
         <div className="mt-6 translate-z-35">
-          <h3 className="text-sm font-semibold text-gray-700">Цвет: <span className="font-normal">{selectedColor.name}</span></h3>
+          <h3 className="text-sm font-semibold text-gray-700">Color: <span className="font-normal">{selectedColor.name}</span></h3>
           <div className="flex items-center space-x-3 mt-2">
             {product.colors.map((color) => (
               <button
@@ -59,7 +59,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         <button className="w-full mt-8 bg-pink-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-pink-600 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-pink-300 transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 transform hover:scale-105 translate-z-50">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-          <span>Добавить в корзину</span>
+          <span>Add to Cart</span>
         </button>
       </div>
     </div>
