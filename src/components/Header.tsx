@@ -32,16 +32,19 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <header ref={headerRef} className="bg-gray-800 text-white p-4 fixed top-0 left-0 right-0 z-10">
+    <header
+      ref={headerRef}
+      className="bg-gray-800 text-white p-4 fixed top-0 left-0 right-0 z-10"
+    >
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-2xl font-bold text-amber-500">
           <Link to="/">KT.TikoToys</Link>
         </h1>
         <nav className="hidden md:flex space-x-4">
-          <Link to="/" className="hover:text-gray-400">Home</Link>
-          <Link to="/products" className="hover:text-gray-400">Products</Link>
-          <Link to="/about" className="hover:text-gray-400">About</Link>
-          <Link to="/contact" className="hover:text-gray-400">Contact</Link>
+          <Link to="/" className="text-white font-bold hover:text-gray-400">Home</Link>
+          <Link to="/products" className="text-white font-bold hover:text-gray-400">Products</Link>
+          <Link to="/about" className="text-white font-bold hover:text-gray-400">About</Link>
+          <Link to="/contact" className="text-white font-bold hover:text-gray-400">Contact</Link>
         </nav>
         <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -49,16 +52,14 @@ const Header: React.FC = () => {
           </svg>
         </button>
       </div>
-      {isMenuOpen && (
-        <div className="md:hidden mt-4">
-          <nav className="flex flex-col space-y-2">
-            <Link to="/" className="hover:text-gray-400" onClick={() => setIsMenuOpen(false)}>Home</Link>
-            <Link to="/products" className="hover:text-gray-400" onClick={() => setIsMenuOpen(false)}>Products</Link>
-            <Link to="/about" className="hover:text-gray-400" onClick={() => setIsMenuOpen(false)}>About</Link>
-            <Link to="/contact" className="hover:text-gray-400" onClick={() => setIsMenuOpen(false)}>Contact</Link>
-          </nav>
-        </div>
-      )}
+      <div className={`md:hidden mt-4 transition-all duration-500 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100 bg-gray-800/80' : 'max-h-0 opacity-0'}`}>
+        <nav className="flex flex-col space-y-2">
+          <Link to="/" className="text-white font-bold hover:text-gray-400" onClick={() => setIsMenuOpen(false)}>Home</Link>
+          <Link to="/products" className="text-white font-bold hover:text-gray-400" onClick={() => setIsMenuOpen(false)}>Products</Link>
+          <Link to="/about" className="text-white font-bold hover:text-gray-400" onClick={() => setIsMenuOpen(false)}>About</Link>
+          <Link to="/contact" className="text-white font-bold hover:text-gray-400" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+        </nav>
+      </div>
     </header>
   );
 };

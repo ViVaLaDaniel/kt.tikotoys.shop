@@ -10,7 +10,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  const nextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.imageUrl.length);
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + product.imageUrl.length) % product.imageUrl.length);
+  };
   useEffect(() => {
     const checkIsMobile = () => {
       const mobile = window.innerWidth < 768; // Simple check for mobile-like screen sizes
@@ -52,7 +62,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       onClick={handleClick}
     >
       <div className="relative transform-style-preserve-3d translate-z-40">
-        <img className="w-full h-72 object-cover" src={product.imageUrl} alt={product.name} />
+        <img className="w-full h-72 object-cover" src={product.imageUrl[currentImageIndex]} alt={`${product.name} ${currentImageIndex + 1}`} />
+
+        {/* Carousel Controls */}
+        <div className="absolute inset-0 flex justify-between items-center px-4">
+          <button onClick={prevImage} className="bg-white/50 rounded-full p-2 hover:bg-white/80 transition">
+            <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+          </button>
+          <button onClick={nextImage} className="bg-white/50 rounded-full p-2 hover:bg-white/80 transition">
+            <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+          </button>
+        </div>
+
+        {/* Dots */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+          {product.imageUrl.map((_, index) => (
+            <button key={index} onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(index); }} className={`w-3 h-3 rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-white/50'}`}></button>
+          ))}
+        </div>
 
         {/* Call to Action Indicator */}
         {!isExpanded && (
