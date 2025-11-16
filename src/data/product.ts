@@ -1,5 +1,5 @@
 import { Product } from "../types";
-import HeadImage from '../assets/Head.jpg';
+import HeadImage from '../assets/WinterHead2.svg';
 
 export const sampleProduct: Product = {
   id: 1,
