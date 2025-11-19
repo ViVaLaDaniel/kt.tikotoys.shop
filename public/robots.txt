@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kt-tikotoys-shop.vercel.app/sitemap.xml

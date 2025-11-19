@@ -46,13 +46,19 @@ const Header: React.FC = () => {
           <Link to="/about" className="text-white font-bold hover:text-gray-400">About</Link>
           <Link to="/contact" className="text-white font-bold hover:text-gray-400">Contact</Link>
         </nav>
-        <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <button
+          className="md:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
+          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
           </svg>
         </button>
       </div>
-      <div className={`md:hidden mt-4 transition-all duration-500 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100 bg-gray-800/80' : 'max-h-0 opacity-0'}`}>
+      <div id="mobile-menu" className={`md:hidden mt-4 transition-all duration-500 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100 bg-gray-800/80' : 'max-h-0 opacity-0'}`}>
         <nav className="flex flex-col space-y-2">
           <Link to="/" className="text-white font-bold hover:text-gray-400" onClick={() => setIsMenuOpen(false)}>Home</Link>
           <Link to="/blog" className="text-white font-bold hover:text-gray-400" onClick={() => setIsMenuOpen(false)}>Blog</Link>
