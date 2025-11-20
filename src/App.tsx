@@ -12,6 +12,8 @@ const BlogPage = lazy(() => import("./pages/BlogPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 
+import { SpeedInsights } from "@vercel/speed-insights/react";
+
 const App: React.FC = () => {
   return (
     <BrowserRouter>
@@ -28,6 +30,7 @@ const App: React.FC = () => {
         </Suspense>
         <Footer />
       </div>
+      <SpeedInsights />
     </BrowserRouter>
   );
 };

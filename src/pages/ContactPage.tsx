@@ -85,3 +85,5 @@ const ContactPage: React.FC = () => {
     </main>
   );
 };
+
+export default ContactPage;
