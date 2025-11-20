@@ -15,7 +15,11 @@ const Snowflakes: React.FC = () => {
     return <div key={index} className="snowflake" style={style} />;
   });
 
-  return <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-50">{snowflakes}</div>;
+  return (
+    <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-50">
+      {snowflakes}
+    </div>
+  );
 };
 
 export default Snowflakes;

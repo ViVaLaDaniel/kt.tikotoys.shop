@@ -1,18 +1,18 @@
-import "./styles/snow.css";
-import "./styles/tailwind.css";
-import React, { Suspense, lazy } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Snowflakes from "./components/Snowflakes";
+import './styles/snow.css';
+import './styles/tailwind.css';
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Snowflakes from './components/Snowflakes';
 
 // Динамический импорт страниц
-const HomePage = lazy(() => import("./pages/HomePage"));
-const BlogPage = lazy(() => import("./pages/BlogPage"));
-const AboutPage = lazy(() => import("./pages/AboutPage"));
-const ContactPage = lazy(() => import("./pages/ContactPage"));
+const HomePage = lazy(() => import('./pages/HomePage'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
 
-import { SpeedInsights } from "@vercel/speed-insights/react";
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 const App: React.FC = () => {
   return (

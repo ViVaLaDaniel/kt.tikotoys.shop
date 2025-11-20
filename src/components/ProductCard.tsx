@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Product } from "../types";
-import StarRating from "./StarRating";
+import React, { useState, useEffect } from 'react';
+import { Product } from '../types';
+import StarRating from './StarRating';
 
 interface ProductCardProps {
   product: Product;
@@ -14,12 +14,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.imageUrl.length);
+    setCurrentImageIndex(
+      (prevIndex) => (prevIndex + 1) % product.imageUrl.length,
+    );
   };
 
   const prevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + product.imageUrl.length) % product.imageUrl.length);
+    setCurrentImageIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + product.imageUrl.length) % product.imageUrl.length,
+    );
   };
   useEffect(() => {
     const checkIsMobile = () => {
@@ -27,8 +32,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       setIsMobile(mobile);
     };
     checkIsMobile();
-    window.addEventListener("resize", checkIsMobile);
-    return () => window.removeEventListener("resize", checkIsMobile);
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
   const handleMouseEnter = () => {
@@ -62,30 +67,84 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       onClick={handleClick}
     >
       <div className="relative transform-style-preserve-3d translate-z-40">
-        <img className="w-full h-72 object-cover" src={product.imageUrl[currentImageIndex]} alt={`${product.name} ${currentImageIndex + 1}`} />
+        <img
+          className="w-full h-72 object-cover"
+          src={product.imageUrl[currentImageIndex]}
+          alt={`${product.name} ${currentImageIndex + 1}`}
+        />
 
         {/* Carousel Controls */}
         <div className="absolute inset-0 flex justify-between items-center px-4">
-          <button onClick={prevImage} className="bg-white/50 rounded-full p-2 hover:bg-white/80 transition">
-            <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+          <button
+            onClick={prevImage}
+            className="bg-white/50 rounded-full p-2 hover:bg-white/80 transition"
+          >
+            <svg
+              className="w-6 h-6 text-gray-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
           </button>
-          <button onClick={nextImage} className="bg-white/50 rounded-full p-2 hover:bg-white/80 transition">
-            <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+          <button
+            onClick={nextImage}
+            className="bg-white/50 rounded-full p-2 hover:bg-white/80 transition"
+          >
+            <svg
+              className="w-6 h-6 text-gray-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
           </button>
         </div>
 
         {/* Dots */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
           {product.imageUrl.map((_, index) => (
-            <button key={index} onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(index); }} className={`w-3 h-3 rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-white/50'}`}></button>
+            <button
+              key={index}
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentImageIndex(index);
+              }}
+              className={`w-3 h-3 rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-white/50'}`}
+            ></button>
           ))}
         </div>
 
         {/* Call to Action Indicator */}
         {!isExpanded && (
           <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent flex justify-center items-center transition-opacity duration-300">
-            <svg className="w-8 h-8 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            <svg
+              className="w-8 h-8 text-white animate-bounce"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              ></path>
             </svg>
           </div>
         )}
@@ -99,8 +158,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           aria-label="Add to favorites"
         >
           <svg
-            className={`w-6 h-6 transition-all duration-300 ${isFavorite ? "text-red-500 scale-110" : "text-gray-500"}`}
-            fill={isFavorite ? "currentColor" : "none"}
+            className={`w-6 h-6 transition-all duration-300 ${isFavorite ? 'text-red-500 scale-110' : 'text-gray-500'}`}
+            fill={isFavorite ? 'currentColor' : 'none'}
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
@@ -116,14 +175,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
       {/* Collapsible Content */}
       <div
-        className={`transform-style-preserve-3d transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
+        className={`transform-style-preserve-3d transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
         onClick={handleInnerClick}
       >
         <div className="p-6 transform-style-preserve-3d translate-z-20">
           <div className="flex justify-between items-start translate-z-30">
             <h2 className="text-2xl font-bold text-gray-800">{product.name}</h2>
             <p className="text-3xl font-extrabold text-amber-900">
-              <span className="text-red-500 line-through text-4xl mr-2">75€</span>
+              <span className="text-red-500 line-through text-4xl mr-2">
+                75€
+              </span>
               {product.price}
               <span className="text-2xl font-bold">{product.currency}</span>
             </p>
@@ -131,13 +192,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
           <div className="flex items-center mt-2 translate-z-25">
             <StarRating rating={product.rating} />
-            <span className="text-sm text-gray-500 ml-2">({product.reviewCount} reviews)</span>
+            <span className="text-sm text-gray-500 ml-2">
+              ({product.reviewCount} reviews)
+            </span>
           </div>
 
-          <p className="text-gray-600 mt-4 text-sm leading-relaxed translate-z-20">{product.description}</p>
+          <p className="text-gray-600 mt-4 text-sm leading-relaxed translate-z-20">
+            {product.description}
+          </p>
 
           <button className="w-full mt-8 bg-pink-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-pink-600 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-pink-300 transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 transform hover:scale-105 translate-z-50">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

@@ -12,10 +12,9 @@ const HomePage: React.FC = () => {
   return (
     <main className="flex-grow w-full flex justify-center px-4 md:px-8 pt-20 pb-20">
       <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row justify-center items-center lg:items-start gap-8">
-        
         {/* --- DESKTOP-ONLY Left Column --- */}
         <div className="hidden lg:flex flex-col gap-8 w-1/4 pt-16">
-          {leftReviews.map(review => (
+          {leftReviews.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
         </div>
@@ -27,19 +26,20 @@ const HomePage: React.FC = () => {
 
         {/* --- DESKTOP-ONLY Right Column --- */}
         <div className="hidden lg:flex flex-col gap-8 w-1/4 pt-16">
-          {rightReviews.map(review => (
+          {rightReviews.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
         </div>
 
         {/* --- MOBILE-ONLY Reviews Section --- */}
         <div className="lg:hidden w-full flex flex-col items-center gap-8 mt-8">
-          <h2 className="text-3xl font-bold text-white">What Our Customers Say</h2>
-          {sampleReviews.map(review => (
+          <h2 className="text-3xl font-bold text-white">
+            What Our Customers Say
+          </h2>
+          {sampleReviews.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
         </div>
-
       </div>
     </main>
   );
