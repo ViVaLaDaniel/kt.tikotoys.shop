@@ -1,12 +1,18 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Header from './Header';
+import { CartProvider } from '../context/CartContext';
+import { AuthProvider } from '../context/AuthContext';
 
 describe('Header', () => {
   it('renders the header with the brand name', () => {
     render(
       <MemoryRouter>
-        <Header />
+        <AuthProvider>
+          <CartProvider>
+            <Header />
+          </CartProvider>
+        </AuthProvider>
       </MemoryRouter>
     );
 
@@ -17,7 +23,7 @@ describe('Header', () => {
     // Check if navigation links are present. Use getAllByText because the links
     // are duplicated in the DOM for mobile and desktop views.
     expect(screen.getAllByText('Home')[0]).toBeInTheDocument();
-    expect(screen.getAllByText('Blog')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Shop')[0]).toBeInTheDocument();
     expect(screen.getAllByText('About')[0]).toBeInTheDocument();
     expect(screen.getAllByText('Contact')[0]).toBeInTheDocument();
   });
