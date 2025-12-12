@@ -1,161 +1,101 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User } from '../types';
+import { auth } from '../firebaseConfig';
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged,
+  User as FirebaseUser,
+} from 'firebase/auth';
+
+// Определяем, как выглядит объект пользователя в нашем приложении
+export interface AppUser {
+  uid: string;
+  email: string | null;
+  name: string | null;
+  photoURL: string | null;
+  isAdmin: boolean;
+}
 
 interface AuthContextType {
-  user: User | null;
-  login: (email: string, password: string) => Promise<boolean>;
-  register: (email: string, password: string, name: string) => Promise<boolean>;
-  logout: () => void;
+  user: AppUser | null;
+  loading: boolean;
   isAuthenticated: boolean;
+  signInWithGoogle: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const USERS_STORAGE_KEY = 'kt-tikotoys-users';
-const CURRENT_USER_KEY = 'kt-tikotoys-current-user';
-
-// Админ по умолчанию
-const DEFAULT_ADMIN: User = {
-  id: 1,
-  email: 'admin@kt.tikotoys.shop',
-  name: 'Юлия (Admin)',
-  isAdmin: true,
-  createdAt: new Date('2024-01-01'),
-};
-
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(() => {
-    // Проверяем текущего пользователя при загрузке
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(CURRENT_USER_KEY);
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch {
-          return null;
-        }
-      }
-    }
-    return null;
-  });
+  const [user, setUser] = useState<AppUser | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Инициализация: добавляем админа если его нет
   useEffect(() => {
-    const users = getUsers();
-    if (!users.find(u => u.id === 1)) {
-      // Сохраняем пароль в простом виде для демо (в реальности использовать bcrypt!)
-      localStorage.setItem('admin-password', 'admin123'); // Демо пароль
-      saveUsers([DEFAULT_ADMIN, ...users]);
-    }
+    // onAuthStateChanged следит за состоянием аутентификации пользователя
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
+      if (firebaseUser) {
+        // Пользователь вошел в систему
+        const appUser: AppUser = {
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          name: firebaseUser.displayName,
+          photoURL: firebaseUser.photoURL,
+          // Временное простое правило для админа. Позже мы сделаем это надежнее.
+          isAdmin: firebaseUser.email === 'admin@kt.tikotoys.shop',
+        };
+        setUser(appUser);
+      } else {
+        // Пользователь вышел
+        setUser(null);
+      }
+      setLoading(false); // Загрузка состояния завершена
+    });
+
+    // Отписываемся от слушателя при размонтировании компонента
+    return () => unsubscribe();
   }, []);
 
-  // Сохранение текущего пользователя
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-    } else {
-      localStorage.removeItem(CURRENT_USER_KEY);
+  const signInWithGoogle = async (): Promise<void> => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      // setUser не нужен, onAuthStateChanged сделает это за нас
+    } catch (error) {
+      console.error("Ошибка входа через Google: ", error);
     }
-  }, [user]);
-
-  const getUsers = (): User[] => {
-    const saved = localStorage.getItem(USERS_STORAGE_KEY);
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return [];
-      }
-    }
-    return [];
   };
 
-  const saveUsers = (users: User[]) => {
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-  };
-
-  const login = async (email: string, password: string): Promise<boolean> => {
-    // Симуляция задержки API
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    // Проверка админа
-    if (email === 'admin@kt.tikotoys.shop') {
-      const adminPassword = localStorage.getItem('admin-password');
-      if (password === adminPassword) {
-        setUser(DEFAULT_ADMIN);
-        return true;
-      }
-      return false;
+  const logout = async (): Promise<void> => {
+    try {
+      await signOut(auth);
+      // setUser(null) не нужен, onAuthStateChanged сделает это за нас
+    } catch (error) {
+      console.error("Ошибка выхода: ", error);
     }
-
-    // Проверка обычных пользователей
-    const users = getUsers();
-    const foundUser = users.find(u => u.email === email);
-    
-    if (foundUser) {
-      // В реальности проверять хеш пароля
-      const userPassword = localStorage.getItem(`user-${foundUser.id}-password`);
-      if (password === userPassword) {
-        setUser(foundUser);
-        return true;
-      }
-    }
-
-    return false;
   };
 
-  const register = async (email: string, password: string, name: string): Promise<boolean> => {
-    // Симуляция задержки API
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    const users = getUsers();
-    
-    // Проверка существования email
-    if (users.find(u => u.email === email) || email === 'admin@kt.tikotoys.shop') {
-      return false; // Email уже занят
-    }
-
-    // Создание нового пользователя
-    const newUser: User = {
-      id: Math.max(...users.map(u => u.id), 1) + 1,
-      email,
-      name,
-      isAdmin: false,
-      createdAt: new Date(),
-    };
-
-    // Сохранение пароля (в реальности хешировать!)
-    localStorage.setItem(`user-${newUser.id}-password`, password);
-    
-    saveUsers([...users, newUser]);
-    setUser(newUser);
-    
-    return true;
+  const value = {
+    user,
+    loading,
+    isAuthenticated: !!user,
+    signInWithGoogle,
+    logout,
   };
 
-  const logout = () => {
-    setUser(null);
-  };
-
+  // Не рендерим дочерние компоненты, пока не определено состояние аутентификации
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        login,
-        register,
-        logout,
-        isAuthenticated: !!user,
-      }}
-    >
-      {children}
+    <AuthContext.Provider value={value}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+  if (context === undefined) {
+    throw new Error('useAuth должен использоваться внутри AuthProvider');
   }
   return context;
 };

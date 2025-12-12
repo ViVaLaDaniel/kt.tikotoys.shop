@@ -107,10 +107,14 @@ const Header: React.FC = () => {
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-800 transition-colors"
                 >
-                  <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-amber-500 rounded-full flex items-center justify-center font-bold text-sm">
-                    {user.name.charAt(0).toUpperCase()}
-                  </div>
-                  <span className="text-gray-300">{user.name}</span>
+                  {user.photoURL ? (
+                    <img src={user.photoURL} alt={user.name || 'User Avatar'} className="w-8 h-8 rounded-full" />
+                  ) : (
+                    <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-amber-500 rounded-full flex items-center justify-center font-bold text-sm">
+                      {user.name ? user.name.charAt(0).toUpperCase() : ' '}
+                    </div>
+                  )}
+                  <span className="text-gray-300">{user.name || 'User'}</span>
                   <svg className={`w-4 h-4 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
@@ -120,8 +124,8 @@ const Header: React.FC = () => {
                 {isUserMenuOpen && (
                   <div className="absolute right-0 mt-2 w-56 bg-gray-800 border border-gray-700 rounded-xl shadow-xl overflow-hidden">
                     <div className="px-4 py-3 border-b border-gray-700">
-                      <p className="text-white font-medium">{user.name}</p>
-                      <p className="text-gray-400 text-sm">{user.email}</p>
+                      <p className="text-white font-medium">{user.name || 'User'}</p>
+                      <p className="text-gray-400 text-sm">{user.email || 'No email'}</p>
                     </div>
                     <div className="py-2">
                       <Link
@@ -157,20 +161,12 @@ const Header: React.FC = () => {
                 )}
               </div>
             ) : (
-              <>
                 <Link
                   to="/login"
-                  className="px-4 py-2 rounded-lg font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition-all"
+                  className="px-4 py-2 rounded-lg font-medium bg-pink-500 hover:bg-pink-600 text-white transition-all shadow-lg shadow-pink-500/20"
                 >
                   Login
                 </Link>
-                <Link
-                  to="/register"
-                  className="px-4 py-2 rounded-lg font-medium bg-pink-500 hover:bg-pink-600 text-white transition-all shadow-lg shadow-pink-500/20"
-                >
-                  Register
-                </Link>
-              </>
             )}
           </div>
 
@@ -236,9 +232,18 @@ const Header: React.FC = () => {
           {/* Auth links mobile */}
           {isAuthenticated && user ? (
             <>
-              <div className="px-4 py-3 bg-gray-800/50 rounded-lg mb-2">
-                <p className="text-white font-medium">{user.name}</p>
-                <p className="text-gray-400 text-sm">{user.email}</p>
+             <div className="flex items-center gap-3 px-4 py-3 bg-gray-800/50 rounded-lg mb-2">
+                {user.photoURL ? (
+                    <img src={user.photoURL} alt={user.name || 'User Avatar'} className="w-10 h-10 rounded-full" />
+                ) : (
+                    <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-amber-500 rounded-full flex items-center justify-center font-bold text-lg">
+                        {user.name ? user.name.charAt(0).toUpperCase() : ' '}
+                    </div>
+                )}
+                <div>
+                    <p className="text-white font-medium">{user.name || 'User'}</p>
+                    <p className="text-gray-400 text-sm">{user.email || 'No email'}</p>
+                </div>
               </div>
               <Link
                 to="/profile"
@@ -262,20 +267,12 @@ const Header: React.FC = () => {
               )}
             </>
           ) : (
-            <>
               <Link
                 to="/login"
-                className="px-4 py-3 rounded-lg font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition-all"
+                className="px-4 py-3 rounded-lg font-medium bg-pink-500/20 text-pink-400 hover:bg-pink-500/30 transition-all"
               >
                 Login
               </Link>
-              <Link
-                to="/register"
-                className="px-4 py-3 rounded-lg font-medium bg-pink-500/20 text-pink-400 hover:bg-pink-500/30 transition-all"
-              >
-                Register
-              </Link>
-            </>
           )}
 
           {/* Regular nav links */}
