@@ -33,8 +33,8 @@ import Analytics from './components/Analytics';
 
 // Loading component
 const LoadingSpinner = () => (
-  <div className="flex-grow w-full min-h-screen bg-gray-900 flex items-center justify-center">
-    <div className="w-12 h-12 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
+  <div className="flex-grow w-full min-h-screen bg-cream-bg flex items-center justify-center">
+    <div className="w-12 h-12 border-4 border-sand border-t-transparent rounded-full animate-spin"></div>
   </div>
 );
 
@@ -47,7 +47,7 @@ const App: React.FC = () => {
           <OrdersProvider>
             <CartProvider>
               <Analytics />
-              <div className="flex flex-col min-h-screen">
+              <div className="flex flex-col min-h-screen bg-cream-bg text-brown-dark">
                 <Snowflakes />
                 <Header />
                 <Suspense fallback={<LoadingSpinner />}>
