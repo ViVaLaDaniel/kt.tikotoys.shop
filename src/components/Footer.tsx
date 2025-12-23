@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   FaFacebookF,
   FaInstagram,
@@ -10,6 +11,8 @@ import {
 } from 'react-icons/fa6';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
+  
   return (
     <footer className="bg-gray-900 text-white border-t border-gray-800">
       {/* Main Footer */}
@@ -24,7 +27,7 @@ const Footer: React.FC = () => {
               </h2>
             </Link>
             <p className="text-gray-400 text-sm mb-4">
-              Handmade knitted toys and accessories, crafted with love in Europe.
+              {t('footer.description')}
             </p>
             <div className="flex gap-3">
               <a
@@ -77,36 +80,36 @@ const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-bold mb-4">Quick Links</h3>
+            <h3 className="text-white font-bold mb-4">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
-              <li><Link to="/shop" className="text-gray-400 hover:text-pink-400 transition-colors">Shop</Link></li>
-              <li><Link to="/about" className="text-gray-400 hover:text-pink-400 transition-colors">About Us</Link></li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-pink-400 transition-colors">Contact</Link></li>
-              <li><Link to="/blog" className="text-gray-400 hover:text-pink-400 transition-colors">Blog</Link></li>
+              <li><Link to="/shop" className="text-gray-400 hover:text-pink-400 transition-colors">{t('header.shop')}</Link></li>
+              <li><Link to="/about" className="text-gray-400 hover:text-pink-400 transition-colors">{t('header.about')}</Link></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-pink-400 transition-colors">{t('header.contact')}</Link></li>
+              <li><Link to="/blog" className="text-gray-400 hover:text-pink-400 transition-colors">{t('header.blog')}</Link></li>
             </ul>
           </div>
 
           {/* Customer Service */}
           <div>
-            <h3 className="text-white font-bold mb-4">Customer Service</h3>
+            <h3 className="text-white font-bold mb-4">{t('footer.customerService')}</h3>
             <ul className="space-y-2">
-              <li><Link to="/cart" className="text-gray-400 hover:text-pink-400 transition-colors">Shopping Cart</Link></li>
-              <li><a href="#" className="text-gray-400 hover:text-pink-400 transition-colors">Shipping Info</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-pink-400 transition-colors">Returns & Exchanges</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-pink-400 transition-colors">FAQ</a></li>
+              <li><Link to="/cart" className="text-gray-400 hover:text-pink-400 transition-colors">{t('footer.shoppingCart')}</Link></li>
+              <li><a href="#" className="text-gray-400 hover:text-pink-400 transition-colors">{t('footer.shippingInfo')}</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-pink-400 transition-colors">{t('footer.returns')}</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-pink-400 transition-colors">{t('footer.faq')}</a></li>
             </ul>
           </div>
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-white font-bold mb-4">Newsletter</h3>
+            <h3 className="text-white font-bold mb-4">{t('footer.newsletter')}</h3>
             <p className="text-gray-400 text-sm mb-4">
-              Subscribe for updates on new products and special offers.
+              {t('footer.newsletterDesc')}
             </p>
             <form className="flex gap-2">
               <input
                 type="email"
-                placeholder="Your email"
+                placeholder={t('footer.emailPlaceholder')}
                 className="flex-grow bg-gray-800 text-white px-4 py-2 rounded-lg border border-gray-700 focus:border-pink-500 focus:outline-none text-sm"
               />
               <button
@@ -126,7 +129,7 @@ const Footer: React.FC = () => {
                 className="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 transition-colors"
               >
                 <FaEtsy size={20} />
-                <span className="text-sm">Visit our Etsy Shop</span>
+                <span className="text-sm">{t('footer.visitEtsy')}</span>
               </a>
             </div>
           </div>
@@ -137,12 +140,12 @@ const Footer: React.FC = () => {
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} KT.TikoToys. All Rights Reserved.
+            © {new Date().getFullYear()} KT.TikoToys. {t('footer.allRightsReserved')}
           </p>
           <div className="flex gap-4 text-sm text-gray-500">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <Link to="/admin" className="hover:text-pink-400 transition-colors">Admin</Link>
+            <a href="#" className="hover:text-white transition-colors">{t('footer.privacyPolicy')}</a>
+            <a href="#" className="hover:text-white transition-colors">{t('footer.termsOfService')}</a>
+            <Link to="/admin" className="hover:text-pink-400 transition-colors">{t('header.admin')}</Link>
           </div>
         </div>
       </div>

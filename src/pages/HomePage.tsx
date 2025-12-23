@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useProducts } from '../context/ProductsContext';
 import { useCart } from '../context/CartContext';
 import StarRating from '../components/StarRating';
@@ -9,6 +10,7 @@ import { sampleReviews } from '../data/reviews';
 const HomePage: React.FC = () => {
   const { addToCart } = useCart();
   const { products } = useProducts();
+  const { t } = useTranslation();
   const featuredProducts = products.slice(0, 4);
 
   return (
@@ -24,21 +26,21 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center">
             <span className="inline-block bg-pink-500/20 text-pink-400 text-sm font-medium px-4 py-2 rounded-full mb-6">
-              ✨ Handmade with Love
+              {t('home.badge')}
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Adorable <span className="bg-gradient-to-r from-pink-400 to-amber-400 bg-clip-text text-transparent">Knitted Toys</span>
-              <br />& Cozy Accessories
+              {t('home.title')} <span className="bg-gradient-to-r from-pink-400 to-amber-400 bg-clip-text text-transparent">{t('home.titleHighlight')}</span>
+              <br />{t('home.titleEnd')}
             </h1>
             <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10">
-              Discover our collection of lovingly handcrafted amigurumi toys, soft beanies, and unique accessories. Each piece is made with premium yarn and lots of love.
+              {t('home.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/shop"
                 className="inline-flex items-center justify-center gap-2 bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg shadow-pink-500/30 hover:shadow-xl hover:shadow-pink-500/40 hover:-translate-y-1"
               >
-                Shop Now
+                {t('home.shopNow')}
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -47,7 +49,7 @@ const HomePage: React.FC = () => {
                 to="/about"
                 className="inline-flex items-center justify-center gap-2 bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300"
               >
-                Our Story
+                {t('home.ourStory')}
               </Link>
             </div>
           </div>
@@ -58,17 +60,17 @@ const HomePage: React.FC = () => {
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">
-            Shop by <span className="text-pink-500">Category</span>
+            {t('home.categories')} <span className="text-pink-500">{t('home.categoriesHighlight')}</span>
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { name: 'Toys', icon: '🧸', desc: 'Cute amigurumi friends', color: 'from-pink-500/20 to-pink-600/20' },
-              { name: 'Beanies', icon: '🧢', desc: 'Warm & cozy hats', color: 'from-amber-500/20 to-amber-600/20' },
-              { name: 'Accessories', icon: '🎀', desc: 'Unique handmade items', color: 'from-purple-500/20 to-purple-600/20' },
+              { name: t('home.categoryToys'), icon: '🧸', desc: t('home.categoryToysDesc'), color: 'from-pink-500/20 to-pink-600/20', link: 'toys' },
+              { name: t('home.categoryBeanies'), icon: '🧢', desc: t('home.categoryBeaniesDesc'), color: 'from-amber-500/20 to-amber-600/20', link: 'beanies' },
+              { name: t('home.categoryAccessories'), icon: '🎀', desc: t('home.categoryAccessoriesDesc'), color: 'from-purple-500/20 to-purple-600/20', link: 'accessories' },
             ].map((cat) => (
               <Link
-                key={cat.name}
-                to={`/shop?category=${cat.name.toLowerCase()}`}
+                key={cat.link}
+                to={`/shop?category=${cat.link}`}
                 className={`group bg-gradient-to-br ${cat.color} backdrop-blur-sm border border-gray-700 rounded-2xl p-8 text-center hover:border-pink-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-pink-500/10`}
               >
                 <span className="text-5xl mb-4 block group-hover:scale-110 transition-transform duration-300">{cat.icon}</span>
@@ -85,13 +87,13 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Featured <span className="text-pink-500">Products</span>
+              {t('home.featured')} <span className="text-pink-500">{t('home.featuredHighlight')}</span>
             </h2>
             <Link
               to="/shop"
               className="text-pink-400 hover:text-pink-300 font-medium flex items-center gap-2 transition-colors"
             >
-              View All
+              {t('home.viewAll')}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -152,14 +154,14 @@ const HomePage: React.FC = () => {
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">
-            Why Choose <span className="text-pink-500">Us</span>
+            {t('home.whyChoose')} <span className="text-pink-500">{t('home.whyChooseHighlight')}</span>
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: '✨', title: 'Handmade', desc: 'Each item is carefully crafted by hand' },
-              { icon: '🧶', title: 'Premium Yarn', desc: 'Hypoallergenic, soft materials' },
-              { icon: '🚚', title: 'Free Shipping', desc: 'On orders over 50€' },
-              { icon: '💝', title: 'Gift Ready', desc: 'Beautiful packaging included' },
+              { icon: '✨', title: t('home.handmade'), desc: t('home.handmadeDesc') },
+              { icon: '🧶', title: t('home.premiumYarn'), desc: t('home.premiumYarnDesc') },
+              { icon: '🚚', title: t('home.freeShipping'), desc: t('home.freeShippingDesc') },
+              { icon: '💝', title: t('home.giftReady'), desc: t('home.giftReadyDesc') },
             ].map((feature) => (
               <div key={feature.title} className="text-center p-6">
                 <span className="text-4xl mb-4 block">{feature.icon}</span>
@@ -175,7 +177,7 @@ const HomePage: React.FC = () => {
       <section className="py-16 px-4 bg-gray-800/30">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">
-            What Our <span className="text-pink-500">Customers</span> Say
+            {t('home.reviews')} <span className="text-pink-500">{t('home.reviewsHighlight')}</span>
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {sampleReviews.map((review) => (
@@ -189,16 +191,16 @@ const HomePage: React.FC = () => {
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Find Your Perfect Gift?
+            {t('home.ctaTitle')}
           </h2>
           <p className="text-gray-400 text-lg mb-8">
-            Browse our collection of handmade treasures and find something special for yourself or a loved one.
+            {t('home.ctaSubtitle')}
           </p>
           <Link
             to="/shop"
             className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-amber-500 hover:from-pink-600 hover:to-amber-600 text-white px-10 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
           >
-            Explore Collection
+            {t('home.exploreCollection')}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>

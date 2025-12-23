@@ -1,5 +1,6 @@
 import './styles/snow.css';
 import './styles/tailwind.css';
+import '../src/i18n'; // Инициализация i18n
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
