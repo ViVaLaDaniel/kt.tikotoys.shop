@@ -1,253 +1,130 @@
-import React, { useState, useEffect, MouseEvent, KeyboardEvent } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Product } from '../types';
 import StarRating from './StarRating';
+import { useCart } from '../context/CartContext';
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const { addToCart } = useCart();
+  const [isHovered, setIsHovered] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const nextImage = (e: MouseEvent) => {
-    e.stopPropagation();
-    setCurrentImageIndex(
-      (prevIndex) => (prevIndex + 1) % product.imageUrl.length,
-    );
-  };
-
-  const prevImage = (e: MouseEvent) => {
-    e.stopPropagation();
-    setCurrentImageIndex(
-      (prevIndex) =>
-        (prevIndex - 1 + product.imageUrl.length) % product.imageUrl.length,
-    );
-  };
-  useEffect(() => {
-    const checkIsMobile = () => {
-      const mobile = window.innerWidth < 768; // Simple check for mobile-like screen sizes
-      setIsMobile(mobile);
-    };
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    return () => window.removeEventListener('resize', checkIsMobile);
-  }, []);
-
-  const handleMouseEnter = () => {
-    if (!isMobile) {
-      setIsExpanded(true);
+  const handleNextImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (product.imageUrl.length > 1) {
+      setCurrentImageIndex((prev) => (prev + 1) % product.imageUrl.length);
     }
   };
 
-  const handleMouseLeave = () => {
-    if (!isMobile) {
-      setIsExpanded(false);
+  const handlePrevImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (product.imageUrl.length > 1) {
+      setCurrentImageIndex((prev) => (prev - 1 + product.imageUrl.length) % product.imageUrl.length);
     }
   };
-
-  const handleClick = () => {
-    if (isMobile) {
-      setIsExpanded(!isExpanded);
-    }
-  };
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    // Allow card expansion with Enter or Space key for accessibility
-    if (isMobile && (e.key === 'Enter' || e.key === ' ')) {
-      e.preventDefault();
-      setIsExpanded(!isExpanded);
-    }
-  };
-
-  // Stop propagation on inner clicks to prevent the card from closing on mobile
-  const handleInnerClick = (e: MouseEvent) => {
-    e.stopPropagation();
-  };
-
-  // Generate responsive image attributes
-  const currentImageUrl = product.imageUrl[currentImageIndex]; // e.g., '/images/WinterHead3.webp'
-  const imageBase = currentImageUrl.replace('/images/WinterHead', '/images/winterhead').replace('.webp', '');
-  const imageSrcSet = [
-    `${imageBase}_400px.webp 400w`,
-    `${imageBase}_800px.webp 800w`,
-    `${imageBase}_1200.webp 1200w`,
-  ].join(', ');
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      className="bg-white rounded-2xl overflow-hidden max-w-sm w-full font-sans transform-style-preserve-3d transition-all duration-500 shadow-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-pink-500"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      whileHover={{ y: -5 }}
+      transition={{ duration: 0.3 }}
+      className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-sand/20 flex flex-col h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative transform-style-preserve-3d translate-z-40">
-        <img
-          className="w-full h-72 object-cover"
-          src={currentImageUrl}
-          srcSet={imageSrcSet}
-          sizes="(max-width: 640px) 90vw, 384px"
-          alt={`${product.name} ${currentImageIndex + 1}`}
+      <Link to={`/product/${product.id}`} className="block relative aspect-square overflow-hidden bg-cream-bg">
+        <motion.img
+          src={product.imageUrl[currentImageIndex]}
+          alt={product.name}
+          className="w-full h-full object-cover"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.5 }}
         />
 
-        {/* Carousel Controls */}
-        <div className="absolute inset-0 flex justify-between items-center px-4">
-          <button
-            onClick={prevImage}
-            className="bg-white/50 rounded-full p-3 hover:bg-white/80 transition"
-            aria-label="Previous image"
-          >
-            <svg
-              className="w-6 h-6 text-gray-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 19l-7-7 7-7"
-              ></path>
-            </svg>
-          </button>
-          <button
-            onClick={nextImage}
-            className="bg-white/50 rounded-full p-3 hover:bg-white/80 transition"
-            aria-label="Next image"
-          >
-            <svg
-              className="w-6 h-6 text-gray-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 5l7 7-7 7"
-              ></path>
-            </svg>
-          </button>
-        </div>
-
-        {/* Dots */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 p-2">
-          {product.imageUrl.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setCurrentImageIndex(index);
-              }}
-              className={`w-4 h-4 rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-white/50'}`}
-              aria-label={`Go to image ${index + 1}`}
-            ></button>
-          ))}
-        </div>
-
-        {/* Call to Action Indicator */}
-        {!isExpanded && (
-          <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent flex justify-center items-center transition-opacity duration-300">
-            <svg
-              className="w-8 h-8 text-white animate-bounce"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              ></path>
-            </svg>
+        {/* Image Controls (only if multiple images) */}
+        {product.imageUrl.length > 1 && isHovered && (
+          <div className="absolute inset-0 flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+             <button
+               onClick={handlePrevImage}
+               className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-salmon hover:text-white text-brown-dark transition-all duration-200"
+               aria-label="Previous image"
+             >
+               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+             </button>
+             <button
+               onClick={handleNextImage}
+               className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-salmon hover:text-white text-brown-dark transition-all duration-200"
+               aria-label="Next image"
+             >
+               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+             </button>
           </div>
         )}
 
-        <button
-          onClick={(e) => {
-            handleInnerClick(e);
-            setIsFavorite(!isFavorite);
-          }}
-          className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm rounded-full p-2 hover:bg-white transition-all duration-300 transform hover:scale-110"
-          aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-        >
-          <svg
-            className={`w-6 h-6 transition-all duration-300 ${isFavorite ? 'text-red-500 scale-110' : 'text-gray-500'}`}
-            fill={isFavorite ? 'currentColor' : 'none'}
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        {/* Quick Actions Overlay */}
+        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0 z-10">
+          <button
+            className="p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-salmon hover:text-white text-brown-light transition-all duration-300"
+            aria-label="Add to favorites"
+            onClick={(e) => e.preventDefault()}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"
-            />
-          </svg>
-        </button>
-      </div>
-
-      {/* Collapsible Content */}
-      <div
-        className={`transform-style-preserve-3d transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
-        onClick={handleInnerClick}
-      >
-        <div className="p-6 transform-style-preserve-3d translate-z-20">
-          <div className="flex justify-between items-start translate-z-30">
-            <h2 className="text-2xl font-bold text-gray-800">{product.name}</h2>
-            <p className="text-3xl font-extrabold text-amber-900">
-              <span className="text-red-500 line-through text-4xl mr-2">
-                75€
-              </span>
-              {product.price}
-              <span className="text-2xl font-bold">{product.currency}</span>
-            </p>
-          </div>
-
-          <div className="flex items-center mt-2 translate-z-25">
-            <StarRating rating={product.rating} />
-            <span className="text-sm text-gray-500 ml-2">
-              ({product.reviewCount} reviews)
-            </span>
-          </div>
-
-          <p className="text-gray-600 mt-4 text-sm leading-relaxed translate-z-20">
-            {product.description}
-          </p>
-
-          <button className="w-full mt-8 bg-pink-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-pink-600 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-pink-300 transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 transform hover:scale-105 translate-z-50">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-              ></path>
-            </svg>
-            <a href="https://kttikotoys.etsy.com">
-              <span>Buy Now</span>
-            </a>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z" /></svg>
           </button>
         </div>
+
+        {/* Dots indicator for multiple images */}
+        {product.imageUrl.length > 1 && isHovered && (
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            {product.imageUrl.map((_, idx) => (
+              <div
+                key={idx}
+                className={`w-1.5 h-1.5 rounded-full transition-colors duration-200 ${idx === currentImageIndex ? 'bg-salmon' : 'bg-white/70'}`}
+              />
+            ))}
+          </div>
+        )}
+      </Link>
+
+      <div className="p-5 flex flex-col flex-grow">
+        <Link to={`/product/${product.id}`} className="block mb-1">
+           <h3 className="font-bold text-lg text-brown-dark group-hover:text-salmon transition-colors line-clamp-1">{product.name}</h3>
+        </Link>
+
+        <div className="flex items-center gap-2 mb-3">
+          <StarRating rating={product.rating} />
+          <span className="text-xs text-brown-light">({product.reviewCount})</span>
+        </div>
+
+        {product.category && (
+           <span className="text-xs text-sand uppercase tracking-wider font-medium mb-auto">{product.category}</span>
+        )}
+
+        <div className="flex items-center justify-between mt-4 pt-3 border-t border-sand/10">
+          <div className="flex flex-col">
+             <span className="text-xl font-bold text-salmon">{product.price} <span className="text-sm font-normal">{product.currency}</span></span>
+          </div>
+
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={(e) => {
+              e.preventDefault();
+              addToCart(product);
+            }}
+            className="flex items-center justify-center bg-sand hover:bg-salmon text-white w-10 h-10 rounded-xl shadow-md shadow-sand/30 hover:shadow-lg hover:shadow-salmon/30 transition-all duration-300"
+            aria-label="Add to cart"
+          >
+             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+          </motion.button>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

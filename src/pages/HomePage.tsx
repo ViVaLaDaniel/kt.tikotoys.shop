@@ -1,39 +1,82 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useProducts } from '../context/ProductsContext';
 import { useCart } from '../context/CartContext';
-import StarRating from '../components/StarRating';
 import ReviewCard from '../components/ReviewCard';
+import ProductCard from '../components/ProductCard';
 import { sampleReviews } from '../data/reviews';
 
 const HomePage: React.FC = () => {
-  const { addToCart } = useCart();
   const { products } = useProducts();
   const featuredProducts = products.slice(0, 4);
+
+  // Animation variants
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
 
   return (
     <main className="flex-grow w-full min-h-screen">
       {/* Hero Section */}
       <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 px-4 overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-salmon/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-sand/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.7, 0.5] }}
+            transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
+            className="absolute top-20 left-10 w-72 h-72 bg-salmon/10 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+            transition={{ duration: 10, repeat: Infinity, repeatType: "reverse", delay: 1 }}
+            className="absolute bottom-20 right-10 w-96 h-96 bg-sand/10 rounded-full blur-3xl"
+          />
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center">
-            <span className="inline-block bg-sand/20 text-sand text-sm font-medium px-4 py-2 rounded-full mb-6">
+            <motion.span
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="inline-block bg-sand/20 text-sand text-sm font-medium px-4 py-2 rounded-full mb-6"
+            >
               ✨ Handmade with Love
-            </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-brown-dark mb-6 leading-tight">
+            </motion.span>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold text-brown-dark mb-6 leading-tight"
+            >
               Adorable <span className="bg-gradient-to-r from-salmon to-sand bg-clip-text text-transparent">Knitted Toys</span>
               <br />& Cozy Accessories
-            </h1>
-            <p className="text-lg md:text-xl text-brown-light max-w-2xl mx-auto mb-10">
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="text-lg md:text-xl text-brown-light max-w-2xl mx-auto mb-10"
+            >
               Discover our collection of lovingly handcrafted amigurumi toys, soft beanies, and unique accessories. Each piece is made with premium yarn and lots of love.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
               <Link
                 to="/shop"
                 className="inline-flex items-center justify-center gap-2 bg-sand hover:bg-salmon text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg shadow-sand/40 hover:shadow-xl hover:shadow-salmon/40 hover:-translate-y-1"
@@ -47,8 +90,13 @@ const HomePage: React.FC = () => {
               >
                 Our Story
               </Link>
-            </div>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-sm text-brown-light">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="mt-10 flex flex-wrap items-center justify-center gap-4 text-sm text-brown-light"
+            >
               {[
                 { label: '5+ years of crafting', icon: '🧵' },
                 { label: 'Premium hypoallergenic yarn', icon: '🧶' },
@@ -60,15 +108,21 @@ const HomePage: React.FC = () => {
                   {badge.label}
                 </span>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Story Highlight */}
-      <section className="px-4 -mt-6">
+      <section className="px-4 -mt-6 z-20 relative">
         <div className="max-w-6xl mx-auto">
-          <div className="bg-gradient-to-br from-cream-bg via-moccasin/30 to-sand/20 border border-sand/40 rounded-3xl p-8 md:p-10 shadow-xl shadow-sand/10">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeIn}
+            className="bg-gradient-to-br from-cream-bg via-moccasin/30 to-sand/20 border border-sand/40 rounded-3xl p-8 md:p-10 shadow-xl shadow-sand/10"
+          >
             <div className="grid md:grid-cols-[1.2fr_1fr] gap-8 items-center">
               <div>
                 <p className="uppercase tracking-[0.2em] text-xs text-brown-light font-semibold mb-3">Handmade for your happiest moments</p>
@@ -94,41 +148,63 @@ const HomePage: React.FC = () => {
                     { title: 'Fast gifting', text: 'Подарочная упаковка уже включена — останется только вручить.' },
                     { title: 'Support with heart', text: 'Помогаем выбрать идеальный размер и цвет.' },
                   ].map((card) => (
-                    <div key={card.title} className="rounded-xl border border-moccasin/70 bg-white/70 p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                    <motion.div
+                      key={card.title}
+                      whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+                      className="rounded-xl border border-moccasin/70 bg-white/70 p-4 transition-all duration-300"
+                    >
                       <h3 className="font-semibold text-brown-dark mb-1">{card.title}</h3>
                       <p className="text-sm text-brown-light">{card.text}</p>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Categories Section */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-brown-dark text-center mb-12">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold text-brown-dark text-center mb-12"
+          >
             Shop by <span className="text-salmon">Category</span>
-          </h2>
-          <div className="grid md:grid-cols-3 gap-6">
+          </motion.h2>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-3 gap-6"
+          >
             {[
               { name: 'Toys', icon: '🧸', desc: 'Cute amigurumi friends', color: 'from-salmon/20 to-sand/20' },
               { name: 'Beanies', icon: '🧢', desc: 'Warm & cozy hats', color: 'from-sand/20 to-moccasin/20' },
               { name: 'Accessories', icon: '🎀', desc: 'Unique handmade items', color: 'from-salmon/10 to-moccasin/30' },
             ].map((cat) => (
-              <Link
-                key={cat.name}
-                to={`/shop?category=${cat.name.toLowerCase()}`}
-                className={`group bg-gradient-to-br ${cat.color} backdrop-blur-sm border border-sand/50 rounded-2xl p-8 text-center hover:border-salmon/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-sand/20`}
-              >
-                <span className="text-5xl mb-4 block group-hover:scale-110 transition-transform duration-300">{cat.icon}</span>
-                <h3 className="text-xl font-bold text-brown-dark mb-2">{cat.name}</h3>
-                <p className="text-brown-light">{cat.desc}</p>
-              </Link>
+              <motion.div key={cat.name} variants={fadeIn}>
+                <Link
+                  to={`/shop?category=${cat.name.toLowerCase()}`}
+                  className={`block h-full group bg-gradient-to-br ${cat.color} backdrop-blur-sm border border-sand/50 rounded-2xl p-8 text-center hover:border-salmon/50 transition-all duration-300 hover:shadow-xl hover:shadow-sand/20`}
+                >
+                  <motion.span
+                    whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
+                    transition={{ duration: 0.5 }}
+                    className="text-5xl mb-4 block inline-block"
+                  >
+                    {cat.icon}
+                  </motion.span>
+                  <h3 className="text-xl font-bold text-brown-dark mb-2">{cat.name}</h3>
+                  <p className="text-brown-light">{cat.desc}</p>
+                </Link>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -145,55 +221,58 @@ const HomePage: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
             {featuredProducts.map((product) => (
-              <div key={product.id} className="group bg-cream-bg/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-sand/50 hover:border-salmon/50 transition-all duration-300 hover:shadow-xl hover:shadow-sand/20 hover:-translate-y-1">
-                <Link to={`/product/${product.id}`} className="block relative overflow-hidden">
-                  <img src={product.imageUrl[0]} alt={product.name} className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-brown-dark/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </Link>
-
-                <div className="p-5">
-                  <Link to={`/product/${product.id}`}>
-                    <h3 className="text-lg font-semibold text-brown-dark mb-2 group-hover:text-salmon transition-colors">{product.name}</h3>
-                  </Link>
-
-                  <div className="flex items-center gap-2 mb-3">
-                    <StarRating rating={product.rating} />
-                    <span className="text-sm text-brown-light">({product.reviewCount})</span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-salmon">{product.price}<span className="text-lg">{product.currency}</span></span>
-                    <button onClick={() => addToCart(product)} className="bg-sand hover:bg-salmon text-white p-3 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-sand/30" aria-label={`Add ${product.name} to cart`}>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <motion.div key={product.id} variants={fadeIn}>
+                <ProductCard product={product} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Why Choose Us Section */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-brown-dark text-center mb-12">Why Choose <span className="text-salmon">Us</span></h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold text-brown-dark text-center mb-12"
+          >
+            Why Choose <span className="text-salmon">Us</span>
+          </motion.h2>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
             {[
               { icon: '✨', title: 'Handmade', desc: 'Each item is carefully crafted by hand' },
               { icon: '🧶', title: 'Premium Yarn', desc: 'Hypoallergenic, soft materials' },
               { icon: '🚚', title: 'Free Shipping', desc: 'On orders over 50€' },
               { icon: '💝', title: 'Gift Ready', desc: 'Beautiful packaging included' },
             ].map((feature) => (
-              <div key={feature.title} className="text-center p-6">
+              <motion.div
+                key={feature.title}
+                variants={fadeIn}
+                whileHover={{ y: -5 }}
+                className="text-center p-6 bg-white/50 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300"
+              >
                 <span className="text-4xl mb-4 block">{feature.icon}</span>
                 <h3 className="text-lg font-bold text-brown-dark mb-2">{feature.title}</h3>
                 <p className="text-brown-light text-sm">{feature.desc}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -210,18 +289,26 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-salmon/10 to-transparent pointer-events-none" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="max-w-4xl mx-auto text-center relative z-10"
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-brown-dark mb-6">Ready to Find Your Perfect Gift?</h2>
           <p className="text-brown-light text-lg mb-8">Browse our collection of handmade treasures and find something special for yourself or a loved one.</p>
-          <Link
-            to="/shop"
-            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-salmon to-sand hover:opacity-90 text-white px-10 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
-          >
-            Explore Collection
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-          </Link>
-        </div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              to="/shop"
+              className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-salmon to-sand hover:opacity-90 text-white px-10 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Explore Collection
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </Link>
+          </motion.div>
+        </motion.div>
       </section>
     </main>
   );
