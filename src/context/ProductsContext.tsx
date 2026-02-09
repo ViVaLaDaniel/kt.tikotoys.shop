@@ -43,6 +43,19 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({ children }
         setProducts(data ?? []);
       } catch (error) {
         console.error('Ошибка загрузки товаров из Supabase:', (error as Error).message);
+        if (typeof window !== 'undefined') {
+          const saved = localStorage.getItem(PRODUCTS_STORAGE_KEY);
+          if (saved) {
+            try {
+              setProducts(JSON.parse(saved));
+              return;
+            } catch {
+              setProducts(initialProducts);
+              return;
+            }
+          }
+        }
+        setProducts(initialProducts);
       }
     };
 
