@@ -116,6 +116,9 @@ alter table public.products enable row level security;
 create policy "public read" on public.products
   for select
   using (true);
+
+-- Для вставки/обновления/удаления нужны отдельные политики.
+-- На проде рекомендуется ограничить эти операции серверной логикой.
 ```
 
 ---
