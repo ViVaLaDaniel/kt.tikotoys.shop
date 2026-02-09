@@ -48,6 +48,60 @@ const HomePage: React.FC = () => {
                 Our Story
               </Link>
             </div>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-sm text-brown-light">
+              {[
+                { label: '5+ years of crafting', icon: '🧵' },
+                { label: 'Premium hypoallergenic yarn', icon: '🧶' },
+                { label: 'Gift-ready packaging', icon: '🎁' },
+                { label: 'Made by Yulia', icon: '💗' },
+              ].map((badge) => (
+                <span key={badge.label} className="inline-flex items-center gap-2 bg-cream-bg/70 border border-moccasin rounded-full px-4 py-2 shadow-sm">
+                  <span>{badge.icon}</span>
+                  {badge.label}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Story Highlight */}
+      <section className="px-4 -mt-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-gradient-to-br from-cream-bg via-moccasin/30 to-sand/20 border border-sand/40 rounded-3xl p-8 md:p-10 shadow-xl shadow-sand/10">
+            <div className="grid md:grid-cols-[1.2fr_1fr] gap-8 items-center">
+              <div>
+                <p className="uppercase tracking-[0.2em] text-xs text-brown-light font-semibold mb-3">Handmade for your happiest moments</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-brown-dark mb-4">
+                  Юличкины игрушки — тёплая история в каждой петле
+                </h2>
+                <p className="text-brown-light text-lg leading-relaxed mb-6">
+                  Мы создаём игрушки, которые хочется обнимать. Каждая работа проходит путь от эскиза до идеальной упаковки —
+                  чтобы ваш подарок выглядел безупречно и радовал долгие годы.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {['Мягкие, безопасные материалы', 'Проверка качества перед отправкой', 'Персональные рекомендации'].map((item) => (
+                    <span key={item} className="inline-flex items-center gap-2 bg-white/60 border border-moccasin rounded-full px-4 py-2 text-sm text-brown-light">
+                      ✨ {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-cream-bg/80 border border-sand/30 rounded-2xl p-6 shadow-inner">
+                <div className="grid gap-4">
+                  {[
+                    { title: 'Limited collections', text: 'Small batches for уникальность и внимание к деталям.' },
+                    { title: 'Fast gifting', text: 'Подарочная упаковка уже включена — останется только вручить.' },
+                    { title: 'Support with heart', text: 'Помогаем выбрать идеальный размер и цвет.' },
+                  ].map((card) => (
+                    <div key={card.title} className="rounded-xl border border-moccasin/70 bg-white/70 p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                      <h3 className="font-semibold text-brown-dark mb-1">{card.title}</h3>
+                      <p className="text-sm text-brown-light">{card.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
