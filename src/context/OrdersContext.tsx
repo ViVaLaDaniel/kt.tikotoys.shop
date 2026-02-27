@@ -17,6 +17,7 @@ export const OrdersProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       const saved = localStorage.getItem(ORDERS_STORAGE_KEY);
       if (saved) {
         try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           return JSON.parse(saved).map((order: any) => ({
             ...order,
             createdAt: new Date(order.createdAt),

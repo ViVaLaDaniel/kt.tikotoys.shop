@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 // We need to declare dataLayer for TypeScript
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dataLayer: any[];
   }
 }

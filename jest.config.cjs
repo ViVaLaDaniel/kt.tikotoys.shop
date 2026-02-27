@@ -3,7 +3,14 @@ module.exports = {
   testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   moduleNameMapper: {
-    '\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '\.(gif|ttf|eot|svg|png)$': '<rootDir>/src/fileMock.js'
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/src/fileMock.js'
   },
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  transform: {
+    '^.+\\.m?[tj]sx?$': ['ts-jest', { useESM: true }]
+  },
+  transformIgnorePatterns: [
+    '/node_modules/(?!(@firebase|firebase)/)'
+  ],
 };
