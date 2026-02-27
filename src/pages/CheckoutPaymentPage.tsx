@@ -27,7 +27,8 @@ const CheckoutPaymentPage: React.FC = () => {
   }, [navigate, orderPlaced]);
 
   const handleCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let { name, value } = e.target;
+    let { value } = e.target;
+    const { name } = e.target;
     if (name === 'number') value = (value.replace(/\D/g, '').match(/.{1,4}/g) || []).join(' ').slice(0, 19);
     if (name === 'expiry') value = (value.replace(/\D/g, '').match(/.{1,2}/g) || []).join('/').slice(0, 5);
     if (name === 'cvv') value = value.replace(/\D/g, '').slice(0, 3);
@@ -66,7 +67,7 @@ const CheckoutPaymentPage: React.FC = () => {
           <div className="w-24 h-24 mx-auto mb-6 bg-green-500 rounded-full flex items-center justify-center"><svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg></div>
           <h1 className="text-3xl font-bold text-brown-dark mb-4">Order Placed Successfully!</h1>
           <p className="text-brown-light mb-2">Thank you for your purchase, {shippingData?.firstName}!</p>
-          <p className="text-brown-light mb-8">We've sent a confirmation email to <span className="text-salmon">{shippingData?.email}</span></p>
+          <p className="text-brown-light mb-8">We&apos;ve sent a confirmation email to <span className="text-salmon">{shippingData?.email}</span></p>
           <Link to="/shop" className="inline-block bg-sand hover:bg-salmon text-white px-8 py-3 rounded-xl font-bold transition-all duration-300">Continue Shopping</Link>
         </div>
       </main>

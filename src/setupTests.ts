@@ -1,5 +1,6 @@
 import { TextEncoder, TextDecoder } from 'util';
 global.TextEncoder = TextEncoder;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (global as any).TextDecoder = TextDecoder;
 
 // jest-dom adds custom jest matchers for asserting on DOM nodes.

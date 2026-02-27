@@ -10,7 +10,7 @@
     "analyze": "vite build --mode analyze",
     "lint": "eslint src --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
-    "test": "jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "dependencies": {
     "@vercel/speed-insights": "^1.2.0",

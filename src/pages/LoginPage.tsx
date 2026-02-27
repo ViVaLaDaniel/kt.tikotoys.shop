@@ -9,6 +9,7 @@ const LoginPage: React.FC = () => {
   const location = useLocation();
   const { signInWithGoogle, isAuthenticated, loading } = useAuth();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const from = (location.state as any)?.from?.pathname || '/';
 
   useEffect(() => {

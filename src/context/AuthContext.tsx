@@ -43,7 +43,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           name: firebaseUser.displayName,
           photoURL: firebaseUser.photoURL,
           // Временное простое правило для админа. Позже мы сделаем это надежнее.
-          isAdmin: firebaseUser.email === 'admin@kt.tikotoys.shop',
+          isAdmin: import.meta.env.VITE_ADMIN_EMAIL
+            ? firebaseUser.email === import.meta.env.VITE_ADMIN_EMAIL
+            : false,
         };
         setUser(appUser);
       } else {
