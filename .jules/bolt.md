@@ -1,0 +1,3 @@
+## 2024-05-24 - [Scroll Event Listener & Image Lazy Loading Optimization]
+**Learning:** Found an unthrottled global scroll event listener in the `Header` component that runs constantly, even when mobile/user menus are closed. Given that these menus are closed >99% of the time, this creates unnecessary main-thread overhead on every scroll event. Additionally, off-screen product images were missing `loading="lazy"`.
+**Action:** Always conditionally attach heavy event listeners (like `scroll` or `resize`) only when they are actively needed (e.g., when a menu or modal is open) and use `{ passive: true }` when possible. Add `loading="lazy"` to `<img>` tags for images below the fold to improve initial page load performance.

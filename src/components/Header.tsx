@@ -15,13 +15,15 @@ const Header: React.FC = () => {
 
   // Close menus on scroll
   useEffect(() => {
+    if (!isMenuOpen && !isUserMenuOpen) return;
+
     const handleScroll = () => {
       setIsMenuOpen(false);
       setIsUserMenuOpen(false);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMenuOpen, isUserMenuOpen]);
 
   // Close menus on click outside
   useEffect(() => {

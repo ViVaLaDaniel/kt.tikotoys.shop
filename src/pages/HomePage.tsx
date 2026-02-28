@@ -149,7 +149,7 @@ const HomePage: React.FC = () => {
             {featuredProducts.map((product) => (
               <div key={product.id} className="group bg-cream-bg/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-sand/50 hover:border-salmon/50 transition-all duration-300 hover:shadow-xl hover:shadow-sand/20 hover:-translate-y-1">
                 <Link to={`/product/${product.id}`} className="block relative overflow-hidden">
-                  <img src={product.imageUrl[0]} alt={product.name} className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={product.imageUrl[0]} alt={product.name} loading="lazy" className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-brown-dark/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </Link>
 

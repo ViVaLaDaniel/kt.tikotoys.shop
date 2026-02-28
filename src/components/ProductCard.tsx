@@ -93,6 +93,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           srcSet={imageSrcSet}
           sizes="(max-width: 640px) 90vw, 384px"
           alt={`${product.name} ${currentImageIndex + 1}`}
+          loading="lazy"
         />
 
         {/* Carousel Controls */}
