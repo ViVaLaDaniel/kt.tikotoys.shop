@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
     try {
       await signInWithGoogle();
     } catch (error) {
-      console.error("Не удалось войти через Google", error);
+      console.error("Не удалось войти через Google: ", error instanceof Error ? error.message : "Неизвестная ошибка");
     }
   };
 
