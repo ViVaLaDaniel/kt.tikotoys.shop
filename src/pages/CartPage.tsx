@@ -47,9 +47,17 @@ const CartPage: React.FC = () => {
                   </div>
                   <div className="flex items-center justify-between mt-4">
                     <div className="flex items-center bg-cream-bg/70 rounded-lg border border-sand/50">
-                      <button onClick={() => updateQuantity(product.id, quantity - 1)} className="px-3 py-1 text-brown-dark hover:bg-sand/30 rounded-l-lg transition">−</button>
-                      <span className="px-4 py-1 text-brown-dark font-medium">{quantity}</span>
-                      <button onClick={() => updateQuantity(product.id, quantity + 1)} className="px-3 py-1 text-brown-dark hover:bg-sand/30 rounded-r-lg transition">+</button>
+                      <button
+                        onClick={() => updateQuantity(product.id, quantity - 1)}
+                        className="px-3 py-1 text-brown-dark hover:bg-sand/30 rounded-l-lg transition"
+                        aria-label={`Decrease quantity of ${product.name}`}
+                      >−</button>
+                      <span className="px-4 py-1 text-brown-dark font-medium" aria-live="polite" aria-atomic="true">{quantity}</span>
+                      <button
+                        onClick={() => updateQuantity(product.id, quantity + 1)}
+                        className="px-3 py-1 text-brown-dark hover:bg-sand/30 rounded-r-lg transition"
+                        aria-label={`Increase quantity of ${product.name}`}
+                      >+</button>
                     </div>
                     <div className="flex items-center gap-4">
                       <span className="text-xl font-bold text-salmon">{(product.price * quantity).toFixed(2)}{product.currency}</span>

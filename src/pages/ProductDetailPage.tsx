@@ -116,11 +116,20 @@ const ProductDetailPage: React.FC = () => {
 
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <span className="text-brown-light">Quantity:</span>
+                <span className="text-brown-light" id="quantity-label">Quantity:</span>
                 <div className="flex items-center bg-moccasin/50 rounded-xl border border-sand/50">
-                  <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-4 py-2 text-brown-dark hover:bg-sand/30 rounded-l-xl transition">−</button>
-                  <span className="px-4 py-2 text-brown-dark font-medium">{quantity}</span>
-                  <button onClick={() => setQuantity(quantity + 1)} className="px-4 py-2 text-brown-dark hover:bg-sand/30 rounded-r-xl transition">+</button>
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="px-4 py-2 text-brown-dark hover:bg-sand/30 rounded-l-xl transition"
+                    aria-label="Decrease quantity"
+                    disabled={quantity <= 1}
+                  >−</button>
+                  <span className="px-4 py-2 text-brown-dark font-medium" aria-live="polite" aria-atomic="true">{quantity}</span>
+                  <button
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="px-4 py-2 text-brown-dark hover:bg-sand/30 rounded-r-xl transition"
+                    aria-label="Increase quantity"
+                  >+</button>
                 </div>
               </div>
 
