@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode } from 'react';
 import { Product } from '../types';
 import { products as initialProducts } from '../data/products';
 import { fetchSupabase, isSupabaseEnabled } from '../supabaseClient';
@@ -69,7 +69,7 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({ children }
     }
   }, [products]);
 
-  const addProduct = async (productData: Omit<Product, 'id'>) => {
+  const addProduct = useCallback(async (productData: Omit<Product, 'id'>) => {
     if (isSupabaseEnabled) {
       try {
         const data = await fetchSupabase<Product[]>(
@@ -91,12 +91,14 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({ children }
       }
       return;
     }
-    const newId = Math.max(...products.map(p => p.id), 0) + 1;
-    const newProduct: Product = { ...productData, id: newId };
-    setProducts([...products, newProduct]);
-  };
+    setProducts((prevProducts) => {
+      const newId = Math.max(...prevProducts.map(p => p.id), 0) + 1;
+      const newProduct: Product = { ...productData, id: newId };
+      return [...prevProducts, newProduct];
+    });
+  }, []);
 
-  const updateProduct = async (id: number, productData: Partial<Product>) => {
+  const updateProduct = useCallback(async (id: number, productData: Partial<Product>) => {
     if (isSupabaseEnabled) {
       try {
         const data = await fetchSupabase<Product[]>(
@@ -111,17 +113,17 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({ children }
         );
         const updatedProduct = data?.[0];
         if (updatedProduct) {
-          setProducts(products.map(p => (p.id === id ? { ...p, ...updatedProduct } : p)));
+          setProducts((prevProducts) => prevProducts.map(p => (p.id === id ? { ...p, ...updatedProduct } : p)));
         }
       } catch (error) {
         console.error('Ошибка обновления товара в Supabase:', (error as Error).message);
       }
       return;
     }
-    setProducts(products.map(p => (p.id === id ? { ...p, ...productData } : p)));
-  };
+    setProducts((prevProducts) => prevProducts.map(p => (p.id === id ? { ...p, ...productData } : p)));
+  }, []);
 
-  const deleteProduct = async (id: number) => {
+  const deleteProduct = useCallback(async (id: number) => {
     if (isSupabaseEnabled) {
       try {
         await fetchSupabase(`/products?id=eq.${id}`, {
@@ -132,11 +134,20 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({ children }
         return;
       }
     }
-    setProducts(products.filter(p => p.id !== id));
-  };
+    setProducts((prevProducts) => prevProducts.filter(p => p.id !== id));
+  }, []);
+
+  // ⚡ Bolt: Memoize context value and functions using useCallback
+  // Impact: Prevents unnecessary re-renders of ProductsContext consumers (like ProductListingPage and ProductDetailPage) when unrelated state changes.
+  const value = useMemo(() => ({
+    products,
+    addProduct,
+    updateProduct,
+    deleteProduct
+  }), [products, addProduct, updateProduct, deleteProduct]);
 
   return (
-    <ProductsContext.Provider value={{ products, addProduct, updateProduct, deleteProduct }}>
+    <ProductsContext.Provider value={value}>
       {children}
     </ProductsContext.Provider>
   );
