@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode } from 'react';
 import { auth } from '../firebaseConfig';
 import {
   GoogleAuthProvider,
@@ -59,7 +59,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return () => unsubscribe();
   }, []);
 
-  const signInWithGoogle = async (): Promise<void> => {
+  const signInWithGoogle = useCallback(async (): Promise<void> => {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
@@ -67,24 +67,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } catch (error) {
       console.error("Ошибка входа через Google: ", error instanceof Error ? error.message : "Неизвестная ошибка");
     }
-  };
+  }, []);
 
-  const logout = async (): Promise<void> => {
+  const logout = useCallback(async (): Promise<void> => {
     try {
       await signOut(auth);
       // setUser(null) не нужен, onAuthStateChanged сделает это за нас
     } catch (error) {
       console.error("Ошибка выхода: ", error instanceof Error ? error.message : "Неизвестная ошибка");
     }
-  };
+  }, []);
 
-  const value = {
+  // ⚡ Bolt: Memoize AuthContext value to prevent global re-renders
+  // Impact: Reduces re-renders across the entire app hierarchy (Header, ProtectedRoute, etc.) whenever the root App component updates.
+  const value = useMemo(() => ({
     user,
     loading,
     isAuthenticated: !!user,
     signInWithGoogle,
     logout,
-  };
+  }), [user, loading, signInWithGoogle, logout]);
 
   // Не рендерим дочерние компоненты, пока не определено состояние аутентификации
   return (

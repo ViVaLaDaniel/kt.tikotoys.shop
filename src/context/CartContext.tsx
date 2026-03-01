@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode } from 'react';
 import { Product } from '../types';
 
 // Интерфейс для элемента корзины
@@ -46,8 +46,13 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
   }, [items]);
 
+  // Удалить товар из корзины (объявлено до использования в updateQuantity)
+  const removeFromCart = useCallback((productId: number) => {
+    setItems((prevItems) => prevItems.filter((item) => item.product.id !== productId));
+  }, []);
+
   // Добавить товар в корзину
-  const addToCart = (product: Product, quantity: number = 1) => {
+  const addToCart = useCallback((product: Product, quantity: number = 1) => {
     setItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.product.id === product.id);
       
@@ -61,15 +66,10 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       
       return [...prevItems, { product, quantity }];
     });
-  };
-
-  // Удалить товар из корзины
-  const removeFromCart = (productId: number) => {
-    setItems((prevItems) => prevItems.filter((item) => item.product.id !== productId));
-  };
+  }, []);
 
   // Обновить количество товара
-  const updateQuantity = (productId: number, quantity: number) => {
+  const updateQuantity = useCallback((productId: number, quantity: number) => {
     if (quantity <= 0) {
       removeFromCart(productId);
       return;
@@ -80,35 +80,37 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         item.product.id === productId ? { ...item, quantity } : item
       )
     );
-  };
+  }, [removeFromCart]);
 
   // Очистить корзину
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setItems([]);
-  };
+  }, []);
 
   // Получить общую сумму
-  const getTotal = () => {
+  const getTotal = useCallback(() => {
     return items.reduce((total, item) => total + item.product.price * item.quantity, 0);
-  };
+  }, [items]);
 
   // Получить количество товаров
-  const getItemCount = () => {
+  const getItemCount = useCallback(() => {
     return items.reduce((count, item) => count + item.quantity, 0);
-  };
+  }, [items]);
+
+  // ⚡ Bolt: Memoize context value to prevent unnecessary re-renders of consuming components
+  // Impact: Prevents all CartContext consumers from re-rendering when CartProvider's parent re-renders, unless `items` change.
+  const value = useMemo(() => ({
+    items,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    getTotal,
+    getItemCount,
+  }), [items, addToCart, removeFromCart, updateQuantity, clearCart, getTotal, getItemCount]);
 
   return (
-    <CartContext.Provider
-      value={{
-        items,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        clearCart,
-        getTotal,
-        getItemCount,
-      }}
-    >
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );
