@@ -6,6 +6,8 @@ import {
   signInWithPopup,
   signOut,
   onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  updateProfile,
   User as FirebaseUser,
 } from 'firebase/auth';
 
@@ -16,6 +18,7 @@ export interface AppUser {
   name: string | null;
   photoURL: string | null;
   isAdmin: boolean;
+  createdAt: string;
 }
 
 interface AuthContextType {
@@ -23,6 +26,7 @@ interface AuthContextType {
   loading: boolean;
   isAuthenticated: boolean;
   signInWithGoogle: () => Promise<void>;
+  register: (email: string, password: string, name: string) => Promise<boolean>;
   logout: () => Promise<void>;
 }
 
@@ -46,6 +50,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           isAdmin: import.meta.env.VITE_ADMIN_EMAIL
             ? firebaseUser.email === import.meta.env.VITE_ADMIN_EMAIL
             : false,
+          createdAt: firebaseUser.metadata.creationTime || new Date().toISOString(),
         };
         setUser(appUser);
       } else {
@@ -69,6 +74,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+
+  const register = async (email: string, password: string, name: string): Promise<boolean> => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      if (name.trim()) {
+        await updateProfile(userCredential.user, { displayName: name.trim() });
+      }
+      return true;
+    } catch (error) {
+      console.error('Ошибка регистрации: ', error instanceof Error ? error.message : 'Неизвестная ошибка');
+      return false;
+    }
+  };
+
   const logout = async (): Promise<void> => {
     try {
       await signOut(auth);
@@ -83,6 +102,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     loading,
     isAuthenticated: !!user,
     signInWithGoogle,
+    register,
     logout,
   };
 

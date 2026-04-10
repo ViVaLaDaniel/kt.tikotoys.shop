@@ -42,7 +42,7 @@ const CheckoutPaymentPage: React.FC = () => {
       if (user && shippingData) {
         const subtotal = getTotal();
         const shippingCost = shippingData.shippingMethod === 'express' ? 9.99 : (subtotal > 50 ? 0 : 5.99);
-        addOrder({ userId: user.id, items, total: subtotal + shippingCost, shippingAddress: { ...shippingData }, status: 'pending' });
+        addOrder({ userId: user.uid, items, total: subtotal + shippingCost, shippingAddress: { ...shippingData }, status: 'pending' });
       }
       setIsProcessing(false);
       setOrderPlaced(true);

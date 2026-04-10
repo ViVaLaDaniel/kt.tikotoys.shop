@@ -9,7 +9,7 @@ export interface User {
 
 export interface Order {
   id: number;
-  userId: number;
+  userId: string;
   items: CartItem[];
   total: number;
   shippingAddress: {
