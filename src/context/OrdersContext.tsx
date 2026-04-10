@@ -4,7 +4,7 @@ import { Order } from '../types';
 interface OrdersContextType {
   orders: Order[];
   addOrder: (order: Omit<Order, 'id' | 'createdAt'>) => void;
-  getOrdersByUserId: (userId: number) => Order[];
+  getOrdersByUserId: (userId: string) => Order[];
 }
 
 const OrdersContext = createContext<OrdersContextType | undefined>(undefined);
@@ -43,7 +43,7 @@ export const OrdersProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     setOrders([newOrder, ...orders]);
   };
 
-  const getOrdersByUserId = (userId: number): Order[] => {
+  const getOrdersByUserId = (userId: string): Order[] => {
     return orders.filter(order => order.userId === userId);
   };
 

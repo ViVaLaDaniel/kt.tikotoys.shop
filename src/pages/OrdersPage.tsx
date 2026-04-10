@@ -11,7 +11,7 @@ const OrdersPage: React.FC = () => {
     return null;
   }
 
-  const orders = getOrdersByUserId(user.id);
+  const orders = getOrdersByUserId(user.uid);
 
   const getStatusColor = (status: string) => {
     switch (status) {
