@@ -11,6 +11,7 @@ import { fetchSupabase, isSupabaseEnabled } from '../supabaseClient';
 
 interface ProductsContextType {
   products: Product[];
+  loadError: string | null;
   addProduct: (product: Omit<Product, 'id'>) => Promise<void>;
   updateProduct: (id: number, product: Partial<Product>) => Promise<void>;
   deleteProduct: (id: number) => Promise<void>;
@@ -29,7 +30,6 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
     if (isSupabaseEnabled) {
       return [];
     }
-    // Загрузка из localStorage или использование начальных данных
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem(PRODUCTS_STORAGE_KEY);
       if (saved) {
@@ -42,6 +42,7 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
     }
     return initialProducts;
   });
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -53,11 +54,11 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
           '/products?select=*&order=id.asc',
         );
         setProducts(data ?? []);
+        setLoadError(null);
       } catch (error) {
-        console.error(
-          'Ошибка загрузки товаров из Supabase:',
-          (error as Error).message,
-        );
+        const message = (error as Error).message;
+        console.error('Failed to load products from Supabase:', message);
+        setLoadError(message);
         if (typeof window !== 'undefined') {
           const saved = localStorage.getItem(PRODUCTS_STORAGE_KEY);
           if (saved) {
@@ -77,32 +78,28 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
     void loadProducts();
   }, []);
 
-  // Сохранение в localStorage при изменении
   useEffect(() => {
     if (!isSupabaseEnabled) {
-      localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+      try {
+        localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+      } catch (error) {
+        console.error('Failed to save products to localStorage:', error);
+      }
     }
   }, [products]);
 
   const addProduct = async (productData: Omit<Product, 'id'>) => {
     if (isSupabaseEnabled) {
-      try {
-        const data = await fetchSupabase<Product[]>('/products?select=*', {
-          method: 'POST',
-          headers: {
-            Prefer: 'return=representation',
-          },
-          body: JSON.stringify(productData),
-        });
-        const createdProduct = data?.[0];
-        if (createdProduct) {
-          setProducts((prev) => [...prev, createdProduct]);
-        }
-      } catch (error) {
-        console.error(
-          'Ошибка добавления товара в Supabase:',
-          (error as Error).message,
-        );
+      const data = await fetchSupabase<Product[]>('/products?select=*', {
+        method: 'POST',
+        headers: {
+          Prefer: 'return=representation',
+        },
+        body: JSON.stringify(productData),
+      });
+      const createdProduct = data?.[0];
+      if (createdProduct) {
+        setProducts((prev) => [...prev, createdProduct]);
       }
       return;
     }
@@ -113,29 +110,22 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
 
   const updateProduct = async (id: number, productData: Partial<Product>) => {
     if (isSupabaseEnabled) {
-      try {
-        const data = await fetchSupabase<Product[]>(
-          `/products?id=eq.${id}&select=*`,
-          {
-            method: 'PATCH',
-            headers: {
-              Prefer: 'return=representation',
-            },
-            body: JSON.stringify(productData),
+      const data = await fetchSupabase<Product[]>(
+        `/products?id=eq.${id}&select=*`,
+        {
+          method: 'PATCH',
+          headers: {
+            Prefer: 'return=representation',
           },
-        );
-        const updatedProduct = data?.[0];
-        if (updatedProduct) {
-          setProducts(
-            products.map((p) =>
-              p.id === id ? { ...p, ...updatedProduct } : p,
-            ),
-          );
-        }
-      } catch (error) {
-        console.error(
-          'Ошибка обновления товара в Supabase:',
-          (error as Error).message,
+          body: JSON.stringify(productData),
+        },
+      );
+      const updatedProduct = data?.[0];
+      if (updatedProduct) {
+        setProducts(
+          products.map((p) =>
+            p.id === id ? { ...p, ...updatedProduct } : p,
+          ),
         );
       }
       return;
@@ -147,24 +137,16 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
 
   const deleteProduct = async (id: number) => {
     if (isSupabaseEnabled) {
-      try {
-        await fetchSupabase(`/products?id=eq.${id}`, {
-          method: 'DELETE',
-        });
-      } catch (error) {
-        console.error(
-          'Ошибка удаления товара в Supabase:',
-          (error as Error).message,
-        );
-        return;
-      }
+      await fetchSupabase(`/products?id=eq.${id}`, {
+        method: 'DELETE',
+      });
     }
     setProducts(products.filter((p) => p.id !== id));
   };
 
   return (
     <ProductsContext.Provider
-      value={{ products, addProduct, updateProduct, deleteProduct }}
+      value={{ products, loadError, addProduct, updateProduct, deleteProduct }}
     >
       {children}
     </ProductsContext.Provider>

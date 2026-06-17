@@ -39,7 +39,11 @@ export const OrdersProvider: React.FC<{ children: ReactNode }> = ({
   });
 
   useEffect(() => {
-    localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+    try {
+      localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+    } catch (error) {
+      console.error('Failed to save orders to localStorage:', error);
+    }
   }, [orders]);
 
   const addOrder = (orderData: Omit<Order, 'id' | 'createdAt'>) => {

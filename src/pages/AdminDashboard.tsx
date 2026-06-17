@@ -6,6 +6,8 @@ const AdminDashboard: React.FC = () => {
   const { products, addProduct, updateProduct, deleteProduct } = useProducts();
   const [isAddingProduct, setIsAddingProduct] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [operationError, setOperationError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -27,8 +29,10 @@ const AdminDashboard: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setOperationError(null);
+    setIsSaving(true);
 
     const productData = {
       name: formData.name,
@@ -41,14 +45,21 @@ const AdminDashboard: React.FC = () => {
       category: formData.category,
     };
 
-    if (editingProduct) {
-      updateProduct(editingProduct.id, productData);
-      setEditingProduct(null);
-    } else {
-      addProduct(productData);
+    try {
+      if (editingProduct) {
+        await updateProduct(editingProduct.id, productData);
+        setEditingProduct(null);
+      } else {
+        await addProduct(productData);
+      }
+      handleCancel();
+    } catch (error) {
+      setOperationError(
+        error instanceof Error ? error.message : 'Failed to save product',
+      );
+    } finally {
+      setIsSaving(false);
     }
-
-    handleCancel();
   };
 
   const handleEdit = (product: Product) => {
@@ -66,9 +77,16 @@ const AdminDashboard: React.FC = () => {
     setIsAddingProduct(true);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     if (window.confirm('Вы уверены, что хотите удалить этот товар?')) {
-      deleteProduct(id);
+      setOperationError(null);
+      try {
+        await deleteProduct(id);
+      } catch (error) {
+        setOperationError(
+          error instanceof Error ? error.message : 'Failed to delete product',
+        );
+      }
     }
   };
 
@@ -119,6 +137,12 @@ const AdminDashboard: React.FC = () => {
             </button>
           )}
         </div>
+
+        {operationError && (
+          <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 mb-6">
+            <p className="text-red-600 text-sm">{operationError}</p>
+          </div>
+        )}
 
         {isAddingProduct && (
           <div className="bg-moccasin/50 backdrop-blur-sm rounded-2xl p-6 border border-sand mb-8">
@@ -247,9 +271,14 @@ const AdminDashboard: React.FC = () => {
               <div className="flex gap-4 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-sand hover:bg-salmon text-white py-3 px-6 rounded-xl font-bold transition-all duration-300 shadow-lg shadow-sand/40"
+                  disabled={isSaving}
+                  className="flex-1 bg-sand hover:bg-salmon disabled:opacity-50 text-white py-3 px-6 rounded-xl font-bold transition-all duration-300 shadow-lg shadow-sand/40"
                 >
-                  {editingProduct ? 'Сохранить изменения' : 'Добавить товар'}
+                  {isSaving
+                    ? 'Saving...'
+                    : editingProduct
+                      ? 'Сохранить изменения'
+                      : 'Добавить товар'}
                 </button>
                 <button
                   type="button"

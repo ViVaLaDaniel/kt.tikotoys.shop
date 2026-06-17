@@ -35,9 +35,15 @@ const CheckoutPaymentPage: React.FC = () => {
   useEffect(() => {
     const saved = sessionStorage.getItem('shippingData');
     if (saved) {
-      setShippingData(JSON.parse(saved));
+      try {
+        setShippingData(JSON.parse(saved));
+      } catch {
+        sessionStorage.removeItem('shippingData');
+        if (!orderPlaced) {
+          navigate('/checkout/shipping');
+        }
+      }
     } else if (!orderPlaced) {
-      // Не перенаправлять, если заказ уже размещен
       navigate('/checkout/shipping');
     }
   }, [navigate, orderPlaced]);

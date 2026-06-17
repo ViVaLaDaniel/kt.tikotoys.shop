@@ -78,12 +78,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      // setUser не нужен, onAuthStateChanged сделает это за нас
     } catch (error) {
       console.error(
         'Ошибка входа через Google: ',
         error instanceof Error ? error.message : 'Неизвестная ошибка',
       );
+      throw error;
     }
   };
 
@@ -122,12 +122,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const logout = async (): Promise<void> => {
     try {
       await signOut(auth);
-      // setUser(null) не нужен, onAuthStateChanged сделает это за нас
     } catch (error) {
       console.error(
         'Ошибка выхода: ',
         error instanceof Error ? error.message : 'Неизвестная ошибка',
       );
+      throw error;
     }
   };
 

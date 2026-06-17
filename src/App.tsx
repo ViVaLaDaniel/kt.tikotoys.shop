@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 
 import FloatingContact from './components/FloatingContact';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Динамический импорт страниц
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -25,25 +26,27 @@ const LoadingSpinner = () => (
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Analytics />
-      <div className="flex flex-col min-h-screen bg-transparent text-brown-dark">
-        <Header />
-        <Suspense fallback={<LoadingSpinner />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            {/* Fallback to home */}
-            <Route path="*" element={<HomePage />} />
-          </Routes>
-        </Suspense>
-        <FloatingContact />
-        <Footer />
-      </div>
-      <SpeedInsights />
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Analytics />
+        <div className="flex flex-col min-h-screen bg-transparent text-brown-dark">
+          <Header />
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              {/* Fallback to home */}
+              <Route path="*" element={<HomePage />} />
+            </Routes>
+          </Suspense>
+          <FloatingContact />
+          <Footer />
+        </div>
+        <SpeedInsights />
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 };
 
