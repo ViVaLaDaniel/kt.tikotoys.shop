@@ -28,6 +28,27 @@ export default defineConfig(({ mode, command }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      build: {
+        chunkSizeWarningLimit: 600,
+        rollupOptions: {
+          output: {
+            manualChunks(id) {
+              if (id.includes('node_modules')) {
+                if (id.includes('react-icons')) {
+                  return 'vendor-icons';
+                }
+                if (id.includes('framer-motion')) {
+                  return 'vendor-motion';
+                }
+                if (id.includes('react-router-dom') || id.includes('react-router') || id.includes('@remix-run')) {
+                  return 'vendor-router';
+                }
+                return 'vendor-core';
+              }
+            }
+          }
+        }
       }
     };
 });

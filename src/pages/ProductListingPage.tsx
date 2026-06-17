@@ -366,6 +366,7 @@ const ProductListingPage: React.FC = () => {
                         <img
                           src={product.imageUrl[0]}
                           alt={product.name}
+                          loading="lazy"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                         />
                         {product.category === 'boxes' && (

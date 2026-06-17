@@ -11,8 +11,8 @@ export const products: Product[] = [
     price: 65,
     currency: '€',
     imageUrl: [
-      'https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?w=600&h=600&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1530325553241-4f6e7690cf36?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?w=500&h=500&fit=crop&q=70&auto=format',
+      'https://images.unsplash.com/photo-1530325553241-4f6e7690cf36?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
       'Adorable handmade Stitch plush toy, crocheted with love. Perfect gift for Disney fans! Approximately 25cm tall. Crafted with hypoallergenic plush yarn.',
@@ -28,9 +28,9 @@ export const products: Product[] = [
     price: 49.95,
     currency: '€',
     imageUrl: [
-      'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=600&h=600&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1522273514726-c225434cedca?w=600&h=600&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1514327605112-b887c0e61c0a?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=500&h=500&fit=crop&q=70&auto=format',
+      'https://images.unsplash.com/photo-1522273514726-c225434cedca?w=500&h=500&fit=crop&q=70&auto=format',
+      'https://images.unsplash.com/photo-1514327605112-b887c0e61c0a?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
       'Experience ultimate comfort with our handmade Cloud-Soft Chenille Knit Beanie. Perfect for chilly days, this incredibly soft and plush hat keeps you warm and stylish. Made from hypoallergenic, chunky chenille yarn.',
@@ -46,8 +46,8 @@ export const products: Product[] = [
     price: 75,
     currency: '€',
     imageUrl: [
-      'https://images.unsplash.com/photo-1608889476561-6242cfdbf622?w=600&h=600&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1608889825271-fc9b78e91d29?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1608889476561-6242cfdbf622?w=500&h=500&fit=crop&q=70&auto=format',
+      'https://images.unsplash.com/photo-1608889825271-fc9b78e91d29?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
       'The cutest Baby Yoda (Grogu) amigurumi you will ever see! Handmade with premium hypoallergenic cotton yarn. A must-have for Star Wars fans. Approximately 22cm tall.',
@@ -63,8 +63,8 @@ export const products: Product[] = [
     price: 55,
     currency: '€',
     imageUrl: [
-      'https://images.unsplash.com/photo-1585990682176-c887a9fc2a99?w=600&h=600&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1565102667-b86b7f2db3c9?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1585990682176-c887a9fc2a99?w=500&h=500&fit=crop&q=70&auto=format',
+      'https://images.unsplash.com/photo-1565102667-b86b7f2db3c9?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
       'Soft and cuddly pink bunny, perfect for babies and toddlers. Made with 100% hypoallergenic plush yarn and secure safety eyes, completely safe for little ones.',
@@ -80,8 +80,8 @@ export const products: Product[] = [
     price: 39,
     currency: '€',
     imageUrl: [
-      'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=600&h=600&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1457545195570-67f207084966?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=500&h=500&fit=crop&q=70&auto=format',
+      'https://images.unsplash.com/photo-1457545195570-67f207084966?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
       'Cozy handknit scarf in beautiful winter colors. Made with premium wool-acrylic blend, it pairs perfectly with our chenille beanies for maximum warmth.',
@@ -97,8 +97,8 @@ export const products: Product[] = [
     price: 60,
     currency: '€',
     imageUrl: [
-      'https://images.unsplash.com/photo-1560525821-1b5deac8c0c5?w=600&h=600&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1565302332725-c0e5b2f9e664?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1560525821-1b5deac8c0c5?w=500&h=500&fit=crop&q=70&auto=format',
+      'https://images.unsplash.com/photo-1565302332725-c0e5b2f9e664?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
       'Classic teddy bear design, handcrafted with premium cotton and plush yarn. Timeless gift for any occasion, stuffed with eco-friendly hypoallergenic fiberfill.',
@@ -114,8 +114,8 @@ export const products: Product[] = [
     price: 45,
     currency: '€',
     imageUrl: [
-      'https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=600&h=600&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1585606393948-aa5f36b9bebe?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=500&h=500&fit=crop&q=70&auto=format',
+      'https://images.unsplash.com/photo-1585606393948-aa5f36b9bebe?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
       'Adorable cat ear beanie, perfect for cat lovers! Soft, warm, and incredibly cute. Hand-knitted with high-quality stretch wool.',
@@ -131,8 +131,8 @@ export const products: Product[] = [
     price: 25,
     currency: '€',
     imageUrl: [
-      'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=600&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1608276826730-cb4e2db6873c?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500&h=500&fit=crop&q=70&auto=format',
+      'https://images.unsplash.com/photo-1608276826730-cb4e2db6873c?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
       'Set of 3 adorable mini amigurumi keychains (Bear, Bunny, Cat). Perfect for decorating backpacks, handbags, keys, or as sweet little gifts!',
@@ -148,8 +148,8 @@ export const products: Product[] = [
     price: 500,
     currency: '€',
     imageUrl: [
-      'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=600&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1512909006721-3d6018887383?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=500&h=500&fit=crop&q=70&auto=format',
+      'https://images.unsplash.com/photo-1512909006721-3d6018887383?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
       "A beautiful collection of Yulia's finest creations. Includes: 6-8 customized handmade knitted toys of your choice, a customized handwritten calligraphy card, and a premium wooden storage box. Ideal for baby showers, birthdays, or high-end gifts. Worldwide express shipping from Marbella / San Pedro included.",
@@ -165,8 +165,8 @@ export const products: Product[] = [
     price: 1000,
     currency: '€',
     imageUrl: [
-      'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600&h=600&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1481973965276-80279be85249?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500&h=500&fit=crop&q=70&auto=format',
+      'https://images.unsplash.com/photo-1481973965276-80279be85249?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
       'Our ultimate luxury offering. Includes: 12-15 customized large & premium knitted toys, personal alignment call with Yulia to choose characters and styles, customized wooden toy chest with personal engravings, deluxe silk wrapping, and priority worldwide express shipping. Truly a keepsake to cherish for generations.',

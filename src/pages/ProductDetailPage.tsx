@@ -341,6 +341,7 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
                     <img
                       src={p.imageUrl[0]}
                       alt={p.name}
+                      loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
