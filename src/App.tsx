@@ -12,6 +12,8 @@ import { ProductsProvider } from './context/ProductsContext';
 import { AuthProvider } from './context/AuthContext';
 import { OrdersProvider } from './context/OrdersContext';
 
+import FloatingContact from './components/FloatingContact';
+
 // Динамический импорт страниц
 const HomePage = lazy(() => import('./pages/HomePage'));
 const BlogPage = lazy(() => import('./pages/BlogPage'));
@@ -20,8 +22,6 @@ const ContactPage = lazy(() => import('./pages/ContactPage'));
 const ProductListingPage = lazy(() => import('./pages/ProductListingPage'));
 const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage'));
 const CartPage = lazy(() => import('./pages/CartPage'));
-const CheckoutShippingPage = lazy(() => import('./pages/CheckoutShippingPage'));
-const CheckoutPaymentPage = lazy(() => import('./pages/CheckoutPaymentPage'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage'));
@@ -54,10 +54,11 @@ const App: React.FC = () => {
                   <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/shop" element={<ProductListingPage />} />
-                    <Route path="/product/:id" element={<ProductDetailPage />} />
+                    <Route
+                      path="/product/:id"
+                      element={<ProductDetailPage />}
+                    />
                     <Route path="/cart" element={<CartPage />} />
-                    <Route path="/checkout/shipping" element={<CheckoutShippingPage />} />
-                    <Route path="/checkout/payment" element={<CheckoutPaymentPage />} />
                     <Route
                       path="/admin"
                       element={
@@ -87,8 +88,11 @@ const App: React.FC = () => {
                     <Route path="/blog" element={<BlogPage />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/contact" element={<ContactPage />} />
+                    {/* Fallback to home */}
+                    <Route path="*" element={<HomePage />} />
                   </Routes>
                 </Suspense>
+                <FloatingContact />
                 <Footer />
               </div>
               <SpeedInsights />

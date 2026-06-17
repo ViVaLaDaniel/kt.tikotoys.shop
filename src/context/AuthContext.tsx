@@ -1,5 +1,10 @@
-
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { auth } from '../firebaseConfig';
 import {
   GoogleAuthProvider,
@@ -28,32 +33,37 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<AppUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // onAuthStateChanged следит за состоянием аутентификации пользователя
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
-      if (firebaseUser) {
-        // Пользователь вошел в систему
-        const appUser: AppUser = {
-          uid: firebaseUser.uid,
-          email: firebaseUser.email,
-          name: firebaseUser.displayName,
-          photoURL: firebaseUser.photoURL,
-          // Временное простое правило для админа. Позже мы сделаем это надежнее.
-          isAdmin: import.meta.env.VITE_ADMIN_EMAIL
-            ? firebaseUser.email === import.meta.env.VITE_ADMIN_EMAIL
-            : false,
-        };
-        setUser(appUser);
-      } else {
-        // Пользователь вышел
-        setUser(null);
-      }
-      setLoading(false); // Загрузка состояния завершена
-    });
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (firebaseUser: FirebaseUser | null) => {
+        if (firebaseUser) {
+          // Пользователь вошел в систему
+          const appUser: AppUser = {
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            name: firebaseUser.displayName,
+            photoURL: firebaseUser.photoURL,
+            // Временное простое правило для админа. Позже мы сделаем это надежнее.
+            isAdmin: import.meta.env.VITE_ADMIN_EMAIL
+              ? firebaseUser.email === import.meta.env.VITE_ADMIN_EMAIL
+              : false,
+          };
+          setUser(appUser);
+        } else {
+          // Пользователь вышел
+          setUser(null);
+        }
+        setLoading(false); // Загрузка состояния завершена
+      },
+    );
 
     // Отписываемся от слушателя при размонтировании компонента
     return () => unsubscribe();
@@ -65,7 +75,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       await signInWithPopup(auth, provider);
       // setUser не нужен, onAuthStateChanged сделает это за нас
     } catch (error) {
-      console.error("Ошибка входа через Google: ", error instanceof Error ? error.message : "Неизвестная ошибка");
+      console.error(
+        'Ошибка входа через Google: ',
+        error instanceof Error ? error.message : 'Неизвестная ошибка',
+      );
     }
   };
 
@@ -74,7 +87,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       await signOut(auth);
       // setUser(null) не нужен, onAuthStateChanged сделает это за нас
     } catch (error) {
-      console.error("Ошибка выхода: ", error instanceof Error ? error.message : "Неизвестная ошибка");
+      console.error(
+        'Ошибка выхода: ',
+        error instanceof Error ? error.message : 'Неизвестная ошибка',
+      );
     }
   };
 

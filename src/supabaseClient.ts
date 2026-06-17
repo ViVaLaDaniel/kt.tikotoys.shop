@@ -5,9 +5,14 @@ export const isSupabaseEnabled = Boolean(supabaseUrl && supabaseAnonKey);
 
 const apiBaseUrl = isSupabaseEnabled ? `${supabaseUrl}/rest/v1` : '';
 
-export const fetchSupabase = async <T>(path: string, options: RequestInit = {}) => {
+export const fetchSupabase = async <T>(
+  path: string,
+  options: RequestInit = {},
+) => {
   if (!isSupabaseEnabled) {
-    throw new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+    throw new Error(
+      'Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.',
+    );
   }
 
   const response = await fetch(`${apiBaseUrl}${path}`, {

@@ -53,16 +53,26 @@ const OrdersPage: React.FC = () => {
         {/* Breadcrumb */}
         <nav className="mb-8">
           <ol className="flex items-center gap-2 text-sm text-gray-400">
-            <li><Link to="/" className="hover:text-white">Home</Link></li>
+            <li>
+              <Link to="/" className="hover:text-white">
+                Home
+              </Link>
+            </li>
             <li>/</li>
-            <li><Link to="/profile" className="hover:text-white">Профиль</Link></li>
+            <li>
+              <Link to="/profile" className="hover:text-white">
+                Профиль
+              </Link>
+            </li>
             <li>/</li>
             <li className="text-white">Заказы</li>
           </ol>
         </nav>
 
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-white">Мои заказы</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-white">
+            Мои заказы
+          </h1>
           <Link
             to="/shop"
             className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-pink-500/30"
@@ -74,8 +84,12 @@ const OrdersPage: React.FC = () => {
         {orders.length === 0 ? (
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-12 border border-gray-700 text-center">
             <div className="text-6xl mb-4">📦</div>
-            <h2 className="text-2xl font-bold text-white mb-2">У вас ещё нет заказов</h2>
-            <p className="text-gray-400 mb-6">Начните делать покупки прямо сейчас!</p>
+            <h2 className="text-2xl font-bold text-white mb-2">
+              У вас ещё нет заказов
+            </h2>
+            <p className="text-gray-400 mb-6">
+              Начните делать покупки прямо сейчас!
+            </p>
             <Link
               to="/shop"
               className="inline-block bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-pink-500/30"
@@ -95,8 +109,12 @@ const OrdersPage: React.FC = () => {
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-xl font-bold text-white">Заказ #{order.id}</h3>
-                        <span className={`text-sm px-3 py-1 rounded-full border ${getStatusColor(order.status)}`}>
+                        <h3 className="text-xl font-bold text-white">
+                          Заказ #{order.id}
+                        </h3>
+                        <span
+                          className={`text-sm px-3 py-1 rounded-full border ${getStatusColor(order.status)}`}
+                        >
                           {getStatusText(order.status)}
                         </span>
                       </div>
@@ -112,7 +130,9 @@ const OrdersPage: React.FC = () => {
                     </div>
                     <div className="text-right">
                       <p className="text-gray-400 text-sm">Итого</p>
-                      <p className="text-2xl font-bold text-amber-400">{order.total.toFixed(2)}€</p>
+                      <p className="text-2xl font-bold text-amber-400">
+                        {order.total.toFixed(2)}€
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -127,7 +147,8 @@ const OrdersPage: React.FC = () => {
                           alt={item.product.name}
                           className="w-16 h-16 object-cover rounded-lg"
                           onError={(e) => {
-                            e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="64" height="64"%3E%3Crect fill="%23333" width="64" height="64"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23666" font-size="24"%3E?%3C/text%3E%3C/svg%3E';
+                            e.currentTarget.src =
+                              'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="64" height="64"%3E%3Crect fill="%23333" width="64" height="64"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23666" font-size="24"%3E?%3C/text%3E%3C/svg%3E';
                           }}
                         />
                         <div className="flex-grow">
@@ -137,7 +158,9 @@ const OrdersPage: React.FC = () => {
                           >
                             {item.product.name}
                           </Link>
-                          <p className="text-gray-400 text-sm">Количество: {item.quantity}</p>
+                          <p className="text-gray-400 text-sm">
+                            Количество: {item.quantity}
+                          </p>
                         </div>
                         <div className="text-right">
                           <p className="text-white font-bold">
@@ -150,13 +173,17 @@ const OrdersPage: React.FC = () => {
 
                   {/* Shipping Address */}
                   <div className="mt-6 pt-6 border-t border-gray-700">
-                    <h4 className="text-white font-medium mb-2">Адрес доставки:</h4>
+                    <h4 className="text-white font-medium mb-2">
+                      Адрес доставки:
+                    </h4>
                     <p className="text-gray-400 text-sm">
-                      {order.shippingAddress.firstName} {order.shippingAddress.lastName}
+                      {order.shippingAddress.firstName}{' '}
+                      {order.shippingAddress.lastName}
                       <br />
                       {order.shippingAddress.address}
                       <br />
-                      {order.shippingAddress.city}, {order.shippingAddress.postalCode}
+                      {order.shippingAddress.city},{' '}
+                      {order.shippingAddress.postalCode}
                       <br />
                       {order.shippingAddress.country}
                     </p>

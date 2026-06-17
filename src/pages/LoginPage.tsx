@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -22,7 +21,10 @@ const LoginPage: React.FC = () => {
     try {
       await signInWithGoogle();
     } catch (error) {
-      console.error("Не удалось войти через Google: ", error instanceof Error ? error.message : "Неизвестная ошибка");
+      console.error(
+        'Не удалось войти через Google: ',
+        error instanceof Error ? error.message : 'Неизвестная ошибка',
+      );
     }
   };
 
@@ -32,8 +34,12 @@ const LoginPage: React.FC = () => {
         {/* Карточка */}
         <div className="bg-moccasin/50 backdrop-blur-sm rounded-2xl p-8 border border-sand">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-brown-dark mb-2">Вход в аккаунт</h1>
-            <p className="text-brown-light">Используйте Google для быстрого доступа</p>
+            <h1 className="text-3xl font-bold text-brown-dark mb-2">
+              Вход в аккаунт
+            </h1>
+            <p className="text-brown-light">
+              Используйте Google для быстрого доступа
+            </p>
           </div>
 
           {/* Кнопка входа через Google */}
@@ -47,7 +53,10 @@ const LoginPage: React.FC = () => {
           </button>
 
           <div className="mt-8 text-center">
-            <Link to="/" className="text-brown-light hover:text-salmon text-sm transition-colors">
+            <Link
+              to="/"
+              className="text-brown-light hover:text-salmon text-sm transition-colors"
+            >
               ← Вернуться на главную
             </Link>
           </div>

@@ -1,100 +1,404 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  FaWhatsapp,
+  FaTrashCan,
+  FaEnvelope,
+  FaUser,
+  FaMapLocationDot,
+  FaCompass,
+  FaChevronLeft,
+} from 'react-icons/fa6';
 
 const CartPage: React.FC = () => {
-  const { items, updateQuantity, removeFromCart, getTotal, clearCart } = useCart();
-  const navigate = useNavigate();
+  const { items, updateQuantity, removeFromCart, getTotal, clearCart } =
+    useCart();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [notes, setNotes] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  if (items.length === 0) {
+  const subtotal = getTotal();
+
+  const handleInquirySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // Formulate WhatsApp message text
+    const whatsappNumber = '34642841240';
+    let itemDetailsText = '';
+
+    items.forEach(({ product, quantity }) => {
+      itemDetailsText += `• ${product.name} x${quantity} (${product.price * quantity}${product.currency})\n`;
+    });
+
+    const message = `🧸 *New Custom Toy Inquiry* 🧸
+
+*Customer Details:*
+👤 Name: ${name}
+📧 Email: ${email}
+📱 WhatsApp/Phone: ${phone}
+📍 Shipping Address: ${address}
+
+*Selected Items:*
+${itemDetailsText}
+💰 *Total Estimated Value:* ${subtotal.toFixed(2)}€
+
+${notes ? `📝 *Custom Requests/Notes:* \n${notes}` : ''}
+
+_Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+    // Simulate sending / saving data
+    setTimeout(() => {
+      setLoading(false);
+      setIsSubmitted(true);
+
+      // Open WhatsApp in new window
+      window.open(whatsappUrl, '_blank');
+
+      // Clear selection after a delay
+      setTimeout(() => {
+        clearCart();
+      }, 1000);
+    }, 1500);
+  };
+
+  if (isSubmitted) {
     return (
-      <main className="flex-grow w-full min-h-screen pt-24 pb-32 px-4 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-24 h-24 mx-auto mb-6 bg-moccasin/50 rounded-full flex items-center justify-center">
-            <svg className="w-12 h-12 text-brown-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+      <main className="flex-grow w-full min-h-screen pt-32 pb-32 px-4 flex items-center justify-center bg-cream-bg font-sans">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center max-w-md bg-white border border-moccasin p-8 rounded-3xl shadow-xl"
+        >
+          <div className="w-20 h-20 mx-auto mb-6 bg-emerald-100 rounded-full flex items-center justify-center">
+            <FaWhatsapp className="w-10 h-10 text-emerald-500" />
           </div>
-          <h1 className="text-3xl font-bold text-brown-dark mb-4">Your Cart is Empty</h1>
-          <p className="text-brown-light mb-8">Looks like you haven&apos;t added anything yet.</p>
-          <Link to="/shop" className="inline-block bg-sand hover:bg-salmon text-white px-8 py-3 rounded-xl font-bold transition-all duration-300">
-            Start Shopping
+          <h1 className="text-3xl font-bold text-brown-dark mb-4">
+            Inquiry Sent!
+          </h1>
+          <p className="text-brown-light mb-6">
+            Thank you, {name}! Your inquiry has been generated and we have
+            redirected you to WhatsApp to start the conversation with Yulia.
+          </p>
+          <p className="text-sm text-brown-light/70 mb-8">
+            Yulia will review your requests, custom designs, and shipping rates
+            from San Pedro, Spain, to finalize your custom order.
+          </p>
+          <Link
+            to="/shop"
+            className="inline-block bg-sand hover:bg-salmon text-white px-8 py-3 rounded-xl font-bold transition-all duration-300 shadow-md hover:-translate-y-0.5"
+          >
+            Back to Collection
           </Link>
-        </div>
+        </motion.div>
       </main>
     );
   }
 
-  const subtotal = getTotal();
-  const shipping = subtotal > 50 ? 0 : 5.99;
-  const total = subtotal + shipping;
+  if (items.length === 0) {
+    return (
+      <main className="flex-grow w-full min-h-screen pt-32 pb-32 px-4 flex items-center justify-center bg-cream-bg font-sans">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center"
+        >
+          <div className="w-24 h-24 mx-auto mb-6 bg-moccasin/50 rounded-full flex items-center justify-center">
+            <span className="text-5xl">🧸</span>
+          </div>
+          <h1 className="text-3xl font-bold text-brown-dark mb-4">
+            Your Inquiry List is Empty
+          </h1>
+          <p className="text-brown-light mb-8">
+            Looks like you haven&apos;t selected any toys or boxes yet.
+          </p>
+          <Link
+            to="/shop"
+            className="inline-block bg-sand hover:bg-salmon text-white px-8 py-3 rounded-xl font-bold transition-all duration-300 shadow-lg shadow-sand/20 hover:-translate-y-0.5"
+          >
+            Explore Collection
+          </Link>
+        </motion.div>
+      </main>
+    );
+  }
 
   return (
-    <main className="flex-grow w-full min-h-screen pt-24 pb-32 px-4 md:px-8">
+    <main className="flex-grow w-full min-h-screen pt-28 pb-32 px-4 md:px-8 bg-cream-bg font-sans">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-bold text-brown-dark mb-8">Shopping <span className="text-salmon">Cart</span></h1>
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-4">
-            {items.map(({ product, quantity }) => (
-              <div key={product.id} className="bg-moccasin/50 backdrop-blur-sm rounded-2xl p-4 md:p-6 flex gap-4 border border-sand/50">
-                <Link to={`/product/${product.id}`} className="shrink-0">
-                  <img src={product.imageUrl[0]} alt={product.name} className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-xl bg-cream-bg" />
-                </Link>
-                <div className="flex-grow flex flex-col justify-between">
-                  <div>
-                    <Link to={`/product/${product.id}`}>
-                      <h3 className="text-lg font-semibold text-brown-dark hover:text-salmon transition-colors">{product.name}</h3>
-                    </Link>
-                    <p className="text-brown-light text-sm mt-1 line-clamp-2 hidden md:block">{product.description}</p>
-                  </div>
-                  <div className="flex items-center justify-between mt-4">
-                    <div className="flex items-center bg-cream-bg/70 rounded-lg border border-sand/50">
-                      <button onClick={() => updateQuantity(product.id, quantity - 1)} className="px-3 py-1 text-brown-dark hover:bg-sand/30 rounded-l-lg transition">−</button>
-                      <span className="px-4 py-1 text-brown-dark font-medium">{quantity}</span>
-                      <button onClick={() => updateQuantity(product.id, quantity + 1)} className="px-3 py-1 text-brown-dark hover:bg-sand/30 rounded-r-lg transition">+</button>
+        <div className="mb-8 flex items-center gap-2">
+          <Link
+            to="/shop"
+            className="text-brown-light hover:text-brown-dark flex items-center gap-1 text-sm font-medium transition-colors"
+          >
+            <FaChevronLeft size={12} /> Back to Collection
+          </Link>
+        </div>
+
+        <h1 className="text-3xl md:text-4xl font-serif font-bold text-brown-dark mb-8">
+          Inquiry <span className="text-salmon italic">Selection</span>
+        </h1>
+
+        <div className="grid lg:grid-cols-5 gap-8 items-start">
+          {/* Inquiry List Column */}
+          <div className="lg:col-span-3 space-y-4">
+            <h2 className="text-lg font-bold text-brown-dark mb-2">
+              Selected Items ({items.length})
+            </h2>
+
+            <AnimatePresence mode="popLayout">
+              {items.map(({ product, quantity }) => (
+                <motion.div
+                  key={product.id}
+                  layout
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-white rounded-2xl p-4 md:p-5 flex gap-4 border border-moccasin shadow-sm"
+                >
+                  <Link to={`/product/${product.id}`} className="shrink-0">
+                    <img
+                      src={product.imageUrl[0]}
+                      alt={product.name}
+                      className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-xl bg-cream-bg border border-moccasin"
+                    />
+                  </Link>
+                  <div className="flex-grow flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-start gap-2">
+                        <Link to={`/product/${product.id}`}>
+                          <h3 className="font-bold text-brown-dark hover:text-salmon transition-colors text-base md:text-lg leading-snug">
+                            {product.name}
+                          </h3>
+                        </Link>
+                        <button
+                          onClick={() => removeFromCart(product.id)}
+                          className="text-brown-light/60 hover:text-red-500 transition-colors p-1"
+                          aria-label="Remove item"
+                        >
+                          <FaTrashCan size={14} />
+                        </button>
+                      </div>
+                      <p className="text-brown-light text-xs mt-1 line-clamp-2 hidden md:block">
+                        {product.description}
+                      </p>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <span className="text-xl font-bold text-salmon">{(product.price * quantity).toFixed(2)}{product.currency}</span>
-                      <button onClick={() => removeFromCart(product.id)} className="text-brown-light hover:text-red-500 transition-colors p-2" aria-label="Remove item">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                      </button>
+
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="flex items-center bg-cream-bg rounded-lg border border-moccasin">
+                        <button
+                          onClick={() =>
+                            updateQuantity(product.id, quantity - 1)
+                          }
+                          className="px-3 py-1 text-brown-dark hover:bg-moccasin/50 rounded-l-lg transition font-bold"
+                        >
+                          −
+                        </button>
+                        <span className="px-3 py-1 text-brown-dark font-medium text-sm">
+                          {quantity}
+                        </span>
+                        <button
+                          onClick={() =>
+                            updateQuantity(product.id, quantity + 1)
+                          }
+                          className="px-3 py-1 text-brown-dark hover:bg-moccasin/50 rounded-r-lg transition font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-lg font-bold text-salmon">
+                          {(product.price * quantity).toFixed(2)}
+                          {product.currency}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+
+            <div className="flex justify-between items-center pt-2">
+              <button
+                onClick={clearCart}
+                className="text-brown-light hover:text-red-500 text-sm font-medium transition-colors cursor-pointer"
+              >
+                Clear all items
+              </button>
+              <div className="text-right">
+                <span className="text-brown-light text-sm">
+                  Estimated Subtotal:{' '}
+                </span>
+                <span className="text-xl font-bold text-brown-dark">
+                  {subtotal.toFixed(2)}€
+                </span>
               </div>
-            ))}
-            <button onClick={clearCart} className="text-brown-light hover:text-red-500 text-sm transition-colors">Clear all items</button>
+            </div>
           </div>
 
-          <div className="lg:col-span-1">
-            <div className="bg-moccasin/50 backdrop-blur-sm rounded-2xl p-6 border border-sand/50 sticky top-24">
-              <h2 className="text-xl font-bold text-brown-dark mb-6">Order Summary</h2>
-              <div className="space-y-4 mb-6">
-                <div className="flex justify-between text-brown-light"><span>Subtotal</span><span className="text-brown-dark font-medium">{subtotal.toFixed(2)}€</span></div>
-                <div className="flex justify-between text-brown-light">
-                  <span>Shipping</span>
-                  <span className={shipping === 0 ? 'text-green-600' : 'text-brown-dark font-medium'}>
-                    {shipping === 0 ? 'FREE' : `${shipping.toFixed(2)}€`}
-                  </span>
-                </div>
-                {shipping > 0 && <p className="text-sm text-brown-light/80">Free shipping on orders over 50€</p>}
-                <hr className="border-sand/50" />
-                <div className="flex justify-between text-lg font-bold">
-                  <span className="text-brown-dark">Total</span>
-                  <span className="text-salmon">{total.toFixed(2)}€</span>
-                </div>
-              </div>
+          {/* Inquiry Form Column */}
+          <div className="lg:col-span-2">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="bg-white rounded-3xl p-6 border border-moccasin shadow-md sticky top-24"
+            >
+              <h2 className="text-xl font-bold text-brown-dark mb-1">
+                Send Inquiry
+              </h2>
+              <p className="text-xs text-brown-light mb-6">
+                No payment is required now. Fill details to coordinate with
+                Yulia.
+              </p>
 
-              <div className="mb-6">
-                <div className="flex gap-2">
-                  <input type="text" placeholder="Promo code" className="flex-grow bg-cream-bg text-brown-dark px-4 py-3 rounded-xl border border-sand focus:border-salmon focus:outline-none placeholder-brown-light/70" />
-                  <button className="bg-sand/50 hover:bg-sand/80 text-brown-dark px-4 py-3 rounded-xl transition-colors">Apply</button>
+              <form onSubmit={handleInquirySubmit} className="space-y-4">
+                {/* Name */}
+                <div>
+                  <label
+                    htmlFor="inquiry-name"
+                    className="block text-xs font-bold text-brown-dark mb-1 uppercase tracking-wider"
+                  >
+                    Your Name
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brown-light/70">
+                      <FaUser size={14} />
+                    </span>
+                    <input
+                      type="text"
+                      id="inquiry-name"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Jane Doe"
+                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-cream-bg/40 border border-moccasin focus:border-sand focus:outline-none placeholder-brown-light/40 text-brown-dark text-sm transition-colors"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <button onClick={() => navigate('/checkout/shipping')} className="w-full bg-sand hover:bg-salmon text-white py-4 px-6 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg shadow-sand/40">
-                Proceed to Checkout
-              </button>
-              <Link to="/shop" className="block text-center text-brown-light hover:text-brown-dark mt-4 text-sm transition-colors">← Continue Shopping</Link>
-            </div>
+                {/* Email */}
+                <div>
+                  <label
+                    htmlFor="inquiry-email"
+                    className="block text-xs font-bold text-brown-dark mb-1 uppercase tracking-wider"
+                  >
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brown-light/70">
+                      <FaEnvelope size={14} />
+                    </span>
+                    <input
+                      type="email"
+                      id="inquiry-email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="jane@example.com"
+                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-cream-bg/40 border border-moccasin focus:border-sand focus:outline-none placeholder-brown-light/40 text-brown-dark text-sm transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Phone / WhatsApp */}
+                <div>
+                  <label
+                    htmlFor="inquiry-phone"
+                    className="block text-xs font-bold text-brown-dark mb-1 uppercase tracking-wider"
+                  >
+                    WhatsApp Number
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-500">
+                      <FaWhatsapp size={16} />
+                    </span>
+                    <input
+                      type="tel"
+                      id="inquiry-phone"
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="+34 600 000 000"
+                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-cream-bg/40 border border-moccasin focus:border-sand focus:outline-none placeholder-brown-light/40 text-brown-dark text-sm transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Address */}
+                <div>
+                  <label
+                    htmlFor="inquiry-address"
+                    className="block text-xs font-bold text-brown-dark mb-1 uppercase tracking-wider"
+                  >
+                    Shipping Address & Country
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3.5 top-3.5 text-brown-light/70">
+                      <FaMapLocationDot size={14} />
+                    </span>
+                    <textarea
+                      id="inquiry-address"
+                      required
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      rows={2}
+                      placeholder="Street address, City, Country"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-cream-bg/40 border border-moccasin focus:border-sand focus:outline-none placeholder-brown-light/40 text-brown-dark text-sm transition-colors resize-none"
+                    />
+                  </div>
+                </div>
+
+                {/* Notes */}
+                <div>
+                  <label
+                    htmlFor="inquiry-notes"
+                    className="block text-xs font-bold text-brown-dark mb-1 uppercase tracking-wider"
+                  >
+                    Custom Requests / Notes (Optional)
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3.5 top-3.5 text-brown-light/70">
+                      <FaCompass size={14} />
+                    </span>
+                    <textarea
+                      id="inquiry-notes"
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      rows={3}
+                      placeholder="E.g., custom colors, personal gift message, specific delivery date requests..."
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-cream-bg/40 border border-moccasin focus:border-sand focus:outline-none placeholder-brown-light/40 text-brown-dark text-sm transition-colors resize-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-zinc-400 text-white py-4 px-6 rounded-2xl font-bold text-base md:text-lg transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-xl hover:shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer hover:-translate-y-0.5"
+                  >
+                    <FaWhatsapp className="w-5 h-5" />
+                    {loading ? 'Generating Inquiry...' : 'Inquire via WhatsApp'}
+                  </button>
+                </div>
+              </form>
+
+              <div className="mt-4 text-center">
+                <span className="text-[10px] text-brown-light/60">
+                  🌍 We ship worldwide from Marbella / San Pedro, Spain.
+                </span>
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>

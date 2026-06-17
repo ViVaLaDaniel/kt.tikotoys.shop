@@ -27,13 +27,19 @@ const ProfilePage: React.FC = () => {
         {/* Breadcrumb */}
         <nav className="mb-8">
           <ol className="flex items-center gap-2 text-sm text-gray-400">
-            <li><Link to="/" className="hover:text-white">Home</Link></li>
+            <li>
+              <Link to="/" className="hover:text-white">
+                Home
+              </Link>
+            </li>
             <li>/</li>
             <li className="text-white">Profile</li>
           </ol>
         </nav>
 
-        <h1 className="text-3xl md:text-4xl font-bold text-white mb-8">My Profile</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-8">
+          My Profile
+        </h1>
 
         <div className="grid md:grid-cols-3 gap-6">
           {/* Sidebar */}
@@ -88,7 +94,9 @@ const ProfilePage: React.FC = () => {
             {/* Personal Info */}
             <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-white">Personal Information</h2>
+                <h2 className="text-xl font-bold text-white">
+                  Personal Information
+                </h2>
                 {!isEditing && (
                   <button
                     onClick={() => setIsEditing(true)}
@@ -102,20 +110,28 @@ const ProfilePage: React.FC = () => {
               {isEditing ? (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2">Name</label>
+                    <label className="block text-gray-400 text-sm mb-2">
+                      Name
+                    </label>
                     <input
                       type="text"
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
                       className="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-pink-500 focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2">Email</label>
+                    <label className="block text-gray-400 text-sm mb-2">
+                      Email
+                    </label>
                     <input
                       type="email"
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
                       className="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-pink-500 focus:outline-none"
                     />
                   </div>
@@ -141,15 +157,21 @@ const ProfilePage: React.FC = () => {
               ) : (
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-gray-400 text-sm mb-1">Name</label>
+                    <label className="block text-gray-400 text-sm mb-1">
+                      Name
+                    </label>
                     <p className="text-white text-lg">{user.name}</p>
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm mb-1">Email</label>
+                    <label className="block text-gray-400 text-sm mb-1">
+                      Email
+                    </label>
                     <p className="text-white text-lg">{user.email}</p>
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm mb-1">Registration Date</label>
+                    <label className="block text-gray-400 text-sm mb-1">
+                      Registration Date
+                    </label>
                     <p className="text-white text-lg">
                       {new Date(user.createdAt).toLocaleDateString('ru-RU')}
                     </p>

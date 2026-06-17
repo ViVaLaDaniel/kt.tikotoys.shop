@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { Order } from '../types';
 
 interface OrdersContextType {
@@ -11,7 +17,9 @@ const OrdersContext = createContext<OrdersContextType | undefined>(undefined);
 
 const ORDERS_STORAGE_KEY = 'kt-tikotoys-orders';
 
-export const OrdersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const OrdersProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [orders, setOrders] = useState<Order[]>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem(ORDERS_STORAGE_KEY);
@@ -37,14 +45,14 @@ export const OrdersProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const addOrder = (orderData: Omit<Order, 'id' | 'createdAt'>) => {
     const newOrder: Order = {
       ...orderData,
-      id: Math.max(...orders.map(o => o.id), 0) + 1,
+      id: Math.max(...orders.map((o) => o.id), 0) + 1,
       createdAt: new Date(),
     };
     setOrders([newOrder, ...orders]);
   };
 
   const getOrdersByUserId = (userId: number): Order[] => {
-    return orders.filter(order => order.userId === userId);
+    return orders.filter((order) => order.userId === userId);
   };
 
   return (

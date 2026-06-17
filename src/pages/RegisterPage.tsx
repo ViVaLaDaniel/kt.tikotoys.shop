@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const { register } = useAuth();
-  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,14 +32,18 @@ const RegisterPage: React.FC = () => {
 
     setIsLoading(true);
 
-    const success = await register(formData.email, formData.password, formData.name);
-    
+    const success = await register(
+      formData.email,
+      formData.password,
+      formData.name,
+    );
+
     if (success) {
       navigate('/', { replace: true });
     } else {
       setError('Пользователь с таким email уже существует');
     }
-    
+
     setIsLoading(false);
   };
 
@@ -49,7 +53,9 @@ const RegisterPage: React.FC = () => {
         {/* Card */}
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">Создать аккаунт</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">
+              Создать аккаунт
+            </h1>
             <p className="text-gray-400">Присоединяйтесь к нам!</p>
           </div>
 
@@ -65,7 +71,9 @@ const RegisterPage: React.FC = () => {
               <input
                 type="text"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 required
                 className="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-pink-500 focus:outline-none"
                 placeholder="Ваше имя"
@@ -77,7 +85,9 @@ const RegisterPage: React.FC = () => {
               <input
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 required
                 className="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-pink-500 focus:outline-none"
                 placeholder="your@email.com"
@@ -89,7 +99,9 @@ const RegisterPage: React.FC = () => {
               <input
                 type="password"
                 value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
                 required
                 minLength={6}
                 className="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-pink-500 focus:outline-none"
@@ -99,11 +111,15 @@ const RegisterPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-gray-400 text-sm mb-2">Подтвердите пароль</label>
+              <label className="block text-gray-400 text-sm mb-2">
+                Подтвердите пароль
+              </label>
               <input
                 type="password"
                 value={formData.confirmPassword}
-                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, confirmPassword: e.target.value })
+                }
                 required
                 className="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-pink-500 focus:outline-none"
                 placeholder="••••••••"
@@ -135,14 +151,20 @@ const RegisterPage: React.FC = () => {
 
           <div className="mt-6 text-center text-gray-400 text-sm">
             Уже есть аккаунт?{' '}
-            <Link to="/login" className="text-pink-400 hover:text-pink-300 font-medium">
+            <Link
+              to="/login"
+              className="text-pink-400 hover:text-pink-300 font-medium"
+            >
               Войти
             </Link>
           </div>
         </div>
 
         <div className="mt-6 text-center">
-          <Link to="/" className="text-gray-400 hover:text-white text-sm transition-colors">
+          <Link
+            to="/"
+            className="text-gray-400 hover:text-white text-sm transition-colors"
+          >
             ← Вернуться на главную
           </Link>
         </div>

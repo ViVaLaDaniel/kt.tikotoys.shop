@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import { Product } from '../types';
 
 // Интерфейс для элемента корзины
@@ -25,7 +31,9 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const CART_STORAGE_KEY = 'kt-tikotoys-cart';
 
 // Провайдер корзины
-export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const CartProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [items, setItems] = useState<CartItem[]>(() => {
     // Загрузка из localStorage при инициализации
     if (typeof window !== 'undefined') {
@@ -49,23 +57,27 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Добавить товар в корзину
   const addToCart = (product: Product, quantity: number = 1) => {
     setItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.product.id === product.id);
-      
+      const existingItem = prevItems.find(
+        (item) => item.product.id === product.id,
+      );
+
       if (existingItem) {
         return prevItems.map((item) =>
           item.product.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
-            : item
+            : item,
         );
       }
-      
+
       return [...prevItems, { product, quantity }];
     });
   };
 
   // Удалить товар из корзины
   const removeFromCart = (productId: number) => {
-    setItems((prevItems) => prevItems.filter((item) => item.product.id !== productId));
+    setItems((prevItems) =>
+      prevItems.filter((item) => item.product.id !== productId),
+    );
   };
 
   // Обновить количество товара
@@ -74,11 +86,11 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       removeFromCart(productId);
       return;
     }
-    
+
     setItems((prevItems) =>
       prevItems.map((item) =>
-        item.product.id === productId ? { ...item, quantity } : item
-      )
+        item.product.id === productId ? { ...item, quantity } : item,
+      ),
     );
   };
 
@@ -89,7 +101,10 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // Получить общую сумму
   const getTotal = () => {
-    return items.reduce((total, item) => total + item.product.price * item.quantity, 0);
+    return items.reduce(
+      (total, item) => total + item.product.price * item.quantity,
+      0,
+    );
   };
 
   // Получить количество товаров

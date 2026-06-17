@@ -38,7 +38,9 @@ export interface Product {
   description: string;
   rating: number;
   reviewCount: number;
-  category?: 'toys' | 'beanies' | 'accessories';
+  category?: 'toys' | 'beanies' | 'accessories' | 'boxes';
+  size?: 'small' | 'medium' | 'large';
+  colors?: string[];
 }
 
 export interface Review {

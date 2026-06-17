@@ -69,7 +69,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   // Generate responsive image attributes
   const currentImageUrl = product.imageUrl[currentImageIndex]; // e.g., '/images/WinterHead3.webp'
-  const imageBase = currentImageUrl.replace('/images/WinterHead', '/images/winterhead').replace('.webp', '');
+  const imageBase = currentImageUrl
+    .replace('/images/WinterHead', '/images/winterhead')
+    .replace('.webp', '');
   const imageSrcSet = [
     `${imageBase}_400px.webp 400w`,
     `${imageBase}_800px.webp 800w`,
