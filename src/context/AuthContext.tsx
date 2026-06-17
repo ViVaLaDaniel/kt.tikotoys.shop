@@ -55,10 +55,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
             email: firebaseUser.email,
             name: firebaseUser.displayName,
             photoURL: firebaseUser.photoURL,
-            // Временное простое правило для админа. Позже мы сделаем это надежнее.
-            isAdmin: import.meta.env.VITE_ADMIN_EMAIL
-              ? firebaseUser.email === import.meta.env.VITE_ADMIN_EMAIL
-              : false,
+            // TODO: Replace with Firebase Custom Claims checked via
+            // firebaseUser.getIdTokenResult() once a backend sets the claim.
+            // This client-side check is a UI hint only and must NOT be
+            // trusted for authorizing destructive operations.
+            isAdmin:
+              firebaseUser.emailVerified &&
+              !!import.meta.env.VITE_ADMIN_EMAIL &&
+              firebaseUser.email === import.meta.env.VITE_ADMIN_EMAIL,
             createdAt: firebaseUser.metadata.creationTime || undefined,
           };
           setUser(appUser);
