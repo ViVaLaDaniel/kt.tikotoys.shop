@@ -1,11 +1,9 @@
 import path from 'path';
-import { defineConfig, loadEnv, PluginOption } from 'vite';
+import { defineConfig, PluginOption } from 'vite';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 
-export default defineConfig(({ mode, command }) => {
-    const env = loadEnv(mode, '.', '');
-    
+export default defineConfig(({ mode }) => {
     const plugins: PluginOption[] = [react()];
     if (mode === 'analyze') {
       plugins.push(visualizer({
@@ -17,17 +15,17 @@ export default defineConfig(({ mode, command }) => {
     return {
       server: {
         port: 3000,
-        host: '0.0.0.0',
+        host: 'localhost',
       },
       plugins: plugins,
-      define: {
-        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
-      },
+      define: {},
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      esbuild: {
+        drop: mode === 'production' ? ['console', 'debugger'] : [],
       },
       build: {
         chunkSizeWarningLimit: 600,

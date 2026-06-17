@@ -23,12 +23,6 @@ const CheckoutPaymentPage: React.FC = () => {
   const { addOrder } = useOrders();
   const [shippingData, setShippingData] = useState<ShippingData | null>(null);
   const [paymentMethod, setPaymentMethod] = useState('card');
-  const [cardData, setCardData] = useState({
-    number: '',
-    name: '',
-    expiry: '',
-    cvv: '',
-  });
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
 
@@ -41,21 +35,6 @@ const CheckoutPaymentPage: React.FC = () => {
       navigate('/checkout/shipping');
     }
   }, [navigate, orderPlaced]);
-
-  const handleCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let { value } = e.target;
-    const { name } = e.target;
-    if (name === 'number')
-      value = (value.replace(/\D/g, '').match(/.{1,4}/g) || [])
-        .join(' ')
-        .slice(0, 19);
-    if (name === 'expiry')
-      value = (value.replace(/\D/g, '').match(/.{1,2}/g) || [])
-        .join('/')
-        .slice(0, 5);
-    if (name === 'cvv') value = value.replace(/\D/g, '').slice(0, 3);
-    setCardData({ ...cardData, [name]: value });
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -254,63 +233,12 @@ const CheckoutPaymentPage: React.FC = () => {
 
               {paymentMethod === 'card' && (
                 <div className="space-y-4">
-                  <div>
-                    <label className="block text-brown-light text-sm mb-2">
-                      Card Number *
-                    </label>
-                    <input
-                      type="text"
-                      name="number"
-                      value={cardData.number}
-                      onChange={handleCardChange}
-                      required
-                      placeholder="1234 5678 9012 3456"
-                      className="w-full bg-cream-bg text-brown-dark px-4 py-3 rounded-xl border border-sand focus:border-salmon focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-brown-light text-sm mb-2">
-                      Name on Card *
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={cardData.name}
-                      onChange={handleCardChange}
-                      required
-                      placeholder="John Doe"
-                      className="w-full bg-cream-bg text-brown-dark px-4 py-3 rounded-xl border border-sand focus:border-salmon focus:outline-none"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-brown-light text-sm mb-2">
-                        Expiry Date *
-                      </label>
-                      <input
-                        type="text"
-                        name="expiry"
-                        value={cardData.expiry}
-                        onChange={handleCardChange}
-                        required
-                        placeholder="MM/YY"
-                        className="w-full bg-cream-bg text-brown-dark px-4 py-3 rounded-xl border border-sand focus:border-salmon focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-brown-light text-sm mb-2">
-                        CVV *
-                      </label>
-                      <input
-                        type="text"
-                        name="cvv"
-                        value={cardData.cvv}
-                        onChange={handleCardChange}
-                        required
-                        placeholder="123"
-                        className="w-full bg-cream-bg text-brown-dark px-4 py-3 rounded-xl border border-sand focus:border-salmon focus:outline-none"
-                      />
-                    </div>
+                  <div className="bg-sand/10 border border-sand rounded-xl p-6 text-center">
+                    <svg className="w-10 h-10 mx-auto mb-3 text-brown-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                    <p className="text-brown-dark font-medium mb-1">Secure payment via Stripe</p>
+                    <p className="text-brown-light text-sm">Card details are collected securely by our payment processor. Your data never touches our servers.</p>
                   </div>
                 </div>
               )}
@@ -471,7 +399,7 @@ const CheckoutPaymentPage: React.FC = () => {
                   />
                 </svg>
                 <p className="text-brown-light text-sm">
-                  Your payment information is secure and encrypted.
+                  Demo mode — no real payment is processed.
                 </p>
               </div>
             </div>
