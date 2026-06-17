@@ -1,23 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const headerRef = useRef<HTMLHeadElement>(null);
-  const userMenuRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  const { getItemCount } = useCart();
-  const { user, logout, isAuthenticated } = useAuth();
-  const itemCount = getItemCount();
 
   // Close menus on scroll
   useEffect(() => {
     const handleScroll = () => {
       setIsMenuOpen(false);
-      setIsUserMenuOpen(false);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -31,7 +23,6 @@ const Header: React.FC = () => {
         !headerRef.current.contains(event.target as Node)
       ) {
         setIsMenuOpen(false);
-        setIsUserMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -41,23 +32,15 @@ const Header: React.FC = () => {
   // Close menus on route change
   useEffect(() => {
     setIsMenuOpen(false);
-    setIsUserMenuOpen(false);
   }, [location]);
 
   const navLinks = [
     { to: '/', label: 'Home' },
-    { to: '/shop', label: 'Toy Gallery' },
-    { to: '/cart', label: 'Box Builder 🎁' },
     { to: '/about', label: 'About Yulia' },
     { to: '/contact', label: 'Contact' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
-
-  const handleLogout = () => {
-    logout();
-    setIsUserMenuOpen(false);
-  };
 
   return (
     <header
@@ -90,124 +73,34 @@ const Header: React.FC = () => {
           ))}
         </nav>
 
-        {/* Right side: Auth + Cart + Mobile menu */}
-        <div className="flex items-center gap-2">
-          <div className="hidden md:flex items-center gap-2">
-            {isAuthenticated && user ? (
-              <div className="relative" ref={userMenuRef}>
-                <button
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-moccasin transition-colors"
-                >
-                  {user.photoURL ? (
-                    <img
-                      src={user.photoURL}
-                      alt={user.name || 'User Avatar'}
-                      className="w-8 h-8 rounded-full"
-                    />
-                  ) : (
-                    <div className="w-8 h-8 bg-gradient-to-br from-sand to-salmon rounded-full flex items-center justify-center font-bold text-sm text-white">
-                      {user.name ? user.name.charAt(0).toUpperCase() : ' '}
-                    </div>
-                  )}
-                  <span className="text-brown-light">
-                    {user.name || 'User'}
-                  </span>
-                  <svg
-                    className={`w-4 h-4 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </button>
-
-                {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-cream-bg border border-moccasin rounded-xl shadow-lg overflow-hidden">
-                    <div className="px-4 py-3 border-b border-moccasin">
-                      <p className="text-brown-dark font-medium">
-                        {user.name || 'User'}
-                      </p>
-                      <p className="text-brown-light text-sm">
-                        {user.email || 'No email'}
-                      </p>
-                    </div>
-                    <div className="py-2">
-                      <Link
-                        to="/profile"
-                        className="block px-4 py-2 text-brown-light hover:bg-moccasin hover:text-brown-dark transition-colors"
-                      >
-                        👤 My Profile
-                      </Link>
-                      <Link
-                        to="/orders"
-                        className="block px-4 py-2 text-brown-light hover:bg-moccasin hover:text-brown-dark transition-colors"
-                      >
-                        📦 My Orders
-                      </Link>
-                      {user.isAdmin && (
-                        <Link
-                          to="/admin"
-                          className="block px-4 py-2 text-salmon hover:bg-moccasin transition-colors"
-                        >
-                          ⚙️ Admin Dashboard
-                        </Link>
-                      )}
-                    </div>
-                    <div className="border-t border-moccasin py-2">
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 text-red-500 hover:bg-moccasin hover:text-red-600 transition-colors"
-                      >
-                        🚪 Logout
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                to="/login"
-                className="px-4 py-2 rounded-lg font-medium bg-sand hover:bg-salmon text-white transition-all shadow-lg shadow-sand/30"
-              >
-                Login
-              </Link>
-            )}
-          </div>
-
-          <Link
-            to="/cart"
-            className="relative p-2 rounded-lg hover:bg-moccasin transition-colors group"
-            aria-label="Shopping cart"
+        {/* Right side: WhatsApp CTA + Mobile menu */}
+        <div className="flex items-center gap-3">
+          {/* Desktop WhatsApp CTA */}
+          <a
+            href="https://wa.me/34642841240?text=Hello%20Yulia!%20I%20would%20like%20to%20inquire%20about%20your%20handmade%20knitted%20toy%20chests."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm transition-all shadow-md shadow-emerald-500/20"
           >
-            <svg
-              className="w-6 h-6 text-brown-light group-hover:text-brown-dark transition-colors"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-            {itemCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-salmon text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                {itemCount > 9 ? '9+' : itemCount}
-              </span>
-            )}
-          </Link>
+            Inquire on WhatsApp 💬
+          </a>
 
+          {/* Mobile WhatsApp Icon */}
+          <a
+            href="https://wa.me/34642841240?text=Hello%20Yulia!%20I%20would%20like%20to%20inquire%20about%20your%20handmade%20knitted%20toy%20chests."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="md:hidden p-2 rounded-lg text-emerald-600 hover:bg-moccasin transition-colors"
+            aria-label="Contact on WhatsApp"
+          >
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.488 1.459 5.407 1.461 5.45.003 9.885-4.432 9.888-9.886.002-2.642-1.027-5.125-2.897-6.999-1.87-1.874-4.353-2.906-6.996-2.908-5.46 0-9.894 4.434-9.897 9.89-.001 1.83.479 3.619 1.392 5.195l-.952 3.478 3.565-.936zm10.743-7.412c-.29-.145-1.716-.848-1.98-.942-.262-.096-.453-.145-.642.145-.19.29-.735.942-.9.1.137-.184.272-.453.54-.596.268-.145.536-.073.804.073.268.145 1.14 1.185 1.74 1.723.33.294.615.54.843.705.29.207.45.197.64.12.19-.077.848-.348.97-.676.12-.33.12-.612.06-.676-.06-.064-.25-.145-.54-.29zm-5.13 5.105c-.333-.08-.947-.323-1.872-1.15-.717-.64-1.203-1.432-1.344-1.674-.14-.243-.015-.374.107-.495.11-.11.252-.293.378-.44.126-.145.168-.25.252-.416.084-.166.042-.31-.021-.454-.063-.14-.54-1.3-.74-1.785-.194-.475-.39-.413-.54-.42l-.46-.008c-.16 0-.418.06-.637.298-.22.24-.837.818-.837 1.996 0 1.18.86 2.32.98 2.48.12.162 1.69 2.58 4.095 3.618.572.247 1.018.396 1.366.507.576.183 1.1.157 1.513.097.46-.067 1.417-.58 1.618-1.14.202-.56.202-1.04.14-1.14-.06-.1-.24-.162-.53-.306z" />
+            </svg>
+          </a>
+
+          {/* Burger Menu Button */}
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-moccasin transition-colors"
+            className="md:hidden p-2 rounded-lg hover:bg-moccasin transition-colors text-brown-dark"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
@@ -231,66 +124,14 @@ const Header: React.FC = () => {
         </div>
       </div>
 
+      {/* Mobile Drawer */}
       <div
         id="mobile-menu"
-        className={`md:hidden border-t border-moccasin transition-all duration-300 ease-in-out overflow-hidden ${
+        className={`md:hidden border-t border-moccasin bg-cream-bg/95 backdrop-blur-md transition-all duration-300 ease-in-out overflow-hidden ${
           isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <nav className="container mx-auto px-4 py-4 flex flex-col gap-2">
-          {isAuthenticated && user ? (
-            <>
-              <div className="flex items-center gap-3 px-4 py-3 bg-moccasin/50 rounded-lg mb-2">
-                {user.photoURL ? (
-                  <img
-                    src={user.photoURL}
-                    alt={user.name || 'User Avatar'}
-                    className="w-10 h-10 rounded-full"
-                  />
-                ) : (
-                  <div className="w-10 h-10 bg-gradient-to-br from-sand to-salmon rounded-full flex items-center justify-center font-bold text-lg text-white">
-                    {user.name ? user.name.charAt(0).toUpperCase() : ' '}
-                  </div>
-                )}
-                <div>
-                  <p className="text-brown-dark font-medium">
-                    {user.name || 'User'}
-                  </p>
-                  <p className="text-brown-light text-sm">
-                    {user.email || 'No email'}
-                  </p>
-                </div>
-              </div>
-              <Link
-                to="/profile"
-                className="px-4 py-3 rounded-lg font-medium text-brown-light hover:text-brown-dark hover:bg-moccasin transition-all"
-              >
-                👤 My Profile
-              </Link>
-              <Link
-                to="/orders"
-                className="px-4 py-3 rounded-lg font-medium text-brown-light hover:text-brown-dark hover:bg-moccasin transition-all"
-              >
-                📦 My Orders
-              </Link>
-              {user.isAdmin && (
-                <Link
-                  to="/admin"
-                  className="px-4 py-3 rounded-lg font-medium text-salmon hover:text-brown-dark hover:bg-moccasin transition-all"
-                >
-                  ⚙️ Admin Dashboard
-                </Link>
-              )}
-            </>
-          ) : (
-            <Link
-              to="/login"
-              className="px-4 py-3 rounded-lg font-medium bg-sand/80 text-brown-dark hover:bg-sand transition-all"
-            >
-              Login
-            </Link>
-          )}
-
           {navLinks.map((link) => (
             <Link
               key={link.to}
@@ -306,15 +147,14 @@ const Header: React.FC = () => {
             </Link>
           ))}
 
-
-          {isAuthenticated && (
-            <button
-              onClick={handleLogout}
-              className="px-4 py-3 rounded-lg font-medium text-red-500 hover:text-red-600 hover:bg-moccasin transition-all text-left"
-            >
-              🚪 Logout
-            </button>
-          )}
+          <a
+            href="https://wa.me/34642841240?text=Hello%20Yulia!%20I%20would%20like%20to%20inquire%20about%20your%20handmade%20knitted%20toy%20chests."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 px-4 py-3 rounded-lg font-bold text-white bg-emerald-500 hover:bg-emerald-600 transition-all text-center flex items-center justify-center gap-2"
+          >
+            Chat on WhatsApp 💬
+          </a>
         </nav>
       </div>
     </header>

@@ -82,10 +82,10 @@ const Footer: React.FC = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  to="/shop"
+                  to="/"
                   className="text-brown-light hover:text-salmon transition-colors"
                 >
-                  Collection
+                  Home
                 </Link>
               </li>
               <li>
@@ -104,43 +104,41 @@ const Footer: React.FC = () => {
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/blog"
-                  className="text-brown-light hover:text-salmon transition-colors"
-                >
-                  Blog
-                </Link>
-              </li>
             </ul>
           </div>
 
           {/* Customer Service */}
           <div>
-            <h3 className="text-brown-dark font-bold mb-4">Customer Service</h3>
+            <h3 className="text-brown-dark font-bold mb-4">Our Storefronts</h3>
             <ul className="space-y-2">
               <li>
-                <Link
-                  to="/cart"
-                  className="text-brown-light hover:text-salmon transition-colors"
-                >
-                  Box Builder 🎁
-                </Link>
-              </li>
-              <li>
                 <a
-                  href="#"
+                  href="https://kttikotoys.etsy.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-brown-light hover:text-salmon transition-colors"
                 >
-                  Worldwide Shipping
+                  Etsy Shop 🛍️
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://es.wallapop.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-brown-light hover:text-salmon transition-colors"
                 >
-                  Custom Orders FAQ
+                  Wallapop Profile 🧸
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://wa.me/34642841240"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-brown-light hover:text-salmon transition-colors"
+                >
+                  WhatsApp Support 💬
                 </a>
               </li>
             </ul>
@@ -205,9 +203,6 @@ const Footer: React.FC = () => {
             <a href="#" className="hover:text-brown-dark transition-colors">
               Terms of Service
             </a>
-            <Link to="/admin" className="hover:text-salmon transition-colors">
-              Admin
-            </Link>
           </div>
         </div>
       </div>
