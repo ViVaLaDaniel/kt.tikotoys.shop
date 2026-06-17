@@ -6,21 +6,7 @@ const CheckoutShippingPage: React.FC = () => {
   const navigate = useNavigate();
   const { items, getTotal } = useCart();
   const [formData, setFormData] = useState(() => {
-    const savedData = sessionStorage.getItem('shippingData');
-    if (savedData) {
-      const data = JSON.parse(savedData);
-      return {
-        firstName: data.firstName || '',
-        lastName: data.lastName || '',
-        email: data.email || '',
-        phone: data.phone || '',
-        address: data.address || '',
-        city: data.city || '',
-        postalCode: data.postalCode || '',
-        country: data.country || 'Germany',
-      };
-    }
-    return {
+    const defaults = {
       firstName: '',
       lastName: '',
       email: '',
@@ -30,10 +16,36 @@ const CheckoutShippingPage: React.FC = () => {
       postalCode: '',
       country: 'Germany',
     };
+    const savedData = sessionStorage.getItem('shippingData');
+    if (savedData) {
+      try {
+        const data = JSON.parse(savedData);
+        return {
+          firstName: data.firstName || '',
+          lastName: data.lastName || '',
+          email: data.email || '',
+          phone: data.phone || '',
+          address: data.address || '',
+          city: data.city || '',
+          postalCode: data.postalCode || '',
+          country: data.country || 'Germany',
+        };
+      } catch {
+        return defaults;
+      }
+    }
+    return defaults;
   });
   const [shippingMethod, setShippingMethod] = useState(() => {
     const savedData = sessionStorage.getItem('shippingData');
-    return savedData ? JSON.parse(savedData).shippingMethod : 'standard';
+    if (savedData) {
+      try {
+        return JSON.parse(savedData).shippingMethod || 'standard';
+      } catch {
+        return 'standard';
+      }
+    }
+    return 'standard';
   });
 
   const handleChange = (

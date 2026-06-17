@@ -49,9 +49,12 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
     return [];
   });
 
-  // Сохранение в localStorage при изменении
   useEffect(() => {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+    } catch (error) {
+      console.error('Failed to save cart to localStorage:', error);
+    }
   }, [items]);
 
   // Добавить товар в корзину
