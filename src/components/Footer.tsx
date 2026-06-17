@@ -8,6 +8,7 @@ import {
   FaEtsy,
   FaWhatsapp,
 } from 'react-icons/fa6';
+import { SOCIAL_URLS, WHATSAPP_NUMBER } from '../constants';
 
 const Footer: React.FC = () => {
   return (
@@ -29,7 +30,7 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://wa.me/34642841240"
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Chat on WhatsApp"
@@ -38,7 +39,7 @@ const Footer: React.FC = () => {
                 <FaWhatsapp size={16} />
               </a>
               <a
-                href="https://tiktok.com/@kt_tiko_toys"
+                href={SOCIAL_URLS.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on TikTok"
@@ -47,7 +48,7 @@ const Footer: React.FC = () => {
                 <FaTiktok size={16} />
               </a>
               <a
-                href="https://www.instagram.com/kt.tikotoys"
+                href={SOCIAL_URLS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Instagram"
@@ -56,7 +57,7 @@ const Footer: React.FC = () => {
                 <FaInstagram size={16} />
               </a>
               <a
-                href="https://www.facebook.com/profile.php?id=100023909207305"
+                href={SOCIAL_URLS.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Facebook"
@@ -65,7 +66,7 @@ const Footer: React.FC = () => {
                 <FaFacebookF size={16} />
               </a>
               <a
-                href="https://es.pinterest.com/kttikotoysshop/"
+                href={SOCIAL_URLS.pinterest}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Pinterest"
@@ -113,7 +114,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="https://kttikotoys.etsy.com"
+                  href={SOCIAL_URLS.etsy}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-brown-light hover:text-salmon transition-colors"
@@ -123,7 +124,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://es.wallapop.com"
+                  href={SOCIAL_URLS.wallapop}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-brown-light hover:text-salmon transition-colors"
@@ -133,7 +134,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://wa.me/34642841240"
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-brown-light hover:text-salmon transition-colors"
@@ -177,7 +178,7 @@ const Footer: React.FC = () => {
             </form>
             <div className="mt-4">
               <a
-                href="https://kttikotoys.etsy.com"
+                href={SOCIAL_URLS.etsy}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-salmon hover:opacity-80 transition-colors"

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import CheckoutStepper from '../components/CheckoutStepper';
+import EmptyCartMessage from '../components/EmptyCartMessage';
+import { calculateShippingCost } from '../utils/shipping';
 
 const CheckoutShippingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -52,56 +55,17 @@ const CheckoutShippingPage: React.FC = () => {
   };
 
   if (items.length === 0) {
-    return (
-      <main className="flex-grow w-full min-h-screen pt-24 pb-32 px-4 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-brown-dark mb-4">
-            Your cart is empty
-          </h1>
-          <Link to="/shop" className="text-salmon hover:opacity-80">
-            ← Back to Shop
-          </Link>
-        </div>
-      </main>
-    );
+    return <EmptyCartMessage />;
   }
 
   const subtotal = getTotal();
-  const shippingCost =
-    shippingMethod === 'express' ? 9.99 : subtotal > 50 ? 0 : 5.99;
+  const shippingCost = calculateShippingCost(subtotal, shippingMethod);
   const total = subtotal + shippingCost;
 
   return (
     <main className="flex-grow w-full min-h-screen pt-24 pb-32 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-center mb-12">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-sand rounded-full flex items-center justify-center text-white font-bold">
-                1
-              </div>
-              <span className="text-brown-dark font-medium hidden sm:block">
-                Shipping
-              </span>
-            </div>
-            <div className="w-12 h-0.5 bg-sand/50"></div>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-moccasin rounded-full flex items-center justify-center text-brown-light font-bold">
-                2
-              </div>
-              <span className="text-brown-light hidden sm:block">Payment</span>
-            </div>
-            <div className="w-12 h-0.5 bg-sand/50"></div>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-moccasin rounded-full flex items-center justify-center text-brown-light font-bold">
-                3
-              </div>
-              <span className="text-brown-light hidden sm:block">
-                Confirmation
-              </span>
-            </div>
-          </div>
-        </div>
+        <CheckoutStepper currentStep={1} />
 
         <div className="grid lg:grid-cols-3 gap-8">
           <form onSubmit={handleSubmit} className="lg:col-span-2 space-y-6">

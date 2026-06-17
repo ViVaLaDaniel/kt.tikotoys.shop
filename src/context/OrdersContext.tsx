@@ -6,6 +6,10 @@ import React, {
   ReactNode,
 } from 'react';
 import { Order } from '../types';
+import {
+  loadFromLocalStorage,
+  saveToLocalStorage,
+} from '../utils/localStorage';
 
 interface OrdersContextType {
   orders: Order[];
@@ -21,25 +25,16 @@ export const OrdersProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [orders, setOrders] = useState<Order[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(ORDERS_STORAGE_KEY);
-      if (saved) {
-        try {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          return JSON.parse(saved).map((order: any) => ({
-            ...order,
-            createdAt: new Date(order.createdAt),
-          }));
-        } catch {
-          return [];
-        }
-      }
-    }
-    return [];
+    const raw = loadFromLocalStorage<Order[]>(ORDERS_STORAGE_KEY, []);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return raw.map((order: any) => ({
+      ...order,
+      createdAt: new Date(order.createdAt),
+    }));
   });
 
   useEffect(() => {
-    localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+    saveToLocalStorage(ORDERS_STORAGE_KEY, orders);
   }, [orders]);
 
   const addOrder = (orderData: Omit<Order, 'id' | 'createdAt'>) => {

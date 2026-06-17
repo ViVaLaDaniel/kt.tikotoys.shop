@@ -5,15 +5,14 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
-import { Product } from '../types';
+import { Product, CartItem } from '../types';
+import {
+  loadFromLocalStorage,
+  saveToLocalStorage,
+} from '../utils/localStorage';
 
-// Интерфейс для элемента корзины
-export interface CartItem {
-  product: Product;
-  quantity: number;
-}
+export type { CartItem };
 
-// Интерфейс контекста корзины
 interface CartContextType {
   items: CartItem[];
   addToCart: (product: Product, quantity?: number) => void;
@@ -34,24 +33,12 @@ const CART_STORAGE_KEY = 'kt-tikotoys-cart';
 export const CartProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [items, setItems] = useState<CartItem[]>(() => {
-    // Загрузка из localStorage при инициализации
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(CART_STORAGE_KEY);
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch {
-          return [];
-        }
-      }
-    }
-    return [];
-  });
+  const [items, setItems] = useState<CartItem[]>(() =>
+    loadFromLocalStorage<CartItem[]>(CART_STORAGE_KEY, []),
+  );
 
-  // Сохранение в localStorage при изменении
   useEffect(() => {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+    saveToLocalStorage(CART_STORAGE_KEY, items);
   }, [items]);
 
   // Добавить товар в корзину

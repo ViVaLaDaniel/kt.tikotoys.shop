@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { createWhatsAppLink, WHATSAPP_MESSAGES } from '../utils/whatsapp';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -77,7 +78,7 @@ const Header: React.FC = () => {
         <div className="flex items-center gap-3">
           {/* Desktop WhatsApp CTA */}
           <a
-            href="https://wa.me/34642841240?text=Hello%20Yulia!%20I%20would%20like%20to%20inquire%20about%20your%20handmade%20knitted%20toy%20chests."
+            href={createWhatsAppLink(WHATSAPP_MESSAGES.default)}
             target="_blank"
             rel="noopener noreferrer"
             className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm transition-all shadow-md shadow-emerald-500/20"
@@ -87,7 +88,7 @@ const Header: React.FC = () => {
 
           {/* Mobile WhatsApp Icon */}
           <a
-            href="https://wa.me/34642841240?text=Hello%20Yulia!%20I%20would%20like%20to%20inquire%20about%20your%20handmade%20knitted%20toy%20chests."
+            href={createWhatsAppLink(WHATSAPP_MESSAGES.default)}
             target="_blank"
             rel="noopener noreferrer"
             className="md:hidden p-2 rounded-lg text-emerald-600 hover:bg-moccasin transition-colors"
@@ -148,7 +149,7 @@ const Header: React.FC = () => {
           ))}
 
           <a
-            href="https://wa.me/34642841240?text=Hello%20Yulia!%20I%20would%20like%20to%20inquire%20about%20your%20handmade%20knitted%20toy%20chests."
+            href={createWhatsAppLink(WHATSAPP_MESSAGES.default)}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-4 px-4 py-3 rounded-lg font-bold text-white bg-emerald-500 hover:bg-emerald-600 transition-all text-center flex items-center justify-center gap-2"

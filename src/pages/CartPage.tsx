@@ -13,6 +13,7 @@ import {
   FaGift,
   FaBoxesPacking,
 } from 'react-icons/fa6';
+import { openWhatsApp } from '../utils/whatsapp';
 
 type BoxType = 'small' | 'large' | 'individual';
 
@@ -57,7 +58,6 @@ const CartPage: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    const whatsappNumber = '34642841240';
     let itemsText = '';
     selectedToys.forEach(({ product, quantity }) => {
       itemsText += `• ${product.name} x${quantity}\n`;
@@ -89,13 +89,10 @@ ${notes ? `📝 *Custom Requests/Notes:* \n${notes}` : ''}
 
 _Sent from Yulia's Toy Chest Showcase (Spain, Marbella)_`;
 
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
     setTimeout(() => {
       setLoading(false);
       setIsSubmitted(true);
-      window.open(whatsappUrl, '_blank');
+      openWhatsApp(message);
       setTimeout(() => {
         clearCart();
       }, 1000);

@@ -9,56 +9,21 @@ import {
   FaCheck,
   FaStar,
 } from 'react-icons/fa6';
-
-// Configurable Storefront URLs
-const SMALL_BOX_ETSY_URL = 'https://kttikotoys.etsy.com';
-const SMALL_BOX_WALLAPOP_URL = 'https://es.wallapop.com';
-const LARGE_BOX_ETSY_URL = 'https://kttikotoys.etsy.com';
-const LARGE_BOX_WALLAPOP_URL = 'https://es.wallapop.com';
-
-const WHATSAPP_NUMBER = '34642841240';
-const WHATSAPP_BASE_MSG =
-  'Hello Yulia! I am visiting your website and would love to inquire about your handmade knitted toy chests.';
-const WHATSAPP_SMALL_MSG =
-  'Hello Yulia! I would like to order the Charming Toy Gift Box (Small, €500).';
-const WHATSAPP_LARGE_MSG =
-  'Hello Yulia! I would like to order the Royal Toy Gift Box (Large, €1000).';
-
-const createWhatsAppLink = (message: string) => {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-};
+import { SOCIAL_URLS } from '../constants';
+import {
+  createWhatsAppLink,
+  WHATSAPP_MESSAGES,
+} from '../utils/whatsapp';
+import {
+  fadeInUp,
+  scaleUp,
+  staggerContainer,
+} from '../utils/animations';
 
 const HomePage: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Animation variants
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { type: 'spring', stiffness: 60, damping: 15 },
-    },
-  };
-
-  const scaleUpImage = {
-    hidden: { opacity: 0, scale: 0.95 },
-    show: {
-      opacity: 1,
-      scale: 1,
-      transition: { type: 'spring', stiffness: 50, damping: 20, delay: 0.1 },
-    },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
+  const scaleUpImage = scaleUp;
 
   // Sample Reviews for Social Proof
   const reviews = [
@@ -140,7 +105,7 @@ const HomePage: React.FC = () => {
               <FaChevronRight size={12} />
             </a>
             <a
-              href={createWhatsAppLink(WHATSAPP_BASE_MSG)}
+              href={createWhatsAppLink(WHATSAPP_MESSAGES.default)}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-pastel-sand/20 border border-pastel-sand text-cocoa-dark font-bold px-8 py-4 rounded-2xl text-base transition-all duration-300 shadow-sm hover:-translate-y-0.5"
@@ -195,7 +160,7 @@ const HomePage: React.FC = () => {
             >
               <div className="relative group cursor-pointer overflow-hidden rounded-3xl border border-pastel-sand bg-cream-bg/35 shadow-sm hover:shadow-xl transition-all duration-500">
                 <a
-                  href={SMALL_BOX_ETSY_URL}
+                  href={SOCIAL_URLS.etsy}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -250,7 +215,7 @@ const HomePage: React.FC = () => {
 
               <div className="flex flex-col sm:flex-row gap-3 pt-6">
                 <a
-                  href={SMALL_BOX_ETSY_URL}
+                  href={SOCIAL_URLS.etsy}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-grow text-center bg-pastel-caramel hover:bg-cocoa-light text-white font-bold py-4 px-6 rounded-2xl text-sm transition-all duration-300 shadow-md hover:-translate-y-0.5"
@@ -258,7 +223,7 @@ const HomePage: React.FC = () => {
                   Buy on Etsy 🛍️
                 </a>
                 <a
-                  href={SMALL_BOX_WALLAPOP_URL}
+                  href={SOCIAL_URLS.wallapop}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-grow text-center bg-white hover:bg-pastel-sand/20 border border-pastel-sand text-cocoa-dark font-bold py-4 px-6 rounded-2xl text-sm transition-all duration-300 shadow-sm hover:-translate-y-0.5"
@@ -267,7 +232,7 @@ const HomePage: React.FC = () => {
                 </a>
               </div>
               <a
-                href={createWhatsAppLink(WHATSAPP_SMALL_MSG)}
+                href={createWhatsAppLink(WHATSAPP_MESSAGES.smallBox)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs text-cocoa-light hover:text-cocoa-dark font-bold pt-1 transition-colors"
@@ -320,7 +285,7 @@ const HomePage: React.FC = () => {
 
               <div className="flex flex-col sm:flex-row gap-3 pt-6">
                 <a
-                  href={LARGE_BOX_ETSY_URL}
+                  href={SOCIAL_URLS.etsy}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-grow text-center bg-pastel-caramel hover:bg-cocoa-light text-white font-bold py-4 px-6 rounded-2xl text-sm transition-all duration-300 shadow-md hover:-translate-y-0.5"
@@ -328,7 +293,7 @@ const HomePage: React.FC = () => {
                   Buy on Etsy 🛍️
                 </a>
                 <a
-                  href={LARGE_BOX_WALLAPOP_URL}
+                  href={SOCIAL_URLS.wallapop}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-grow text-center bg-white hover:bg-pastel-sand/20 border border-pastel-sand text-cocoa-dark font-bold py-4 px-6 rounded-2xl text-sm transition-all duration-300 shadow-sm hover:-translate-y-0.5"
@@ -337,7 +302,7 @@ const HomePage: React.FC = () => {
                 </a>
               </div>
               <a
-                href={createWhatsAppLink(WHATSAPP_LARGE_MSG)}
+                href={createWhatsAppLink(WHATSAPP_MESSAGES.largeBox)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs text-cocoa-light hover:text-cocoa-dark font-bold pt-1 transition-colors"
@@ -355,7 +320,7 @@ const HomePage: React.FC = () => {
             >
               <div className="relative group cursor-pointer overflow-hidden rounded-3xl border border-pastel-sand bg-cream-bg/35 shadow-sm hover:shadow-xl transition-all duration-500">
                 <a
-                  href={LARGE_BOX_ETSY_URL}
+                  href={SOCIAL_URLS.etsy}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -493,7 +458,7 @@ const HomePage: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
             <a
-              href={createWhatsAppLink(WHATSAPP_BASE_MSG)}
+              href={createWhatsAppLink(WHATSAPP_MESSAGES.default)}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all duration-300 shadow-md hover:-translate-y-0.5"
@@ -504,7 +469,7 @@ const HomePage: React.FC = () => {
 
           <div className="pt-8 flex justify-center gap-6 text-sm text-cocoa-light/80 font-bold">
             <a
-              href="https://tiktok.com/@kt_tiko_toys"
+              href={SOCIAL_URLS.tiktok}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-cocoa-dark transition-colors flex items-center gap-1.5"
@@ -513,7 +478,7 @@ const HomePage: React.FC = () => {
             </a>
             <span>•</span>
             <a
-              href="https://www.instagram.com/kt.tikotoys"
+              href={SOCIAL_URLS.instagram}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-cocoa-dark transition-colors flex items-center gap-1.5"
@@ -522,7 +487,7 @@ const HomePage: React.FC = () => {
             </a>
             <span>•</span>
             <a
-              href="https://es.pinterest.com/kttikotoysshop/"
+              href={SOCIAL_URLS.pinterest}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-cocoa-dark transition-colors flex items-center gap-1.5"

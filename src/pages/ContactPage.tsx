@@ -8,6 +8,18 @@ import {
   FaLocationDot,
   FaPhone,
 } from 'react-icons/fa6';
+import {
+  SOCIAL_URLS,
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  STUDIO_ADDRESS,
+  GOOGLE_MAPS_URL,
+} from '../constants';
+import {
+  createWhatsAppLink,
+  WHATSAPP_MESSAGES,
+} from '../utils/whatsapp';
+import PageHeader from '../components/PageHeader';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -34,31 +46,16 @@ const ContactPage: React.FC = () => {
     }, 2000);
   };
 
-  const whatsappNumber = '34642841240';
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hello Yulia! I am reaching out through your contact page.')}`;
+  const whatsappUrl = createWhatsAppLink(WHATSAPP_MESSAGES.contactPage);
 
   return (
     <main className="flex-grow w-full px-4 md:px-8 pt-28 pb-32 bg-cream-bg font-sans">
       <div className="w-full max-w-6xl mx-auto">
-        {/* Header */}
-        <header className="text-center mb-16">
-          <motion.h1
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-serif font-bold text-brown-dark mb-4 tracking-tight"
-          >
-            Say <span className="text-salmon italic">Hello</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.15 }}
-            className="text-lg text-brown-light"
-          >
-            We&apos;d love to hear from you! Reach out for custom requests or
-            order consultations.
-          </motion.p>
-        </header>
+        <PageHeader
+          title="Say"
+          highlight="Hello"
+          subtitle="We'd love to hear from you! Reach out for custom requests or order consultations."
+        />
 
         <div className="bg-white rounded-3xl border border-moccasin shadow-sm flex flex-col md:flex-row overflow-hidden min-h-[600px]">
           {/* Contact Form */}
@@ -178,13 +175,12 @@ const ContactPage: React.FC = () => {
                         Our Studio Location
                       </h4>
                       <a
-                        href="https://maps.app.goo.gl/1Jt4Nz4FktEovJsv9"
+                        href={GOOGLE_MAPS_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:underline text-xs text-white/80 leading-normal block mt-1"
                       >
-                        C. las Gitanillas, 14, 29670 Marbella / San Pedro
-                        Alcántara, Málaga, Spain
+                        {STUDIO_ADDRESS}
                       </a>
                     </div>
                     {isMapVisible && (
@@ -214,10 +210,10 @@ const ContactPage: React.FC = () => {
                       Email Support
                     </h4>
                     <a
-                      href="mailto:kt.tikotoys.shop@gmail.com"
+                      href={`mailto:${CONTACT_EMAIL}`}
                       className="hover:underline text-xs text-white/80 mt-1 block"
                     >
-                      kt.tikotoys.shop@gmail.com
+                      {CONTACT_EMAIL}
                     </a>
                   </div>
                 </div>
@@ -232,10 +228,10 @@ const ContactPage: React.FC = () => {
                       WhatsApp / Phone
                     </h4>
                     <a
-                      href="tel:+34642841240"
+                      href={`tel:${CONTACT_PHONE.replace(/\s/g, '')}`}
                       className="hover:underline text-xs text-white/80 mt-1 block"
                     >
-                      +34 642 841 240
+                      {CONTACT_PHONE}
                     </a>
                   </div>
                 </div>
@@ -253,7 +249,7 @@ const ContactPage: React.FC = () => {
                 <FaWhatsapp size={16} /> Chat Instantly on WhatsApp
               </a>
               <a
-                href="https://tiktok.com/@kt_tiko_toys"
+                href={SOCIAL_URLS.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-zinc-800 hover:bg-zinc-700 border border-white/10 text-white font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-all"

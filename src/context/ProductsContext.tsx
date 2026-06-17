@@ -8,6 +8,10 @@ import React, {
 import { Product } from '../types';
 import { products as initialProducts } from '../data/products';
 import { fetchSupabase, isSupabaseEnabled } from '../supabaseClient';
+import {
+  loadFromLocalStorage,
+  saveToLocalStorage,
+} from '../utils/localStorage';
 
 interface ProductsContextType {
   products: Product[];
@@ -29,18 +33,10 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
     if (isSupabaseEnabled) {
       return [];
     }
-    // Загрузка из localStorage или использование начальных данных
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(PRODUCTS_STORAGE_KEY);
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch {
-          return initialProducts;
-        }
-      }
-    }
-    return initialProducts;
+    return loadFromLocalStorage<Product[]>(
+      PRODUCTS_STORAGE_KEY,
+      initialProducts,
+    );
   });
 
   useEffect(() => {
@@ -58,29 +54,20 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
           'Ошибка загрузки товаров из Supabase:',
           (error as Error).message,
         );
-        if (typeof window !== 'undefined') {
-          const saved = localStorage.getItem(PRODUCTS_STORAGE_KEY);
-          if (saved) {
-            try {
-              setProducts(JSON.parse(saved));
-              return;
-            } catch {
-              setProducts(initialProducts);
-              return;
-            }
-          }
-        }
-        setProducts(initialProducts);
+        const cached = loadFromLocalStorage<Product[]>(
+          PRODUCTS_STORAGE_KEY,
+          initialProducts,
+        );
+        setProducts(cached);
       }
     };
 
     void loadProducts();
   }, []);
 
-  // Сохранение в localStorage при изменении
   useEffect(() => {
     if (!isSupabaseEnabled) {
-      localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+      saveToLocalStorage(PRODUCTS_STORAGE_KEY, products);
     }
   }, [products]);
 

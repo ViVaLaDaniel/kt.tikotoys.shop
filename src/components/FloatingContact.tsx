@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { FaWhatsapp, FaTiktok, FaCommentDots, FaXmark } from 'react-icons/fa6';
+import { SOCIAL_URLS } from '../constants';
+import { createWhatsAppLink, WHATSAPP_MESSAGES } from '../utils/whatsapp';
 
 const FloatingContact: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const whatsappNumber = '34642841240';
-  const defaultMessage = encodeURIComponent(
-    'Hello Yulia! I am visiting your website and would love to inquire about your handmade knitted toys.',
-  );
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${defaultMessage}`;
-  const tiktokUrl = 'https://tiktok.com/@kt_tiko_toys';
+  const whatsappUrl = createWhatsAppLink(WHATSAPP_MESSAGES.default);
+  const tiktokUrl = SOCIAL_URLS.tiktok;
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 font-sans">
