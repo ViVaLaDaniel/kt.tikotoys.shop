@@ -4,12 +4,9 @@ import { motion } from 'framer-motion';
 import {
   FaWhatsapp,
   FaTiktok,
-  FaInstagram,
   FaEnvelope,
   FaLocationDot,
   FaPhone,
-  FaCompass,
-  FaChevronRight,
 } from 'react-icons/fa6';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -172,7 +169,9 @@ const ContactPage: React.FC = () => {
               <div className="space-y-6">
                 {/* Location */}
                 <div ref={mapRef} className="flex items-start gap-4">
-                  <FaLocationDot className="w-5 h-5 text-sand shrink-0 mt-1" />
+                  <span className="text-sand shrink-0 mt-1">
+                    <FaLocationDot size={20} />
+                  </span>
                   <div className="space-y-2.5 flex-grow">
                     <div>
                       <h4 className="font-bold text-sm leading-none text-sand/90">
@@ -207,7 +206,9 @@ const ContactPage: React.FC = () => {
 
                 {/* Email info */}
                 <div className="flex items-center gap-4">
-                  <FaEnvelope className="w-5 h-5 text-sand shrink-0" />
+                  <span className="text-sand shrink-0">
+                    <FaEnvelope size={20} />
+                  </span>
                   <div>
                     <h4 className="font-bold text-sm leading-none text-sand/90">
                       Email Support
@@ -223,7 +224,9 @@ const ContactPage: React.FC = () => {
 
                 {/* Phone info */}
                 <div className="flex items-center gap-4">
-                  <FaPhone className="w-5 h-5 text-sand shrink-0" />
+                  <span className="text-sand shrink-0">
+                    <FaPhone size={20} />
+                  </span>
                   <div>
                     <h4 className="font-bold text-sm leading-none text-sand/90">
                       WhatsApp / Phone

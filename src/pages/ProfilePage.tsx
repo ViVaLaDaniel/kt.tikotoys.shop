@@ -47,10 +47,14 @@ const ProfilePage: React.FC = () => {
             <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
               <div className="text-center mb-6">
                 <div className="w-24 h-24 bg-gradient-to-br from-pink-500 to-amber-500 rounded-full flex items-center justify-center font-bold text-3xl mx-auto mb-4">
-                  {user.name.charAt(0).toUpperCase()}
+                  {(user.name || 'User').charAt(0).toUpperCase()}
                 </div>
-                <h2 className="text-xl font-bold text-white">{user.name}</h2>
-                <p className="text-gray-400 text-sm">{user.email}</p>
+                <h2 className="text-xl font-bold text-white">
+                  {user.name || 'User'}
+                </h2>
+                <p className="text-gray-400 text-sm">
+                  {user.email || 'No email'}
+                </p>
                 {user.isAdmin && (
                   <span className="inline-block bg-pink-500/20 text-pink-400 text-xs px-3 py-1 rounded-full mt-2">
                     👑 Administrator
@@ -146,7 +150,10 @@ const ProfilePage: React.FC = () => {
                       type="button"
                       onClick={() => {
                         setIsEditing(false);
-                        setFormData({ name: user.name, email: user.email });
+                        setFormData({
+                          name: user.name || '',
+                          email: user.email || '',
+                        });
                       }}
                       className="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-3 px-6 rounded-xl font-bold transition-colors"
                     >
@@ -160,20 +167,24 @@ const ProfilePage: React.FC = () => {
                     <label className="block text-gray-400 text-sm mb-1">
                       Name
                     </label>
-                    <p className="text-white text-lg">{user.name}</p>
+                    <p className="text-white text-lg">{user.name || 'User'}</p>
                   </div>
                   <div>
                     <label className="block text-gray-400 text-sm mb-1">
                       Email
                     </label>
-                    <p className="text-white text-lg">{user.email}</p>
+                    <p className="text-white text-lg">
+                      {user.email || 'No email'}
+                    </p>
                   </div>
                   <div>
                     <label className="block text-gray-400 text-sm mb-1">
                       Registration Date
                     </label>
                     <p className="text-white text-lg">
-                      {new Date(user.createdAt).toLocaleDateString('ru-RU')}
+                      {user.createdAt
+                        ? new Date(user.createdAt).toLocaleDateString('ru-RU')
+                        : 'N/A'}
                     </p>
                   </div>
                 </div>

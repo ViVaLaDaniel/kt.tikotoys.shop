@@ -70,7 +70,7 @@ const CheckoutPaymentPage: React.FC = () => {
               ? 0
               : 5.99;
         addOrder({
-          userId: user.id,
+          userId: user.uid,
           items,
           total: subtotal + shippingCost,
           shippingAddress: { ...shippingData },

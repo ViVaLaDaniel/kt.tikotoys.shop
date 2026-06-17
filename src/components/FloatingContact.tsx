@@ -25,7 +25,9 @@ const FloatingContact: React.FC = () => {
           >
             <span className="text-sm font-medium tracking-wide">TikTok</span>
             <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <FaTiktok className="w-5 h-5 text-white" />
+              <span className="text-white flex items-center justify-center">
+                <FaTiktok size={20} />
+              </span>
             </div>
           </a>
 
@@ -40,7 +42,9 @@ const FloatingContact: React.FC = () => {
               WhatsApp Chat
             </span>
             <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <FaWhatsapp className="w-5 h-5 text-white" />
+              <span className="text-white flex items-center justify-center">
+                <FaWhatsapp size={20} />
+              </span>
             </div>
           </a>
         </div>
@@ -57,9 +61,11 @@ const FloatingContact: React.FC = () => {
         aria-label="Contact Yulia"
       >
         {isOpen ? (
-          <FaXmark className="w-6 h-6" />
+          <FaXmark size={24} />
         ) : (
-          <FaCommentDots className="w-6 h-6 animate-pulse-quick" />
+          <span className="animate-pulse-quick flex items-center justify-center">
+            <FaCommentDots size={24} />
+          </span>
         )}
       </button>
 
@@ -73,11 +79,18 @@ const FloatingContact: React.FC = () => {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-4px); }
         }
+        @keyframes pulseQuick {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.1); }
+        }
         .animate-pulse-slow {
           animation: pulseSlow 3s infinite ease-in-out;
         }
         .animate-bounce-short {
           animation: bounceShort 2s infinite ease-in-out;
+        }
+        .animate-pulse-quick {
+          animation: pulseQuick 1.5s infinite ease-in-out;
         }
       `}</style>
     </div>

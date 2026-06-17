@@ -1,44 +1,43 @@
 import { Product } from '../types';
 
 // Категории товаров
-export type ProductCategory = 'toys' | 'beanies' | 'accessories' | 'boxes';
+export type ProductCategory = 'toys' | 'keychains' | 'boxes';
 
 // Массив товаров для магазина
 export const products: Product[] = [
   {
     id: 1,
-    name: 'Stitch Amigurumi (Handmade)',
-    price: 65,
+    name: 'Candy Unicorn Amigurumi',
+    price: 55,
     currency: '€',
     imageUrl: [
       'https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?w=500&h=500&fit=crop&q=70&auto=format',
       'https://images.unsplash.com/photo-1530325553241-4f6e7690cf36?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
-      'Adorable handmade Stitch plush toy, crocheted with love. Perfect gift for Disney fans! Approximately 25cm tall. Crafted with hypoallergenic plush yarn.',
+      'Adorable handmade Candy Unicorn plush toy, crocheted with love. Made with extra-soft pastel yarn, complete with a sparkling golden horn and soft safety eyes. Perfect for fairytale nursery decoration.',
     rating: 4.9,
-    reviewCount: 89,
+    reviewCount: 94,
     category: 'toys',
     size: 'medium',
-    colors: ['blue', 'purple'],
+    colors: ['pink', 'white', 'pastel'],
   },
   {
     id: 2,
-    name: 'Cloud-Soft Chenille Knit Beanie',
-    price: 49.95,
+    name: 'Cozy Forest Fox Plush',
+    price: 50,
     currency: '€',
     imageUrl: [
       'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=500&h=500&fit=crop&q=70&auto=format',
       'https://images.unsplash.com/photo-1522273514726-c225434cedca?w=500&h=500&fit=crop&q=70&auto=format',
-      'https://images.unsplash.com/photo-1514327605112-b887c0e61c0a?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
-      'Experience ultimate comfort with our handmade Cloud-Soft Chenille Knit Beanie. Perfect for chilly days, this incredibly soft and plush hat keeps you warm and stylish. Made from hypoallergenic, chunky chenille yarn.',
+      'Charmingly soft handmade forest fox amigurumi. Crocheted with premium plush chenille yarn in warm orange and cream tones. Features safety eyes and embroidered nose.',
     rating: 4.8,
-    reviewCount: 124,
-    category: 'beanies',
-    size: 'small',
-    colors: ['white', 'pink', 'gray'],
+    reviewCount: 112,
+    category: 'toys',
+    size: 'medium',
+    colors: ['orange', 'white', 'beige'],
   },
   {
     id: 3,
@@ -50,7 +49,7 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1608889825271-fc9b78e91d29?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
-      'The cutest Baby Yoda (Grogu) amigurumi you will ever see! Handmade with premium hypoallergenic cotton yarn. A must-have for Star Wars fans. Approximately 22cm tall.',
+      'The cutest Baby Yoda (Grogu) amigurumi you will ever see! Handmade with premium hypoallergenic cotton yarn and stuffed with eco-friendly fiberfill. A must-have for Star Wars fans. Approximately 22cm tall.',
     rating: 5.0,
     reviewCount: 156,
     category: 'toys',
@@ -59,37 +58,37 @@ export const products: Product[] = [
   },
   {
     id: 4,
-    name: 'Pink Fluffy Bunny',
-    price: 55,
+    name: 'Candy Dino Crochet Plush',
+    price: 60,
     currency: '€',
     imageUrl: [
       'https://images.unsplash.com/photo-1585990682176-c887a9fc2a99?w=500&h=500&fit=crop&q=70&auto=format',
       'https://images.unsplash.com/photo-1565102667-b86b7f2db3c9?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
-      'Soft and cuddly pink bunny, perfect for babies and toddlers. Made with 100% hypoallergenic plush yarn and secure safety eyes, completely safe for little ones.',
+      'Cute, chubby little dinosaur crocheted with high-quality soft plush yarn. Perfect for kids to hug. Stuffed with hypoallergenic hollowfiber.',
     rating: 4.7,
     reviewCount: 67,
     category: 'toys',
     size: 'medium',
-    colors: ['pink', 'white'],
+    colors: ['blue', 'pink', 'green'],
   },
   {
     id: 5,
-    name: 'Winter Chunky Scarf Set',
-    price: 39,
+    name: 'Pastel Dreamy Unicorn',
+    price: 65,
     currency: '€',
     imageUrl: [
       'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=500&h=500&fit=crop&q=70&auto=format',
       'https://images.unsplash.com/photo-1457545195570-67f207084966?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
-      'Cozy handknit scarf in beautiful winter colors. Made with premium wool-acrylic blend, it pairs perfectly with our chenille beanies for maximum warmth.',
-    rating: 4.6,
+      'Elegant pastel unicorn with long curly mane and silver hooves. Crocheted with organic wool blend yarn. Custom color accents available upon request.',
+    rating: 4.9,
     reviewCount: 45,
-    category: 'accessories',
+    category: 'toys',
     size: 'medium',
-    colors: ['gray', 'beige'],
+    colors: ['white', 'lavender', 'pink'],
   },
   {
     id: 6,
@@ -110,24 +109,24 @@ export const products: Product[] = [
   },
   {
     id: 7,
-    name: 'Cat Ear Beanie Hat',
-    price: 45,
+    name: 'Dragon Amigurumi (Handmade)',
+    price: 65,
     currency: '€',
     imageUrl: [
       'https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=500&h=500&fit=crop&q=70&auto=format',
       'https://images.unsplash.com/photo-1585606393948-aa5f36b9bebe?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
-      'Adorable cat ear beanie, perfect for cat lovers! Soft, warm, and incredibly cute. Hand-knitted with high-quality stretch wool.',
+      'Adorable custom crocheted dragon with tiny felt wings and horns. Made with soft plush yarn. Approximately 25cm tall.',
     rating: 4.9,
     reviewCount: 112,
-    category: 'beanies',
-    size: 'small',
-    colors: ['black', 'pink', 'gray'],
+    category: 'toys',
+    size: 'medium',
+    colors: ['green', 'red', 'pastel'],
   },
   {
     id: 8,
-    name: 'Mini Amigurumi Keychain Set',
+    name: 'Mini Octopus Keychain Set',
     price: 25,
     currency: '€',
     imageUrl: [
@@ -135,10 +134,10 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1608276826730-cb4e2db6873c?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
-      'Set of 3 adorable mini amigurumi keychains (Bear, Bunny, Cat). Perfect for decorating backpacks, handbags, keys, or as sweet little gifts!',
+      'Set of 3 adorable mini amigurumi keychains (Octopus, Bear, Bunny). Perfect for decorating backpacks, handbags, keys, or as sweet little gifts!',
     rating: 4.5,
     reviewCount: 34,
-    category: 'accessories',
+    category: 'keychains',
     size: 'small',
     colors: ['pink', 'blue', 'green'],
   },
@@ -152,7 +151,7 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1512909006721-3d6018887383?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
-      "A beautiful collection of Yulia's finest creations. Includes: 6-8 customized handmade knitted toys of your choice, a customized handwritten calligraphy card, and a premium wooden storage box. Ideal for baby showers, birthdays, or high-end gifts. Worldwide express shipping from Marbella / San Pedro included.",
+      "A beautiful collection of Yulia's finest creations. Includes: 6-8 customized handmade knitted toys of your choice, a customized handwritten calligraphy card, and a premium wooden storage box. Ideal for baby showers, birthdays, or high-end gifts. Worldwide express shipping from Marbella / San Pedro included. Fits 8 slots in the Box Builder.",
     rating: 5.0,
     reviewCount: 18,
     category: 'boxes',
@@ -169,7 +168,7 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1481973965276-80279be85249?w=500&h=500&fit=crop&q=70&auto=format',
     ],
     description:
-      'Our ultimate luxury offering. Includes: 12-15 customized large & premium knitted toys, personal alignment call with Yulia to choose characters and styles, customized wooden toy chest with personal engravings, deluxe silk wrapping, and priority worldwide express shipping. Truly a keepsake to cherish for generations.',
+      'Our ultimate luxury offering. Includes: 12-15 customized large & premium knitted toys, personal alignment call with Yulia to choose characters and styles, customized wooden toy chest with personal engravings, deluxe silk wrapping, and priority worldwide express shipping. Truly a keepsake to cherish for generations. Fits 15 slots in the Box Builder.',
     rating: 5.0,
     reviewCount: 12,
     category: 'boxes',

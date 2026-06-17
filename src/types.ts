@@ -9,7 +9,7 @@ export interface User {
 
 export interface Order {
   id: number;
-  userId: number;
+  userId: string;
   items: CartItem[];
   total: number;
   shippingAddress: {
@@ -38,7 +38,7 @@ export interface Product {
   description: string;
   rating: number;
   reviewCount: number;
-  category?: 'toys' | 'beanies' | 'accessories' | 'boxes';
+  category?: 'toys' | 'keychains' | 'boxes';
   size?: 'small' | 'medium' | 'large';
   colors?: string[];
 }

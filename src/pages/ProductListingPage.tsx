@@ -11,9 +11,18 @@ import {
   FaBasketShopping,
 } from 'react-icons/fa6';
 
-type CategoryFilter = 'all' | 'toys' | 'beanies' | 'accessories' | 'boxes';
+type CategoryFilter = 'all' | 'toys' | 'keychains' | 'boxes';
 type SizeFilter = 'all' | 'small' | 'medium' | 'large';
-type ColorFilter = 'all' | 'pink' | 'blue' | 'beige' | 'gray' | 'pastel';
+type ColorFilter =
+  | 'all'
+  | 'pink'
+  | 'blue'
+  | 'beige'
+  | 'gray'
+  | 'pastel'
+  | 'green'
+  | 'orange'
+  | 'lavender';
 type SortOption = 'popular' | 'price-low' | 'price-high' | 'rating';
 
 const ProductListingPage: React.FC = () => {
@@ -31,7 +40,7 @@ const ProductListingPage: React.FC = () => {
     const categoryParam = searchParams.get('category');
     if (
       categoryParam &&
-      ['toys', 'beanies', 'accessories', 'boxes'].includes(categoryParam)
+      ['toys', 'keychains', 'boxes'].includes(categoryParam)
     ) {
       setCategory(categoryParam as CategoryFilter);
     }
@@ -77,11 +86,10 @@ const ProductListingPage: React.FC = () => {
   }, [products, category, size, color, sortBy]);
 
   const categories = [
-    { value: 'all', label: 'All Collection' },
-    { value: 'toys', label: 'Knitted Toys' },
-    { value: 'boxes', label: 'Gift Boxes 🎁' },
-    { value: 'beanies', label: 'Cozy Beanies' },
-    { value: 'accessories', label: 'Accessories' },
+    { value: 'all', label: 'All Fairytale Items' },
+    { value: 'toys', label: 'Plush Toys 🧸' },
+    { value: 'keychains', label: 'Keychains 🔑' },
+    { value: 'boxes', label: 'Toy Boxes 🎁' },
   ];
 
   const sizes = [
@@ -98,6 +106,9 @@ const ProductListingPage: React.FC = () => {
     { value: 'beige', label: 'Beige' },
     { value: 'gray', label: 'Gray' },
     { value: 'pastel', label: 'Pastel' },
+    { value: 'green', label: 'Green' },
+    { value: 'orange', label: 'Orange' },
+    { value: 'lavender', label: 'Lavender' },
   ];
 
   // Grid animation configs
@@ -129,26 +140,27 @@ const ProductListingPage: React.FC = () => {
           <motion.h1
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-brown-dark mb-4"
+            className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-cocoa-dark mb-4"
           >
-            Handmade <span className="text-salmon italic">Treasures</span>
+            Toy <span className="text-pastel-pink italic">Gallery</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-brown-light text-base md:text-lg max-w-2xl mx-auto"
+            className="text-cocoa-light text-base md:text-lg max-w-2xl mx-auto font-normal leading-relaxed"
           >
-            Lovingly crocheted and knitted from premium yarn in Marbella, Spain.
-            Browse our individual toys or custom curated gift boxes.
+            Browse Yulia&apos;s magical creations. Select individual toys,
+            keychains, or curated toy chests to begin your custom fairytale
+            selection.
           </motion.p>
         </div>
 
         {/* Controls Layout */}
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           {/* Desktop Filters Sidebar */}
-          <aside className="hidden lg:block w-64 shrink-0 bg-white border border-moccasin rounded-3xl p-6 shadow-sm sticky top-24">
-            <div className="flex items-center gap-2 mb-6 text-brown-dark border-b border-moccasin pb-3">
+          <aside className="hidden lg:block w-64 shrink-0 bg-white border border-pastel-sand rounded-3xl p-6 shadow-sm sticky top-24">
+            <div className="flex items-center gap-2 mb-6 text-cocoa-dark border-b border-pastel-sand pb-3">
               <FaFilter />
               <h2 className="font-bold text-base uppercase tracking-wider">
                 Filters
@@ -157,7 +169,7 @@ const ProductListingPage: React.FC = () => {
 
             {/* Category Filter */}
             <div className="mb-6">
-              <h3 className="text-xs font-bold text-brown-dark uppercase tracking-wider mb-3">
+              <h3 className="text-xs font-bold text-cocoa-dark uppercase tracking-wider mb-3">
                 Category
               </h3>
               <div className="space-y-1.5">
@@ -167,8 +179,8 @@ const ProductListingPage: React.FC = () => {
                     onClick={() => setCategory(cat.value as CategoryFilter)}
                     className={`w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition-all ${
                       category === cat.value
-                        ? 'bg-sand text-white font-semibold'
-                        : 'text-brown-light hover:bg-cream-bg/60 hover:text-brown-dark'
+                        ? 'bg-pastel-pink text-cocoa-dark font-bold'
+                        : 'text-cocoa-light hover:bg-cream-bg/60 hover:text-cocoa-dark'
                     }`}
                   >
                     {cat.label}
@@ -179,7 +191,7 @@ const ProductListingPage: React.FC = () => {
 
             {/* Size Filter */}
             <div className="mb-6">
-              <h3 className="text-xs font-bold text-brown-dark uppercase tracking-wider mb-3">
+              <h3 className="text-xs font-bold text-cocoa-dark uppercase tracking-wider mb-3">
                 Size
               </h3>
               <div className="space-y-1.5">
@@ -189,8 +201,8 @@ const ProductListingPage: React.FC = () => {
                     onClick={() => setSize(s.value as SizeFilter)}
                     className={`w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition-all ${
                       size === s.value
-                        ? 'bg-sand text-white font-semibold'
-                        : 'text-brown-light hover:bg-cream-bg/60 hover:text-brown-dark'
+                        ? 'bg-pastel-pink text-cocoa-dark font-bold'
+                        : 'text-cocoa-light hover:bg-cream-bg/60 hover:text-cocoa-dark'
                     }`}
                   >
                     {s.label}
@@ -201,7 +213,7 @@ const ProductListingPage: React.FC = () => {
 
             {/* Color Filter */}
             <div className="mb-2">
-              <h3 className="text-xs font-bold text-brown-dark uppercase tracking-wider mb-3">
+              <h3 className="text-xs font-bold text-cocoa-dark uppercase tracking-wider mb-3">
                 Primary Color
               </h3>
               <div className="space-y-1.5">
@@ -211,8 +223,8 @@ const ProductListingPage: React.FC = () => {
                     onClick={() => setColor(c.value as ColorFilter)}
                     className={`w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition-all ${
                       color === c.value
-                        ? 'bg-sand text-white font-semibold'
-                        : 'text-brown-light hover:bg-cream-bg/60 hover:text-brown-dark'
+                        ? 'bg-pastel-pink text-cocoa-dark font-bold'
+                        : 'text-cocoa-light hover:bg-cream-bg/60 hover:text-cocoa-dark'
                     }`}
                   >
                     {c.label}
@@ -222,33 +234,35 @@ const ProductListingPage: React.FC = () => {
             </div>
           </aside>
 
-          {/* Main Collection Area */}
+          {/* Main Gallery Area */}
           <div className="flex-grow w-full">
             {/* Top Toolbar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-8 bg-white border border-moccasin rounded-2xl p-4 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8 bg-white border border-pastel-sand rounded-2xl p-4 shadow-sm">
               <div className="flex items-center gap-2">
                 {/* Mobile Filter Toggle */}
                 <button
                   onClick={() => setShowFiltersMobile(!showFiltersMobile)}
-                  className="lg:hidden flex items-center gap-2 bg-cream-bg text-brown-dark px-4 py-2 rounded-xl border border-moccasin text-sm font-medium hover:bg-moccasin/50 transition-colors"
+                  className="lg:hidden flex items-center gap-2 bg-cream-bg text-cocoa-dark px-4 py-2 rounded-xl border border-pastel-sand text-sm font-medium hover:bg-pastel-sand/50 transition-colors"
                 >
                   <FaSliders size={14} /> Filters
                 </button>
-                <span className="text-sm text-brown-light font-medium">
+                <span className="text-sm text-cocoa-light font-medium">
                   Showing {filteredProducts.length} items
                 </span>
               </div>
 
               {/* Sort selector */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-brown-light hidden sm:inline">
-                  <FaArrowDownWideShort size={12} className="inline mr-1" />{' '}
+                <span className="text-xs text-cocoa-light hidden sm:inline">
+                  <span className="inline mr-1">
+                    <FaArrowDownWideShort size={12} />
+                  </span>{' '}
                   Sort by:
                 </span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="bg-cream-bg/60 text-brown-dark text-sm px-4 py-2 rounded-xl border border-moccasin focus:border-sand focus:outline-none font-medium cursor-pointer"
+                  className="bg-cream-bg/60 text-cocoa-dark text-sm px-4 py-2 rounded-xl border border-pastel-sand focus:border-pastel-pink focus:outline-none font-medium cursor-pointer"
                 >
                   <option value="popular">Most Popular</option>
                   <option value="rating">Highest Rated</option>
@@ -258,18 +272,18 @@ const ProductListingPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Mobile Filters Panel (Dropdown Collapsible) */}
+            {/* Mobile Filters Panel */}
             <AnimatePresence>
               {showFiltersMobile && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="lg:hidden w-full bg-white border border-moccasin rounded-2xl p-6 mb-6 shadow-md overflow-hidden flex flex-col gap-6"
+                  className="lg:hidden w-full bg-white border border-pastel-sand rounded-2xl p-6 mb-6 shadow-md overflow-hidden flex flex-col gap-6"
                 >
                   {/* Categories Mobile */}
                   <div>
-                    <h3 className="text-xs font-bold text-brown-dark uppercase tracking-wider mb-2">
+                    <h3 className="text-xs font-bold text-cocoa-dark uppercase tracking-wider mb-2">
                       Category
                     </h3>
                     <div className="flex flex-wrap gap-2">
@@ -281,8 +295,8 @@ const ProductListingPage: React.FC = () => {
                           }
                           className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                             category === cat.value
-                              ? 'bg-sand text-white'
-                              : 'bg-cream-bg/50 text-brown-light'
+                              ? 'bg-pastel-pink text-cocoa-dark font-bold'
+                              : 'bg-cream-bg/50 text-cocoa-light'
                           }`}
                         >
                           {cat.label}
@@ -293,7 +307,7 @@ const ProductListingPage: React.FC = () => {
 
                   {/* Sizes Mobile */}
                   <div>
-                    <h3 className="text-xs font-bold text-brown-dark uppercase tracking-wider mb-2">
+                    <h3 className="text-xs font-bold text-cocoa-dark uppercase tracking-wider mb-2">
                       Size
                     </h3>
                     <div className="flex flex-wrap gap-2">
@@ -303,8 +317,8 @@ const ProductListingPage: React.FC = () => {
                           onClick={() => setSize(s.value as SizeFilter)}
                           className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                             size === s.value
-                              ? 'bg-sand text-white'
-                              : 'bg-cream-bg/50 text-brown-light'
+                              ? 'bg-pastel-pink text-cocoa-dark font-bold'
+                              : 'bg-cream-bg/50 text-cocoa-light'
                           }`}
                         >
                           {s.label}
@@ -315,7 +329,7 @@ const ProductListingPage: React.FC = () => {
 
                   {/* Colors Mobile */}
                   <div>
-                    <h3 className="text-xs font-bold text-brown-dark uppercase tracking-wider mb-2">
+                    <h3 className="text-xs font-bold text-cocoa-dark uppercase tracking-wider mb-2">
                       Color
                     </h3>
                     <div className="flex flex-wrap gap-2">
@@ -325,8 +339,8 @@ const ProductListingPage: React.FC = () => {
                           onClick={() => setColor(c.value as ColorFilter)}
                           className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                             color === c.value
-                              ? 'bg-sand text-white'
-                              : 'bg-cream-bg/50 text-brown-light'
+                              ? 'bg-pastel-pink text-cocoa-dark font-bold'
+                              : 'bg-cream-bg/50 text-cocoa-light'
                           }`}
                         >
                           {c.label}
@@ -357,7 +371,7 @@ const ProductListingPage: React.FC = () => {
                       layout
                       variants={itemVariants}
                       exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                      className="group bg-white rounded-3xl overflow-hidden border border-moccasin shadow-sm hover:border-salmon/60 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+                      className="group bg-white rounded-3xl overflow-hidden border border-pastel-sand shadow-sm hover:border-pastel-pink/60 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
                     >
                       <Link
                         to={`/product/${product.id}`}
@@ -370,42 +384,42 @@ const ProductListingPage: React.FC = () => {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                         />
                         {product.category === 'boxes' && (
-                          <span className="absolute top-4 left-4 bg-salmon text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+                          <span className="absolute top-4 left-4 bg-pastel-pink text-cocoa-dark text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
                             PREMIUM BOX 🎁
                           </span>
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-brown-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-cocoa-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </Link>
 
                       <div className="p-6 flex-grow flex flex-col justify-between">
                         <div>
                           <div className="flex items-center justify-between gap-2 mb-2">
-                            <span className="text-[10px] font-bold tracking-widest text-salmon uppercase">
+                            <span className="text-[10px] font-bold tracking-widest text-pastel-pink uppercase">
                               {product.category}
                             </span>
                             {product.size && (
-                              <span className="text-[10px] font-medium text-brown-light bg-cream-bg px-2 py-0.5 rounded-full border border-moccasin uppercase">
+                              <span className="text-[10px] font-medium text-cocoa-light bg-cream-bg px-2 py-0.5 rounded-full border border-pastel-sand uppercase">
                                 {product.size}
                               </span>
                             )}
                           </div>
 
                           <Link to={`/product/${product.id}`}>
-                            <h3 className="text-lg font-bold text-brown-dark mb-1 group-hover:text-salmon transition-colors font-serif leading-tight">
+                            <h3 className="text-lg font-bold text-cocoa-dark mb-1 group-hover:text-pastel-pink transition-colors font-serif leading-tight">
                               {product.name}
                             </h3>
                           </Link>
 
                           <div className="flex items-center gap-1.5 mb-4">
                             <StarRating rating={product.rating} />
-                            <span className="text-xs text-brown-light">
+                            <span className="text-xs text-cocoa-light font-medium">
                               ({product.reviewCount})
                             </span>
                           </div>
                         </div>
 
                         <div className="flex items-center justify-between mt-2 pt-3 border-t border-cream-bg">
-                          <span className="text-2xl font-bold text-brown-dark">
+                          <span className="text-2xl font-bold text-cocoa-dark">
                             {product.price}
                             <span className="text-lg font-bold">
                               {product.currency}
@@ -417,7 +431,7 @@ const ProductListingPage: React.FC = () => {
                             className={`p-3 rounded-xl transition-all duration-300 hover:scale-105 flex items-center justify-center cursor-pointer shadow-sm ${
                               isInCart
                                 ? 'bg-emerald-500 text-white shadow-emerald-500/10'
-                                : 'bg-sand hover:bg-salmon text-white shadow-sand/10 hover:shadow-md'
+                                : 'bg-pastel-pink hover:bg-pastel-lavender text-cocoa-dark shadow-sand/10 hover:shadow-md'
                             }`}
                             aria-label={`Add ${product.name} to Selection`}
                           >
@@ -442,10 +456,10 @@ const ProductListingPage: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-center py-20 bg-white border border-moccasin rounded-3xl"
+                className="text-center py-20 bg-white border border-pastel-sand rounded-3xl"
               >
                 <span className="text-4xl mb-4 block">🔍</span>
-                <p className="text-brown-light font-medium text-lg">
+                <p className="text-cocoa-light font-medium text-lg">
                   No toys fit the selected criteria.
                 </p>
                 <button
@@ -454,7 +468,7 @@ const ProductListingPage: React.FC = () => {
                     setSize('all');
                     setColor('all');
                   }}
-                  className="mt-4 text-salmon hover:underline text-sm font-semibold cursor-pointer"
+                  className="mt-4 text-pastel-pink hover:underline text-sm font-semibold cursor-pointer"
                 >
                   Reset all filters
                 </button>

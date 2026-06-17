@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import {
   FaFacebookF,
   FaInstagram,
-  FaYoutube,
   FaTiktok,
   FaPinterestP,
   FaEtsy,
@@ -19,9 +18,9 @@ const Footer: React.FC = () => {
           {/* Brand */}
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <span className="text-2xl">🧸</span>
-              <h2 className="text-xl font-bold bg-gradient-to-r from-salmon to-sand bg-clip-text text-transparent">
-                KT.TikoToys
+              <span className="text-2xl">🐰</span>
+              <h2 className="text-xl font-serif font-bold bg-gradient-to-r from-salmon to-sand bg-clip-text text-transparent">
+                Yulia&apos;s Toy Chest
               </h2>
             </Link>
             <p className="text-brown-light text-sm mb-4">
@@ -94,7 +93,7 @@ const Footer: React.FC = () => {
                   to="/about"
                   className="text-brown-light hover:text-salmon transition-colors"
                 >
-                  About Us
+                  About Yulia
                 </Link>
               </li>
               <li>
@@ -125,7 +124,7 @@ const Footer: React.FC = () => {
                   to="/cart"
                   className="text-brown-light hover:text-salmon transition-colors"
                 >
-                  Inquiry Selection
+                  Box Builder 🎁
                 </Link>
               </li>
               <li>

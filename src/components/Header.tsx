@@ -46,8 +46,9 @@ const Header: React.FC = () => {
 
   const navLinks = [
     { to: '/', label: 'Home' },
-    { to: '/shop', label: 'Collection' },
-    { to: '/about', label: 'About' },
+    { to: '/shop', label: 'Toy Gallery' },
+    { to: '/cart', label: 'Box Builder 🎁' },
+    { to: '/about', label: 'About Yulia' },
     { to: '/contact', label: 'Contact' },
   ];
 
@@ -66,9 +67,9 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
-          <span className="text-2xl">🧸</span>
-          <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-salmon to-sand bg-clip-text text-transparent group-hover:opacity-90 transition-all">
-            KT.TikoToys
+          <span className="text-2xl">🐰</span>
+          <h1 className="text-xl md:text-2xl font-serif font-bold bg-gradient-to-r from-salmon to-sand bg-clip-text text-transparent group-hover:opacity-90 transition-all">
+            Yulia&apos;s Toy Chest
           </h1>
         </Link>
 

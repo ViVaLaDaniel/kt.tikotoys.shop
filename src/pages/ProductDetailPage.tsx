@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductsContext';
 import { useCart } from '../context/CartContext';
 import StarRating from '../components/StarRating';
@@ -7,7 +7,6 @@ import { motion } from 'framer-motion';
 import {
   FaWhatsapp,
   FaBasketShopping,
-  FaChevronLeft,
   FaHandHoldingHeart,
   FaCompass,
   FaTruckFast,
@@ -16,7 +15,6 @@ import {
 
 const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { addToCart, items } = useCart();
   const { products } = useProducts();
   const [quantity, setQuantity] = useState(1);
@@ -38,11 +36,14 @@ const ProductDetailPage: React.FC = () => {
     return (
       <main className="flex-grow w-full min-h-screen pt-32 pb-32 px-4 flex items-center justify-center bg-cream-bg font-sans">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-brown-dark mb-4">
-            Product Not Found
+          <h1 className="text-3xl font-bold text-cocoa-dark mb-4">
+            Toy Not Found
           </h1>
-          <Link to="/shop" className="text-salmon hover:opacity-80 font-medium">
-            ← Back to Collection
+          <Link
+            to="/shop"
+            className="text-pastel-pink hover:opacity-80 font-medium"
+          >
+            ← Back to Gallery
           </Link>
         </div>
       </main>
@@ -65,7 +66,7 @@ Hi Yulia! I am interested in ordering:
 
 Could you please let me know about availability and shipping options? Thank you!
 
-_Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
+_Sent from Yulia's Toy Chest Showcase (Spain, Marbella)_`;
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
@@ -83,19 +84,19 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
         <nav className="mb-8 flex items-center gap-2">
           <Link
             to="/"
-            className="text-sm text-brown-light hover:text-brown-dark transition-colors"
+            className="text-sm text-cocoa-light hover:text-cocoa-dark transition-colors font-medium"
           >
             Home
           </Link>
-          <span className="text-brown-light/40">/</span>
+          <span className="text-cocoa-light/40">/</span>
           <Link
             to="/shop"
-            className="text-sm text-brown-light hover:text-brown-dark transition-colors"
+            className="text-sm text-cocoa-light hover:text-cocoa-dark transition-colors font-medium"
           >
-            Collection
+            Toy Gallery
           </Link>
-          <span className="text-brown-light/40">/</span>
-          <span className="text-sm text-brown-dark font-medium leading-none">
+          <span className="text-cocoa-light/40">/</span>
+          <span className="text-sm text-cocoa-dark font-semibold leading-none">
             {product.name}
           </span>
         </nav>
@@ -107,7 +108,7 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
-              className="bg-white rounded-3xl overflow-hidden aspect-square border border-moccasin shadow-sm relative"
+              className="bg-white rounded-3xl overflow-hidden aspect-square border border-pastel-sand shadow-sm relative"
             >
               <img
                 src={product.imageUrl[currentImageIndex]}
@@ -115,7 +116,7 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
                 className="w-full h-full object-cover"
               />
               {product.category === 'boxes' && (
-                <span className="absolute top-4 left-4 bg-salmon text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+                <span className="absolute top-4 left-4 bg-pastel-pink text-cocoa-dark text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
                   PREMIUM BOX 🎁
                 </span>
               )}
@@ -129,8 +130,8 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
                     onClick={() => setCurrentImageIndex(index)}
                     className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
                       currentImageIndex === index
-                        ? 'border-salmon scale-95 shadow-md'
-                        : 'border-moccasin opacity-60 hover:opacity-100'
+                        ? 'border-pastel-pink scale-95 shadow-md'
+                        : 'border-pastel-sand opacity-60 hover:opacity-100'
                     }`}
                   >
                     <img
@@ -153,33 +154,33 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
           >
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <span className="inline-block bg-sand/20 text-brown-dark text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
+                <span className="inline-block bg-pastel-pink/30 text-cocoa-dark text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">
                   {product.category}
                 </span>
                 {product.size && (
-                  <span className="inline-block bg-cream-bg border border-moccasin text-brown-light text-[10px] font-medium px-2 py-0.5 rounded-full uppercase">
+                  <span className="inline-block bg-white border border-pastel-sand text-cocoa-light text-[10px] font-medium px-2 py-0.5 rounded-full uppercase">
                     Size: {product.size}
                   </span>
                 )}
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-serif font-bold text-brown-dark mb-4 leading-tight">
+              <h1 className="text-3xl md:text-4xl font-serif font-bold text-cocoa-dark mb-4 leading-tight">
                 {product.name}
               </h1>
 
               <div className="flex items-center gap-4 mb-4">
                 <StarRating rating={product.rating} />
-                <span className="text-brown-light text-sm">
-                  ({product.reviewCount} customer inquiries aligned)
+                <span className="text-cocoa-light text-sm">
+                  ({product.reviewCount} customer reviews aligned)
                 </span>
               </div>
 
               <div className="flex items-baseline gap-3 mb-2">
-                <span className="text-4xl font-bold text-brown-dark">
+                <span className="text-4xl font-bold text-cocoa-dark">
                   {product.price}
                   {product.currency}
                 </span>
-                <span className="text-lg text-brown-light/60 line-through">
+                <span className="text-lg text-cocoa-light/60 line-through">
                   {Math.round(product.price * 1.25)}
                   {product.currency}
                 </span>
@@ -187,30 +188,30 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
                   Estimated Value
                 </span>
               </div>
-              <p className="text-[10px] text-brown-light/60">
+              <p className="text-[10px] text-cocoa-light/60">
                 Values are estimates. Final price tailored with Yulia based on
                 shipping & customizations.
               </p>
             </div>
 
-            <p className="text-brown-light leading-relaxed text-sm md:text-base">
+            <p className="text-cocoa-light leading-relaxed text-sm md:text-base font-normal">
               {product.description}
             </p>
 
             {/* Colors display if exist */}
             {product.colors && product.colors.length > 0 && (
               <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-brown-dark">
+                <span className="text-xs font-bold uppercase tracking-wider text-cocoa-dark">
                   Available Colors / Themes:
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {product.colors.map((colorName) => (
                     <span
                       key={colorName}
-                      className="inline-flex items-center bg-white border border-moccasin px-3 py-1 rounded-full text-xs text-brown-light capitalize font-medium"
+                      className="inline-flex items-center bg-white border border-pastel-sand px-3 py-1 rounded-full text-xs text-cocoa-light capitalize font-medium"
                     >
                       <span
-                        className={`w-2.5 h-2.5 rounded-full mr-2 inline-block border border-moccasin`}
+                        className={`w-2.5 h-2.5 rounded-full mr-2 inline-block border border-pastel-sand`}
                         style={{
                           backgroundColor:
                             colorName === 'pastel'
@@ -229,60 +230,63 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
 
             {/* Value Indicators */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white border border-moccasin rounded-2xl p-4">
-                <span className="text-salmon text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+              <div className="bg-white border border-pastel-sand rounded-2xl p-4">
+                <span className="text-pastel-pink text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
                   <FaHandHoldingHeart /> 100% Handmade
                 </span>
-                <p className="text-brown-light text-[11px] mt-1 leading-normal">
-                  Lovingly crafted loop-by-loop with hypoallergenic materials.
+                <p className="text-cocoa-light text-[11px] mt-1 leading-normal">
+                  Lovingly crafted loop-by-loop with hypoallergenic plush
+                  materials.
                 </p>
               </div>
-              <div className="bg-white border border-moccasin rounded-2xl p-4">
-                <span className="text-salmon text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+              <div className="bg-white border border-pastel-sand rounded-2xl p-4">
+                <span className="text-pastel-pink text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
                   <FaCompass /> Worldwide Shipping
                 </span>
-                <p className="text-brown-light text-[11px] mt-1 leading-normal">
-                  Shipped securely from Marbella, Spain to any destination.
+                <p className="text-cocoa-light text-[11px] mt-1 leading-normal">
+                  Shipped securely from Marbella, Spain to any global
+                  destination.
                 </p>
               </div>
-              <div className="bg-white border border-moccasin rounded-2xl p-4">
-                <span className="text-salmon text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+              <div className="bg-white border border-pastel-sand rounded-2xl p-4">
+                <span className="text-pastel-pink text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
                   <FaTruckFast /> Safe Delivery
                 </span>
-                <p className="text-brown-light text-[11px] mt-1 leading-normal">
-                  Packed meticulously in premium gift wrap with full tracking.
+                <p className="text-cocoa-light text-[11px] mt-1 leading-normal">
+                  Packed meticulously in premium fairytale wrap with tracking
+                  link.
                 </p>
               </div>
-              <div className="bg-white border border-moccasin rounded-2xl p-4">
-                <span className="text-salmon text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
-                  <FaArrowRotateLeft /> Client Alignment
+              <div className="bg-white border border-pastel-sand rounded-2xl p-4">
+                <span className="text-pastel-pink text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+                  <FaArrowRotateLeft /> Personal Alignment
                 </span>
-                <p className="text-brown-light text-[11px] mt-1 leading-normal">
-                  Choose colors, custom features, and details directly with
+                <p className="text-cocoa-light text-[11px] mt-1 leading-normal">
+                  Choose colors, features, or design a custom toy chest with
                   Yulia.
                 </p>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="space-y-4 pt-4 border-t border-moccasin">
+            <div className="space-y-4 pt-4 border-t border-pastel-sand">
               <div className="flex items-center gap-4">
-                <span className="text-sm font-semibold text-brown-dark">
+                <span className="text-sm font-semibold text-cocoa-dark">
                   Quantity:
                 </span>
-                <div className="flex items-center bg-white rounded-xl border border-moccasin">
+                <div className="flex items-center bg-white rounded-xl border border-pastel-sand">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-4 py-2 text-brown-dark hover:bg-moccasin/30 rounded-l-xl transition font-bold"
+                    className="px-4 py-2 text-cocoa-dark hover:bg-pastel-sand/30 rounded-l-xl transition font-bold"
                   >
                     −
                   </button>
-                  <span className="px-4 py-2 text-brown-dark font-medium text-sm">
+                  <span className="px-4 py-2 text-cocoa-dark font-medium text-sm">
                     {quantity}
                   </span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="px-4 py-2 text-brown-dark hover:bg-moccasin/30 rounded-r-xl transition font-bold"
+                    className="px-4 py-2 text-cocoa-dark hover:bg-pastel-sand/30 rounded-r-xl transition font-bold"
                   >
                     +
                   </button>
@@ -296,11 +300,11 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
                   className={`flex-1 py-4 px-6 rounded-2xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm ${
                     addedToSelection
                       ? 'bg-emerald-500 text-white'
-                      : 'bg-white border border-sand hover:bg-moccasin/40 text-brown-dark'
+                      : 'bg-white border border-pastel-pink hover:bg-pastel-sand/20 text-cocoa-dark'
                   }`}
                 >
                   {addedToSelection ? (
-                    <>Added to Selection! 🧸</>
+                    <>Added to Selection! 🐰</>
                   ) : (
                     <>
                       <FaBasketShopping />
@@ -316,7 +320,7 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
                   onClick={handleWhatsAppQuickInquiry}
                   className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white py-4 px-6 rounded-2xl font-bold text-base transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-xl hover:shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer hover:-translate-y-0.5"
                 >
-                  <FaWhatsapp className="w-5 h-5" />
+                  <FaWhatsapp size={20} />
                   Order / Inquire Now
                 </button>
               </div>
@@ -327,7 +331,7 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
         {/* Related Products */}
         {relatedProducts.length > 0 && (
           <section className="mt-20">
-            <h2 className="text-2xl font-serif font-bold text-brown-dark mb-8">
+            <h2 className="text-2xl font-serif font-bold text-cocoa-dark mb-8">
               You May Also Like
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -335,7 +339,7 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
                 <Link
                   key={p.id}
                   to={`/product/${p.id}`}
-                  className="group bg-white rounded-3xl overflow-hidden hover:shadow-md transition-all duration-300 border border-moccasin"
+                  className="group bg-white rounded-3xl overflow-hidden hover:shadow-md transition-all duration-300 border border-pastel-sand"
                 >
                   <div className="aspect-square overflow-hidden bg-cream-bg">
                     <img
@@ -346,10 +350,10 @@ _Sent from Yulia's Knitted Toys Showcase (Spain, Marbella)_`;
                     />
                   </div>
                   <div className="p-4 flex flex-col justify-between">
-                    <h3 className="text-brown-dark font-semibold text-sm mb-1 group-hover:text-salmon transition-colors line-clamp-1">
+                    <h3 className="text-cocoa-dark font-semibold text-sm mb-1 group-hover:text-pastel-pink transition-colors line-clamp-1 font-serif">
                       {p.name}
                     </h3>
-                    <span className="text-salmon font-bold text-base">
+                    <span className="text-pastel-pink font-bold text-base">
                       {p.price}
                       {p.currency}
                     </span>

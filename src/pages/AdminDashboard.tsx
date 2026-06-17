@@ -15,7 +15,7 @@ const AdminDashboard: React.FC = () => {
     description: '',
     rating: '4.5',
     reviewCount: '0',
-    category: 'toys' as 'toys' | 'beanies' | 'accessories',
+    category: 'toys' as 'toys' | 'keychains' | 'boxes',
   });
 
   const handleInputChange = (
@@ -152,10 +152,8 @@ const AdminDashboard: React.FC = () => {
                     className="w-full bg-cream-bg text-brown-dark px-4 py-3 rounded-xl border border-sand focus:border-salmon focus:outline-none"
                   >
                     <option value="toys">Toys (Игрушки)</option>
-                    <option value="beanies">Beanies (Шапки)</option>
-                    <option value="accessories">
-                      Accessories (Аксессуары)
-                    </option>
+                    <option value="keychains">Keychains (Брелоки)</option>
+                    <option value="boxes">Boxes (Наборы)</option>
                   </select>
                 </div>
                 <div>
@@ -281,11 +279,11 @@ const AdminDashboard: React.FC = () => {
             <div className="text-brown-light text-sm">Игрушки</div>
           </div>
           <div className="bg-gradient-to-br from-sand/80 to-salmon/80 backdrop-blur-sm border border-sand rounded-2xl p-6">
-            <div className="text-3xl mb-2">🧢</div>
+            <div className="text-3xl mb-2">🔑</div>
             <div className="text-2xl font-bold text-brown-dark">
-              {products.filter((p) => p.category === 'beanies').length}
+              {products.filter((p) => p.category === 'keychains').length}
             </div>
-            <div className="text-brown-light text-sm">Шапки</div>
+            <div className="text-brown-light text-sm">Брелоки</div>
           </div>
         </div>
 
@@ -346,8 +344,8 @@ const AdminDashboard: React.FC = () => {
                         className={`inline-block px-3 py-1 rounded-full text-sm ${product.category === 'toys' ? 'bg-salmon/20 text-salmon' : 'bg-sand/30 text-brown-light'}`}
                       >
                         {product.category === 'toys' && '🧸 Игрушки'}
-                        {product.category === 'beanies' && '🧢 Шапки'}
-                        {product.category === 'accessories' && '🎀 Аксессуары'}
+                        {product.category === 'keychains' && '🔑 Брелоки'}
+                        {product.category === 'boxes' && '🎁 Наборы'}
                       </span>
                     </td>
                     <td className="px-6 py-4">

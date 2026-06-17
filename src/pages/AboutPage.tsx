@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaHeart, FaCertificate, FaCompass, FaRegStar } from 'react-icons/fa6';
+import { FaHeart, FaCertificate, FaCompass } from 'react-icons/fa6';
 
 const AboutPage: React.FC = () => {
   return (

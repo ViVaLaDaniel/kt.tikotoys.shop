@@ -12,6 +12,8 @@ import {
   signOut,
   onAuthStateChanged,
   User as FirebaseUser,
+  createUserWithEmailAndPassword,
+  updateProfile,
 } from 'firebase/auth';
 
 // Определяем, как выглядит объект пользователя в нашем приложении
@@ -21,6 +23,7 @@ export interface AppUser {
   name: string | null;
   photoURL: string | null;
   isAdmin: boolean;
+  createdAt?: string;
 }
 
 interface AuthContextType {
@@ -29,6 +32,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   signInWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
+  register: (email: string, password: string, name: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -55,6 +59,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
             isAdmin: import.meta.env.VITE_ADMIN_EMAIL
               ? firebaseUser.email === import.meta.env.VITE_ADMIN_EMAIL
               : false,
+            createdAt: firebaseUser.metadata.creationTime || undefined,
           };
           setUser(appUser);
         } else {
@@ -82,6 +87,38 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const register = async (
+    email: string,
+    password: string,
+    name: string,
+  ): Promise<boolean> => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      await updateProfile(userCredential.user, { displayName: name });
+
+      const appUser: AppUser = {
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+        name: name,
+        photoURL: null,
+        isAdmin: false,
+        createdAt: userCredential.user.metadata.creationTime || undefined,
+      };
+      setUser(appUser);
+      return true;
+    } catch (error) {
+      console.error(
+        'Ошибка регистрации: ',
+        error instanceof Error ? error.message : 'Неизвестная ошибка',
+      );
+      return false;
+    }
+  };
+
   const logout = async (): Promise<void> => {
     try {
       await signOut(auth);
@@ -100,6 +137,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     isAuthenticated: !!user,
     signInWithGoogle,
     logout,
+    register,
   };
 
   // Не рендерим дочерние компоненты, пока не определено состояние аутентификации
