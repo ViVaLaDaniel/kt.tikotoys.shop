@@ -306,31 +306,6 @@ const Header: React.FC = () => {
             </Link>
           ))}
 
-          <Link
-            to="/cart"
-            className="px-4 py-3 rounded-lg font-medium text-brown-light hover:text-brown-dark hover:bg-moccasin transition-all duration-300 flex items-center gap-2"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-            Selection 🧸
-            {itemCount > 0 && (
-              <span className="bg-salmon text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                {itemCount}
-              </span>
-            )}
-          </Link>
 
           {isAuthenticated && (
             <button

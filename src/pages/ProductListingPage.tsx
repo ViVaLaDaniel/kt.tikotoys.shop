@@ -133,7 +133,7 @@ const ProductListingPage: React.FC = () => {
   };
 
   return (
-    <main className="flex-grow w-full min-h-screen pt-28 pb-32 px-4 md:px-8 bg-cream-bg font-sans">
+    <main className="flex-grow w-full min-h-screen pt-28 pb-32 px-4 md:px-8 bg-transparent font-sans">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">

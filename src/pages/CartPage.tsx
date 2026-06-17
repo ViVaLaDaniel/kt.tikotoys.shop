@@ -104,7 +104,7 @@ _Sent from Yulia's Toy Chest Showcase (Spain, Marbella)_`;
 
   if (isSubmitted) {
     return (
-      <main className="flex-grow w-full min-h-screen pt-32 pb-32 px-4 flex items-center justify-center bg-cream-bg font-sans">
+      <main className="flex-grow w-full min-h-screen pt-32 pb-32 px-4 flex items-center justify-center bg-transparent font-sans">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -139,7 +139,7 @@ _Sent from Yulia's Toy Chest Showcase (Spain, Marbella)_`;
   }
 
   return (
-    <main className="flex-grow w-full min-h-screen pt-28 pb-32 px-4 md:px-8 bg-cream-bg font-sans">
+    <main className="flex-grow w-full min-h-screen pt-28 pb-32 px-4 md:px-8 bg-transparent font-sans">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <Link

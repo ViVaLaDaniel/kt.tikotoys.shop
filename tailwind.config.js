@@ -7,19 +7,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        'cream-bg': '#FCF9F2',       // Fairytale Cream Background
-        'cocoa-dark': '#3D261C',     // Dark Cocoa Text
-        'cocoa-light': '#8D5B4C',    // Light Cocoa Text
-        'pastel-pink': '#FFB7B2',    // Magic Pastel Pink
-        'pastel-lavender': '#E8AEB7',// Magical Lavender
-        'pastel-sand': '#E2CFC4',    // Cozy Soft Sand
+        'cream-bg': '#FAF6EE',       // Fairytale Soft Cream
+        'cocoa-dark': '#3A261A',     // Deep Cocoa Text
+        'cocoa-light': '#805B46',    // Warm Caramel-Cocoa Text
+        'pastel-pink': '#FFC4C0',    // Soft Blush Pink
+        'pastel-lavender': '#E2CEE6',// Whimsical Lavender
+        'pastel-sand': '#E8D4C8',    // Warm Toy Sand
+        'pastel-sage': '#C6D8C3',    // Magical Sage Green
+        'pastel-caramel': '#D8A47F', // Cozy Honey Caramel
         
         // Aliases for layout compatibility
-        'brown-dark': '#3D261C',
-        'brown-light': '#8D5B4C',
-        'sand': '#FFB7B2',           // Primary action defaults to Pastel Pink
-        'salmon': '#E8AEB7',         // Accents defaults to Lavender
-        'moccasin': '#E2CFC4',       // Highlights defaults to Sand
+        'brown-dark': '#3A261A',
+        'brown-light': '#805B46',
+        'sand': '#D8A47F',           // Primary action is now Cozy Honey Caramel
+        'salmon': '#FFC4C0',         // Accent highlight is Blush Pink
+        'moccasin': '#C6D8C3',       // Secondary highlights are Sage Green
       }
     },
   },

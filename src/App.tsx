@@ -4,7 +4,6 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Snowflakes from './components/Snowflakes';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
 import { CartProvider } from './context/CartContext';
@@ -47,8 +46,7 @@ const App: React.FC = () => {
           <OrdersProvider>
             <CartProvider>
               <Analytics />
-              <div className="flex flex-col min-h-screen bg-cream-bg text-brown-dark">
-                <Snowflakes />
+              <div className="flex flex-col min-h-screen bg-transparent text-brown-dark">
                 <Header />
                 <Suspense fallback={<LoadingSpinner />}>
                   <Routes>

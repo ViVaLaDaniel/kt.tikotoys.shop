@@ -4,7 +4,7 @@ import { FaHeart, FaCertificate, FaCompass } from 'react-icons/fa6';
 
 const AboutPage: React.FC = () => {
   return (
-    <main className="flex-grow w-full px-4 md:px-8 pt-28 pb-32 bg-cream-bg font-sans">
+    <main className="flex-grow w-full px-4 md:px-8 pt-28 pb-32 bg-transparent font-sans">
       <div className="w-full max-w-5xl mx-auto">
         {/* Header */}
         <header className="text-center mb-16">

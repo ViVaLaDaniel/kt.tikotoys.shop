@@ -48,9 +48,9 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <main className="flex-grow w-full min-h-screen bg-cream-bg font-sans overflow-hidden">
+    <main className="flex-grow w-full min-h-screen bg-transparent font-sans overflow-hidden">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 px-4 overflow-hidden bg-gradient-to-b from-pastel-pink/10 via-pastel-lavender/5 to-cream-bg">
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 px-4 overflow-hidden bg-gradient-to-b from-pastel-pink/10 via-pastel-lavender/5 to-transparent">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 left-10 w-72 h-72 bg-pastel-pink/20 rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-pastel-lavender/20 rounded-full blur-3xl" />

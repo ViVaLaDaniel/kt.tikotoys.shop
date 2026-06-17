@@ -34,7 +34,7 @@ const ProductDetailPage: React.FC = () => {
 
   if (!product) {
     return (
-      <main className="flex-grow w-full min-h-screen pt-32 pb-32 px-4 flex items-center justify-center bg-cream-bg font-sans">
+      <main className="flex-grow w-full min-h-screen pt-32 pb-32 px-4 flex items-center justify-center bg-transparent font-sans">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-cocoa-dark mb-4">
             Toy Not Found
@@ -78,7 +78,7 @@ _Sent from Yulia's Toy Chest Showcase (Spain, Marbella)_`;
     .slice(0, 4);
 
   return (
-    <main className="flex-grow w-full min-h-screen pt-28 pb-32 px-4 md:px-8 bg-cream-bg font-sans">
+    <main className="flex-grow w-full min-h-screen pt-28 pb-32 px-4 md:px-8 bg-transparent font-sans">
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumbs */}
         <nav className="mb-8 flex items-center gap-2">
