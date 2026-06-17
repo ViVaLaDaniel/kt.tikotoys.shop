@@ -1,29 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaHeart, FaCertificate, FaCompass } from 'react-icons/fa6';
+import PageHeader from '../components/PageHeader';
 
 const AboutPage: React.FC = () => {
   return (
     <main className="flex-grow w-full px-4 md:px-8 pt-28 pb-32 bg-transparent font-sans">
       <div className="w-full max-w-5xl mx-auto">
-        {/* Header */}
-        <header className="text-center mb-16">
-          <motion.h1
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-serif font-bold text-brown-dark mb-4 tracking-tight"
-          >
-            Our <span className="text-salmon italic">Story</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.15 }}
-            className="text-lg md:text-xl text-brown-light"
-          >
-            Weaving warmth, love, and childhood dreams into every stitch.
-          </motion.p>
-        </header>
+        <PageHeader
+          title="Our"
+          highlight="Story"
+          subtitle="Weaving warmth, love, and childhood dreams into every stitch."
+        />
 
         {/* Our Mission Section */}
         <motion.section

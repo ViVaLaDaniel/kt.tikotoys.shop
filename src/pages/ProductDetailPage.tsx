@@ -12,6 +12,7 @@ import {
   FaTruckFast,
   FaArrowRotateLeft,
 } from 'react-icons/fa6';
+import { openWhatsApp } from '../utils/whatsapp';
 
 const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -57,7 +58,6 @@ const ProductDetailPage: React.FC = () => {
   };
 
   const handleWhatsAppQuickInquiry = () => {
-    const whatsappNumber = '34642841240';
     const message = `🧸 *Quick Toy Inquiry* 🧸
 
 Hi Yulia! I am interested in ordering:
@@ -68,9 +68,7 @@ Could you please let me know about availability and shipping options? Thank you!
 
 _Sent from Yulia's Toy Chest Showcase (Spain, Marbella)_`;
 
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
+    openWhatsApp(message);
   };
 
   const relatedProducts = products

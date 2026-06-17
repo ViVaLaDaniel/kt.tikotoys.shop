@@ -10,6 +10,10 @@ import {
   FaArrowDownWideShort,
   FaBasketShopping,
 } from 'react-icons/fa6';
+import {
+  gridStaggerContainer,
+  gridItem,
+} from '../utils/animations';
 
 type CategoryFilter = 'all' | 'toys' | 'keychains' | 'boxes';
 type SizeFilter = 'all' | 'small' | 'medium' | 'large';
@@ -111,26 +115,8 @@ const ProductListingPage: React.FC = () => {
     { value: 'lavender', label: 'Lavender' },
   ];
 
-  // Grid animation configs
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, scale: 0.96, y: 15 },
-    show: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: { type: 'spring', stiffness: 80, damping: 15 },
-    },
-  };
+  const containerVariants = gridStaggerContainer;
+  const itemVariants = gridItem;
 
   return (
     <main className="flex-grow w-full min-h-screen pt-28 pb-32 px-4 md:px-8 bg-transparent font-sans">
